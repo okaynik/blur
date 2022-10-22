@@ -1,8 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
 function App() {
+
+  const [data, setData] = useState("Nothing");
+
+  useEffect(() => {
+    fetch("http://localhost:9000/react-test")
+        .then(res => res.text())
+        .then(res => setData(res));
+  }, []);
+
   return (
     <div className="App">
       <header className="App-header">
@@ -19,6 +28,9 @@ function App() {
           Learn React
         </a>
       </header>
+
+
+    <p className="App-intro">API Response: {data}</p>
     </div>
   );
 }
