@@ -17,7 +17,8 @@ import { RouteError } from '@declarations/classes';
 // **** Init express **** //
 
 const app = express();
-
+var cors = require("cors");
+app.use(cors());
 
 // **** Set basic express settings **** //
 
@@ -82,9 +83,7 @@ app.get('/users', (req: Request, res: Response) => {
     res.sendFile('users.html', {root: viewsDir});
   }
 });
-var cors = require("cors");
 var testAPIRouter = require("./routes/react-test");
-app.use(cors());
 app.use("/react-test", testAPIRouter);
 
 
