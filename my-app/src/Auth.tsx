@@ -15,7 +15,7 @@ function Auth() {
 
   const context = useContext(AuthContext);
   if (context.auth) {
-    navigate("/home");
+    navigate("/main");
   }
 
   const [email, setEmail] = useState("");
@@ -38,7 +38,7 @@ function Auth() {
       if (res.status === 200) {
         // context.login(res.data);
         context.login("TEST");
-        navigate("/home");
+        navigate("/main");
         console.log(res);
         // navigate("/home");
       }
@@ -101,7 +101,7 @@ function Auth() {
             <div className="d-grid gap-2 mt-3">
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="btn btn-dark"
                 onSubmit={handleLogin}
               >
                 Submit
@@ -159,7 +159,7 @@ function Auth() {
             <div className="d-grid gap-2 mt-3">
               <button
                 type="submit"
-                className="btn btn-primary"
+                className="btn btn-dark"
                 onSubmit={handleSignup}
               >
                 Submit

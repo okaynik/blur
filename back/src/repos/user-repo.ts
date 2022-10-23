@@ -3,11 +3,14 @@ import { getRandomInt } from "@declarations/functions";
 import orm from "./mock-orm";
 
 const Sequelize = require("sequelize-cockroachdb");
-const sequelize = new Sequelize("", {
-  dialectOptions: {
-    application_name: "blur",
-  },
-});
+const sequelize = new Sequelize(
+  "postgresql://waka:WuiwJDk2iDozLmQBmvLhPQ@free-tier14.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&options=--cluster%3Dblur-edu-6053",
+  {
+    dialectOptions: {
+      application_name: "blur",
+    },
+  }
+);
 
 const User = sequelize.define("Users", {
   id: {
