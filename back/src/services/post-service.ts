@@ -13,8 +13,13 @@ async function getOne(id: string): Promise<IPost | null>{
     return postRepo.getOne(id);
 }
 
+async function add(title: string, body: string, aurthor: string): Promise<void>{
+    return postRepo.add(title, body, aurthor);
+}
+
 export default {
     getAll,
     topViews,
     getOne,
+    add,
 } as const;

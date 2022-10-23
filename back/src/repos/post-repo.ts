@@ -72,8 +72,19 @@ async function getOne(id: string): Promise<IPost | null>{
     });
 }
 
+async function add(title: string, body: string, author:string): Promise<void>{
+  return Post.sync({force:false})
+  .then(()=>{
+    console.log(title, author, body);
+    Post.create({ body: body, title: title, author: author });
+    console.log("Post Added")
+  })
+}
+
+
 export default {
     getAll,
     topViews,
     getOne,
+    add,
 } as const;
