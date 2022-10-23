@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import logo from "./blur.png";
 import {
   styled,
@@ -14,6 +14,8 @@ import {
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
+import { Link, useNavigate } from "react-router-dom";
+import { AuthContext } from "./UserContext";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -58,7 +60,10 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function TopBar() {
+  const navigate = useNavigate();
   const [text, setText] = useState("");
+  const { username } = useContext(AuthContext);
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <CssBaseline />
@@ -68,7 +73,14 @@ export default function TopBar() {
             justifyContent: "space-between",
           }}
         >
-          <Stack direction="row" alignItems="center">
+          <Stack
+            direction="row"
+            alignItems="center"
+            onClick={() => {
+              navigate("/main");
+            }}
+            sx={{ cursor: "pointer" }}
+          >
             <Box
               component="img"
               sx={{
@@ -78,6 +90,7 @@ export default function TopBar() {
               src={logo}
             />
           </Stack>
+
           <Search>
             <SearchIconWrapper>
               <SearchIcon />
@@ -98,6 +111,9 @@ export default function TopBar() {
           >
             <MenuIcon />
           </IconButton>
+          <Typography variant="h5" component="div">
+            {username}
+          </Typography>
         </Toolbar>
       </AppBar>
     </Box>

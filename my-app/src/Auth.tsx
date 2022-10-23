@@ -37,7 +37,7 @@ function Auth() {
       console.log(res);
       if (res.status === 200) {
         // context.login(res.data);
-        context.login("TEST");
+        context.login("waka");
         navigate("/main");
         console.log(res);
         // navigate("/home");

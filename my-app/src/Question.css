@@ -1,4 +1,5 @@
 .Post-box {
+    margin-top: 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -23,6 +24,30 @@
     flex-direction: column;
 }
 
+.Answer {
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.Inp {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.ButtonGroup {
+    margin-top: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    flex-direction: row;
+}
+
 .Card {
     display: flex;
     flex-direction: row;
@@ -39,6 +64,7 @@
 }
 
 .Votes {
+    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;

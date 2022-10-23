@@ -29,6 +29,7 @@ export default function Main() {
       <TopBar />
       <div className="Header mt-3 ml-2">
         <h1>Top Posts</h1>
+        <button className="btn btn-primary">New Post</button>
       </div>
       <Posts />
     </div>

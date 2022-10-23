@@ -27,7 +27,11 @@ export default function Posts() {
       {postList?.length > 0 &&
         postList?.map((post) => {
           return (
-            <Card variant="outlined" className="Outer-card">
+            <Card
+              variant="outlined"
+              className="Outer-card"
+              sx={{ background: "snow" }}
+            >
               <Link
                 to={`question/${post.id}`}
                 key={post.id}
@@ -37,9 +41,9 @@ export default function Posts() {
                   height: "100%",
                 }}
               >
-                <Card className="Inner-card">
+                <Card className="Inner-card" sx={{ background: "snow" }}>
                   <Vote likes={post.likes} />
-                  <CardContent classes="Card-content">
+                  <CardContent classes="Card-content" sx={{ p: 0 }}>
                     <Typography variant="h5" component="div">
                       {post.title}
                     </Typography>
@@ -62,11 +66,32 @@ export default function Posts() {
 }
 
 function Vote(props: { likes: number }) {
+  const [offset, setOffset] = useState(0);
+  const [colorUp, setColorUp] = useState("black");
+  const [colorDown, setColorDown] = useState("black");
   return (
     <div className="Votes">
-      <FaChevronUp size={"20"} />
-      <p className="Likes fs-4">{props.likes}</p>
-      <FaChevronDown size={"20"} />
+      <FaChevronUp
+        size={"20"}
+        color={colorUp}
+        onClick={(e) => {
+          e.preventDefault();
+          setOffset(1);
+          setColorUp("orange");
+          setColorDown("black");
+        }}
+      />
+      <p className="Likes fs-4">{props.likes + offset}</p>
+      <FaChevronDown
+        size={"20"}
+        color={colorDown}
+        onClick={(e) => {
+          e.preventDefault();
+          setOffset(-1);
+          setColorDown("blue");
+          setColorUp("black");
+        }}
+      />
     </div>
   );
 }
