@@ -77,7 +77,7 @@ apiRouter.use(postRoutes.paths.basePath, postRouter);
 // response router
 const resRouter = Router();
 resRouter.get(resRoutes.paths.getAll, resRoutes.getAll);
-
+resRouter.get(resRoutes.paths.add, resRoutes.add);
 apiRouter.use(resRoutes.paths.basePath, resRouter);
 // **** Export default **** //
 

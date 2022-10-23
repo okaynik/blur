@@ -58,6 +58,15 @@ async function getAll(id: string):Promise<IResponse[]>{
     });
 }
 
+async function add(author: string, postId: string, body: string): Promise<void>{
+  return Response.sync({force:false})
+  .then(()=>{
+    console.log(author, postId, body);
+    Response.create({ body: body, postId: postId, author: author });
+    console.log("completed")
+  })
+}
 export default {
   getAll,
+  add,
 } as const;
