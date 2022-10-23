@@ -4,7 +4,8 @@ import "./App.css";
 import Auth from "./Auth";
 import Home from "./Home";
 import AuthContextProvider from "./UserContext";
-import Main from "./Main"
+import Main from "./Main";
+import Question from "./Question";
 
 function App() {
   const [data, setData] = useState("Nothing");
@@ -20,8 +21,9 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Auth />} />
-          <Route path='/main' element={<Main />} />
+          <Route path="/main" element={<Main />} />
           <Route path="/home" element={<Home />} />
+          <Route path="/main/question/:id" element={<Question />} />
         </Routes>
       </BrowserRouter>
     </AuthContextProvider>

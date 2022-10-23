@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import posts from "./mockPosts.json";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./Posts.css";
@@ -10,39 +10,50 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
-
-const bull = (
-  <Box
-    component="span"
-    sx={{ display: "inline-block", mx: "2px", transform: "scale(0.8)" }}
-  >
-    •
-  </Box>
-);
+import { Post } from "./Main";
+import { Link } from "react-router-dom";
 
 export default function Posts() {
-  const [userList, setUserlist] = useState(posts.questions);
+  const [postList, setPosts] = useState<Post[]>([]);
+
+  useEffect(() => {
+    fetch("http://localhost:9000/api/posts/topviews")
+      .then((response) => response.json())
+      .then((data) => setPosts(data.posts));
+  }, []);
 
   return (
     <Box className="Questions-box">
-      {userList?.length > 0 &&
-        userList?.map((post) => {
+      {postList?.length > 0 &&
+        postList?.map((post) => {
           return (
-            <Card variant="outlined" className="Card" key={post.id}>
-              <Vote likes={post.likes} />
-              <CardContent>
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  {post.username}
-                </Typography>
-                <Typography variant="h5" component="div">
-                  {post.title}
-                </Typography>
-                <Typography variant="body2">{post.ans}</Typography>
-              </CardContent>
+            <Card variant="outlined" className="Outer-card">
+              <Link
+                to={`question/${post.id}`}
+                key={post.id}
+                style={{
+                  textDecoration: "none",
+                  width: "100%",
+                  height: "100%",
+                }}
+              >
+                <Card className="Inner-card">
+                  <Vote likes={post.likes} />
+                  <CardContent classes="Card-content">
+                    <Typography variant="h5" component="div">
+                      {post.title}
+                    </Typography>
+                    <Typography
+                      sx={{ fontSize: 14 }}
+                      color="text.secondary"
+                      gutterBottom
+                    >
+                      {post.author}
+                    </Typography>
+                    <Typography variant="body2">{post.body}</Typography>
+                  </CardContent>
+                </Card>
+              </Link>
             </Card>
           );
         })}

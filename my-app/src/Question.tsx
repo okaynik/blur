@@ -1,7 +1,7 @@
-import { useState } from "react";
-import posts from "./mockPosts.json";
+import { useEffect, useState } from "react";
+import responses from "./mockResponses.json";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./Posts.css";
+import "./Question.css";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Card from "@mui/material/Card";
@@ -10,34 +10,77 @@ import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { FaChevronUp, FaChevronDown } from "react-icons/fa";
+import { Post, Response } from "./Main";
+import TopBar from "./TopBar";
+import { useParams } from "react-router-dom";
 
-export default function Posts() {
-  const [userList, setUserlist] = useState(posts.questions);
+export default function Question() {
+  const [responseList, setResponses] = useState(responses.responses);
+  const [post, setPost] = useState<Post>({
+    id: 0,
+    title: "How can I drill on things like Dr. Charlesworth does?",
+    body: "really need help understanding programming languages but i don't know where to start",
+    author: "John",
+    likes: 12,
+    views: 120,
+    time: "2021-10-10 12:00:00",
+  });
+  const { id } = useParams();
+
+  // useEffect(() => {
+  //   fetch("http://localhost:9000/api/posts/" + id)
+  //     .then((response) => response.json())
+  //     .then((data) => setPost(data.post));
+  // }, []);
 
   return (
-    <Box className="Questions-box">
-      {userList?.length > 0 &&
-        userList?.map((post) => {
-          return (
-            <Card variant="outlined" className="Card" key={post.id}>
-              <Vote likes={post.likes} />
-              <CardContent>
-                <Typography
-                  sx={{ fontSize: 14 }}
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  {post.username}
-                </Typography>
-                <Typography variant="h5" component="div">
-                  {post.title}
-                </Typography>
-                <Typography variant="body2">{post.ans}</Typography>
-              </CardContent>
-            </Card>
-          );
-        })}
-    </Box>
+    <>
+      <TopBar />
+
+      {post && (
+        <Box className="Post-box">
+          <Card variant="outlined" className="Post-Card">
+            <Vote likes={post.likes} />
+            <CardContent className="p-0">
+              <Typography variant="h5" component="div">
+                {post.title}
+              </Typography>
+              <Typography
+                sx={{ fontSize: 14 }}
+                color="text.secondary"
+                gutterBottom
+              >
+                {post.author}
+              </Typography>
+              <Typography variant="body2">{post.body}</Typography>
+            </CardContent>
+          </Card>
+        </Box>
+      )}
+
+      <Box className="Questions-box">Enter your answer here</Box>
+
+      <Box className="Questions-box">
+        {responseList?.length > 0 &&
+          responseList?.map((response) => {
+            return (
+              <Card variant="outlined" className="Card" key={response.id}>
+                <Vote likes={response.likes} />
+                <CardContent>
+                  <Typography
+                    sx={{ fontSize: 14 }}
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    {response.username}
+                  </Typography>
+                  <Typography variant="body2">{response.ans}</Typography>
+                </CardContent>
+              </Card>
+            );
+          })}
+      </Box>
+    </>
   );
 }
 
