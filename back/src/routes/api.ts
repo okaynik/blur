@@ -67,7 +67,7 @@ const postRouter = Router();
 postRouter.get(postRoutes.paths.get, postRoutes.getAll);
 postRouter.get(postRoutes.paths.topViews, postRoutes.topViews);
 postRouter.get(postRoutes.paths.getOne, postRoutes.getOne);
-
+postRouter.post(postRoutes.paths.add, postRoutes.add);
 apiRouter.use(postRoutes.paths.basePath, postRouter);
 
 // response router
