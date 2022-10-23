@@ -3,9 +3,11 @@ import { Router } from "express";
 import adminMw from "./middlware/adminMw";
 import validate from "./middlware/validate";
 import User from "@models/User";
+
 import authRoutes from "./auth-routes";
 import userRoutes from "./user-routes";
-import postRoutes from "./post-routes"
+import postRoutes from "./post-routes";
+import resRoutes from "./res-routes";
 
 // **** Init **** //
 
@@ -66,12 +68,17 @@ apiRouter.use(userRoutes.paths.basePath, userRouter);
 const postRouter = Router();
 
 postRouter.get(postRoutes.paths.get, postRoutes.getAll);
-postRouter.get(postRoutes.paths.topViews, postRoutes.topViews)
-
-postRouter.get(postRoutes.paths.getOne, postRoutes.getOne)
+postRouter.get(postRoutes.paths.topViews, postRoutes.topViews);
+postRouter.get(postRoutes.paths.getOne, postRoutes.getOne);
 
 apiRouter.use(postRoutes.paths.basePath, postRouter);
 
+
+// response router
+const resRouter = Router();
+resRouter.get(resRoutes.paths.getAll, resRoutes.getAll);
+
+apiRouter.use(resRoutes.paths.basePath, resRouter);
 // **** Export default **** //
 
 export default apiRouter;

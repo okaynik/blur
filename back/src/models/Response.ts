@@ -3,6 +3,6 @@ export interface IResponse {
     body: string;
     author: string;
     likes: number;
-    time: string;
-    postId: number;
+    createdAt: string;
+    postId: string;
 }

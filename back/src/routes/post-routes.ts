@@ -28,6 +28,7 @@ async function getOne(req: IReq, res: IRes) {
 }
 
 
+
   export default {
     paths,
     getAll,

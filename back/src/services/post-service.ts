@@ -1,11 +1,11 @@
 import postRepo from '@repos/post-repo';
 import {IPost} from '@models/Post';
 
-function getAll(): Promise<IPost[]> {
+async function getAll(): Promise<IPost[]> {
     return postRepo.getAll();
 }
 
-function topViews(): Promise<IPost[]> {
+async function topViews(): Promise<IPost[]> {
     return postRepo.topViews();
 }
 
