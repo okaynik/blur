@@ -1,7 +1,7 @@
 .Post-box {
     margin-top: 10px;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     flex-direction: row;
 }
@@ -25,14 +25,15 @@
 }
 
 .Answer {
-    width: 80%;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     flex-direction: column;
 }
 
 .Inp {
+    width: 80%;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -41,7 +42,7 @@
 
 .ButtonGroup {
     margin-top: 5px;
-    width: 100%;
+    width: 80%;
     display: flex;
     justify-content: right;
     align-items: center;
