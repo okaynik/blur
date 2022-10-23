@@ -1,16 +1,15 @@
-import HttpStatusCodes from '@configurations/HttpStatusCodes';
+import HttpStatusCodes from "@configurations/HttpStatusCodes";
 
-import resService from '@services/res-service';
-import { IResponse } from '@models/Response';
-import { IReq, IRes } from '@declarations/types';
+import resService from "@services/res-service";
+import { IResponse } from "@models/Response";
+import { IReq, IRes } from "@declarations/types";
 
 // Paths
 const paths = {
-    basePath: '/res',
-    getAll: '/getall/:id',
-    add:'/add/:author/:postid/:body',
-  } as const;
-
+  basePath: "/res",
+  getAll: "/getall/:id",
+  add: "/add",
+} as const;
 
 async function getAll(req: IReq, res: IRes) {
   console.log(req.params.id);
@@ -19,20 +18,20 @@ async function getAll(req: IReq, res: IRes) {
   return res.status(HttpStatusCodes.OK).json({ responses });
 }
 
-async function add(req: IReq, res: IRes){
-  console.log(req.params);
-  // console.log(req.params.body);
-  const author = req.params.author;
-  const body = req.params.body;
-  const postId = req.params.postid;
+async function add(
+  req: IReq<{ author: string; body: string; postId: string }>,
+  res: IRes
+) {
+  console.log(req);
+  const author = req.body.author;
+  const body = req.body.body;
+  const postId = req.body.postId;
   await resService.add(author, postId, body);
-
   return res.status(HttpStatusCodes.CREATED).end();
-
 }
 
 export default {
-    paths,
-    getAll,
-    add,
-  } as const;
+  paths,
+  getAll,
+  add,
+} as const;

@@ -17,8 +17,6 @@ const apiRouter = Router();
 
 const authRouter = Router();
 
-
-
 // Login user
 authRouter.post(
   authRoutes.paths.login,
@@ -63,7 +61,6 @@ userRouter.delete(
 // Add userRouter
 apiRouter.use(userRoutes.paths.basePath, userRouter);
 
-
 // post router
 const postRouter = Router();
 
@@ -73,11 +70,10 @@ postRouter.get(postRoutes.paths.getOne, postRoutes.getOne);
 
 apiRouter.use(postRoutes.paths.basePath, postRouter);
 
-
 // response router
 const resRouter = Router();
 resRouter.get(resRoutes.paths.getAll, resRoutes.getAll);
-resRouter.get(resRoutes.paths.add, resRoutes.add);
+resRouter.post(resRoutes.paths.add, resRoutes.add);
 apiRouter.use(resRoutes.paths.basePath, resRouter);
 // **** Export default **** //
 
