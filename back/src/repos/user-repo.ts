@@ -38,13 +38,7 @@ const User = sequelize.define("Users", {
  * Get one user.
  */
 async function getOne(email: string): Promise<IUser | null> {
-  // const db = await orm.openDb();
-  // for (const user of db.users) {
-  //   if (user.email === email) {
-  //     return user;
-  //   }
-  // }
-  // return null;
+
   return User.sync({ force: false })
     .then(() => User.findAll())
     .then((users: IUser[]) => {

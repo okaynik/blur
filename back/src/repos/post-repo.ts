@@ -54,7 +54,26 @@ async function topViews(): Promise<IPost[]>{
   }); 
 }
 
+//get one response
+async function getOne(id: string): Promise<IPost | null>{
+    return Post.sync({ force: false })
+    .then(() => Post.findAll())
+    .then((posts: IPost[]) => {
+      for (const post of posts) {
+        console.log(post.id);
+        console.log(id);
+        if (post.id.toString() === id) {
+          return post;
+        }
+      }
+    })
+    .catch((err: any) => {
+      return null;
+    });
+}
+
 export default {
     getAll,
     topViews,
+    getOne,
 } as const;
