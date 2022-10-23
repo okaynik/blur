@@ -1,7 +1,33 @@
-import { IUser } from '@models/User';
-import { getRandomInt } from '@declarations/functions';
-import orm from './mock-orm';
+import { IUser } from "@models/User";
+import { getRandomInt } from "@declarations/functions";
+import orm from "./mock-orm";
 
+const Sequelize = require("sequelize-cockroachdb");
+const sequelize = new Sequelize("", {
+  dialectOptions: {
+    application_name: "blur",
+  },
+});
+
+const User = sequelize.define("Users", {
+  id: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+    primaryKey: true,
+  },
+  username: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  email: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+  pwdHash: {
+    type: Sequelize.STRING,
+    allowNull: false,
+  },
+});
 
 // **** Functions **** //
 
@@ -9,13 +35,26 @@ import orm from './mock-orm';
  * Get one user.
  */
 async function getOne(email: string): Promise<IUser | null> {
-  const db = await orm.openDb();
-  for (const user of db.users) {
-    if (user.email === email) {
-      return user;
-    }
-  }
-  return null;
+  // const db = await orm.openDb();
+  // for (const user of db.users) {
+  //   if (user.email === email) {
+  //     return user;
+  //   }
+  // }
+  // return null;
+  return User.sync({ force: false })
+    .then(() => User.findAll())
+    .then((users: IUser[]) => {
+      console.log(users);
+      for (const user of users) {
+        if (user.email === email) {
+          return user;
+        }
+      }
+    })
+    .catch((err: any) => {
+      return null;
+    });
 }
 
 /**
@@ -35,8 +74,12 @@ async function persists(id: number): Promise<boolean> {
  * Get all users.
  */
 async function getAll(): Promise<IUser[]> {
-  const db = await orm.openDb();
-  return db.users;
+  return User.sync({ force: false })
+    .then(() => User.findAll())
+    .then((users: IUser[]) => {
+      console.log(users);
+      return users;
+    });
 }
 
 /**
@@ -74,7 +117,6 @@ async function _delete(id: number): Promise<void> {
     }
   }
 }
-
 
 // **** Export default **** //
 

@@ -21,17 +21,17 @@ const { paths } = authRoutes,
 
 // Test message
 const msgs = {
-  goodLogin: 'should return a response with a status of ' + 
-    `"${HttpStatusCodes.OK}" and a cookie with a jwt if the login was ` + 
+  goodLogin: 'should return a response with a status of ' +
+    `"${HttpStatusCodes.OK}" and a cookie with a jwt if the login was ` +
     'successful.',
-  emailNotFound: 'should return a response with a status of ' + 
-    `"${HttpStatusCodes.UNAUTHORIZED}" and a json with an error message if ` + 
+  emailNotFound: 'should return a response with a status of ' +
+    `"${HttpStatusCodes.UNAUTHORIZED}" and a json with an error message if ` +
     'the email was not found.',
-  pwdFailed: 'should return a response with a status of ' + 
-    `"${HttpStatusCodes.UNAUTHORIZED}" and a json with the error ` + 
+  pwdFailed: 'should return a response with a status of ' +
+    `"${HttpStatusCodes.UNAUTHORIZED}" and a json with the error ` +
     `"${authServiceErrs.unauth}" if the password failed.`,
-  fallbackErr: 'should return a response with a status of ' + 
-    `"${HttpStatusCodes.BAD_REQUEST}" and a json with an error for all ` + 
+  fallbackErr: 'should return a response with a status of ' +
+    `"${HttpStatusCodes.BAD_REQUEST}" and a json with an error for all ` +
     'other bad responses.',
   goodLogout: `should return a response with a status of ${HttpStatusCodes.OK}`,
 } as const;
@@ -71,7 +71,7 @@ describe('auth-router', () => {
     it(msgs.goodLogin, (done) => {
       const role = UserRoles.Standard;
       const pwdHash = pwdUtil.hashSync(loginCreds.password);
-      const loginUser = User.new('john smith', loginCreds.email, role, pwdHash);
+      const loginUser = User.new('john smith', loginCreds.email, pwdHash);
       spyOn(userRepo, 'getOne').and.returnValue(Promise.resolve(loginUser));
       // Call API
       callApi(loginCreds)
@@ -101,7 +101,7 @@ describe('auth-router', () => {
     it(msgs.pwdFailed, (done) => {
       const role = UserRoles.Standard;
       const pwdHash = pwdUtil.hashSync('bad password');
-      const loginUser = User.new('john smith', loginCreds.email, role, pwdHash);
+      const loginUser = User.new('john smith', loginCreds.email, pwdHash);
       spyOn(userRepo, 'getOne').and.returnValue(Promise.resolve(loginUser));
       // Call API
       callApi(loginCreds)

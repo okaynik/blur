@@ -33,16 +33,15 @@ async function getJwt(email: string, password: string): Promise<string> {
   const pwdPassed = await pwdUtil.compare(password, hash);
   if (!pwdPassed) {
     throw new RouteError(
-      HttpStatusCodes.UNAUTHORIZED, 
+      HttpStatusCodes.UNAUTHORIZED,
       errors.unauth,
     );
   }
   // Setup Admin Cookie
   return jwtUtil.sign({
     id: user.id,
-    email: user.name,
-    name: user.name,
-    role: user.role,
+    email: user.email,
+    name: user.username,
   });
 }
 

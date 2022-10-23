@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-return */
 
 import jsonfile from 'jsonfile';
-
 import { IUser } from '@models/User';
 
 

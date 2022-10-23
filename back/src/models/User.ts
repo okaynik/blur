@@ -13,10 +13,9 @@ export enum UserRoles {
 
 export interface IUser {
   id: number;
-  name: string;
+  username: string;
   email: string;
-  pwdHash?: string;
-  role?: UserRoles;
+  pwdHash: string;
 }
 
 
@@ -26,17 +25,15 @@ export interface IUser {
  * Get a new User object.
  */
 function _new(
-  name: string,
+  username: string,
   email: string,
-  role?: UserRoles,
-  pwdHash?: string,
+  pwdHash: string,
 ): IUser {
   return {
     id: -1,
     email,
-    name,
-    role: (role ?? UserRoles.Standard),
-    pwdHash: (pwdHash ?? ''),
+    username,
+    pwdHash,
   };
 }
 
@@ -47,8 +44,7 @@ function copy(user: IUser): IUser {
   return {
     id: user.id,
     email: user.email,
-    name: user.name,
-    role: user.role,
+    username: user.username,
     pwdHash: user.pwdHash,
   };
 }
@@ -62,8 +58,7 @@ function instanceOf(arg: TAll): boolean {
     typeof arg === 'object' &&
     'id' in arg &&
     'email' in arg &&
-    'name' in arg &&
-    'role' in arg
+    'username' in arg
   );
 }
 

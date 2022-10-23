@@ -23,8 +23,7 @@ const jwtNotPresentErr = 'JWT not present in signed cookie.',
 export interface ISessionUser extends JwtPayload {
   id: number;
   email: string;
-  name: string;
-  role: IUser['role'];
+  username: string;
 }
 
 
