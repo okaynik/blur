@@ -4,6 +4,7 @@ import "./App.css";
 import Auth from "./Auth";
 import Home from "./Home";
 import AuthContextProvider from "./UserContext";
+import Main from "./Main"
 
 function App() {
   const [data, setData] = useState("Nothing");
@@ -19,6 +20,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Auth />} />
+          <Route path='/main' element={<Main />} />
           <Route path="/home" element={<Home />} />
         </Routes>
       </BrowserRouter>

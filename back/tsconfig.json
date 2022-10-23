@@ -96,7 +96,7 @@
   "include": [
     "src/**/*.ts",
     "spec/**/*.ts"
-, "src/routes/middlware"  ],
+, "src/routes/middlware", "src/repos/mock-orm.js", "src/repos/cockroach-orm.js"  ],
   "exclude": [
     "src/public/"
   ]
