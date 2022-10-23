@@ -47,7 +47,7 @@ export default function Question() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        author: "log(n)",
+        author: "spicyshrimp",
         body: answer,
         postId: id,
       }),
@@ -97,7 +97,7 @@ export default function Question() {
           >
             <span>Cancel</span>
           </button>
-          <button className="btn btn-primary ml-1" onClick={submitAnswer}>
+          <button className="btn btn-dark ml-1" onClick={submitAnswer}>
             <span>Submit</span>
           </button>
         </div>
