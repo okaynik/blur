@@ -5,6 +5,7 @@ import validate from "./middlware/validate";
 import User from "@models/User";
 import authRoutes from "./auth-routes";
 import userRoutes from "./user-routes";
+import postRoutes from "./post-routes"
 
 // **** Init **** //
 
@@ -13,6 +14,8 @@ const apiRouter = Router();
 // **** Setup auth routes **** //
 
 const authRouter = Router();
+
+
 
 // Login user
 authRouter.post(
@@ -57,6 +60,14 @@ userRouter.delete(
 
 // Add userRouter
 apiRouter.use(userRoutes.paths.basePath, userRouter);
+
+
+// post router
+const postRouter = Router();
+
+postRouter.get(postRoutes.paths.get, postRoutes.getAll);
+postRouter.get(postRoutes.paths.topViews, postRoutes.topViews)
+apiRouter.use(postRoutes.paths.basePath, postRouter);
 
 // **** Export default **** //
 
