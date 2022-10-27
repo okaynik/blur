@@ -31,7 +31,7 @@ async function getOne(req: IReq, res: IRes) {
 async function add(req: IReq<{title: string, body: string, author: string}>, res: IRes){
   console.log(req.body);
   // console.log(req.params.body);
-  const title = req.body.author;
+  const title = req.body.title;
   const body = req.body.body;
   const author = req.body.author;
   await postService.add(title, body, author);

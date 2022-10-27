@@ -1,10 +1,12 @@
 import { IUser } from "@models/User";
 import { getRandomInt } from "@declarations/functions";
 import orm from "./mock-orm";
+require('dotenv').config();
+
 
 const Sequelize = require("sequelize-cockroachdb");
 const sequelize = new Sequelize(
-  "postgresql://waka:WuiwJDk2iDozLmQBmvLhPQ@free-tier14.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&options=--cluster%3Dblur-edu-6053",
+  `postgresql://${process.env.CONNECTION_TOKEN}@free-tier14.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&options=--cluster%3Dblur-edu-6053`,
   {
     dialectOptions: {
       application_name: "blur",
@@ -42,7 +44,7 @@ async function getOne(email: string): Promise<IUser | null> {
   return User.sync({ force: false })
     .then(() => User.findAll())
     .then((users: IUser[]) => {
-      console.log(users);
+      // console.log(users);
       for (const user of users) {
         if (user.email === email) {
           return user;
@@ -74,7 +76,7 @@ async function getAll(): Promise<IUser[]> {
   return User.sync({ force: false })
     .then(() => User.findAll())
     .then((users: IUser[]) => {
-      console.log(users);
+      // console.log(users);
       return users;
     });
 }

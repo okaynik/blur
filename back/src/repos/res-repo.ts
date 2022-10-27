@@ -1,8 +1,8 @@
 import { IResponse } from "@models/Response";
+require('dotenv').config();
 
 const Sequelize = require("sequelize-cockroachdb");
-const sequelize = new Sequelize(
-  "postgresql://waka:WuiwJDk2iDozLmQBmvLhPQ@free-tier14.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&options=--cluster%3Dblur-edu-6053",
+const sequelize = new Sequelize(`postgresql://${process.env.CONNECTION_TOKEN}@free-tier14.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&options=--cluster%3Dblur-edu-6053`,
   {
     dialectOptions: {
       application_name: "blur",
@@ -41,7 +41,7 @@ async function getAll(id: string): Promise<IResponse[]> {
           collect_posts.push(res);
         }
       }
-      console.log(collect_posts.length);
+      // console.log(collect_posts.length);
 
       collect_posts.sort(function (a, b) {
         return a.likes === b.likes
@@ -63,9 +63,9 @@ async function add(
   body: string
 ): Promise<void> {
   return Response.sync({ force: false }).then(() => {
-    console.log(author, postId, body);
+    // console.log(author, postId, body);
     Response.create({ body: body, postId: postId, author: author });
-    console.log("completed");
+    console.log("add completed");
   });
 }
 export default {

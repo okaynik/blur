@@ -1,7 +1,10 @@
 import { IPost } from "@models/Post";
+require('dotenv').config();
+
 
 const Sequelize = require("sequelize-cockroachdb");
-const sequelize = new Sequelize("postgresql://waka:WuiwJDk2iDozLmQBmvLhPQ@free-tier14.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&options=--cluster%3Dblur-edu-6053", {
+
+const sequelize = new Sequelize(`postgresql://${process.env.CONNECTION_TOKEN}@free-tier14.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&options=--cluster%3Dblur-edu-6053`, {
   dialectOptions: {
     application_name: "blur",
   },
@@ -37,7 +40,7 @@ async function getAll(): Promise<IPost[]> {
     return Post.sync({ force: false })
       .then(() => Post.findAll())
       .then((posts: IPost[]) => {
-        console.log(posts);
+        // console.log(posts);
         return posts;
     });
 }
@@ -49,7 +52,7 @@ async function topViews(): Promise<IPost[]>{
         posts.sort(function(a,b){
             return b.views - a.views
         })
-        console.log(posts)
+        // console.log(posts)
       return posts;
   }); 
 }
@@ -60,8 +63,8 @@ async function getOne(id: string): Promise<IPost | null>{
     .then(() => Post.findAll())
     .then((posts: IPost[]) => {
       for (const post of posts) {
-        console.log(post.id);
-        console.log(id);
+        // console.log(post.id);
+        // console.log(id);
         if (post.id.toString() === id) {
           return post;
         }
@@ -75,7 +78,7 @@ async function getOne(id: string): Promise<IPost | null>{
 async function add(title: string, body: string, author:string): Promise<void>{
   return Post.sync({force:false})
   .then(()=>{
-    console.log(title, author, body);
+    // console.log(title, author, body);
     Post.create({ body: body, title: title, author: author });
     console.log("Post Added")
   })

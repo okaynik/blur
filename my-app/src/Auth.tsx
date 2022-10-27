@@ -5,6 +5,7 @@ import logo from "./blur.svg";
 import { Http } from "./http";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "./UserContext";
+// import AuthButton from "./AuthButton";
 
 function Auth() {
   let [authMode, setAuthMode] = useState("signin");
@@ -39,7 +40,9 @@ function Auth() {
         // context.login(res.data);
         context.login("waka");
         navigate("/main");
+        console.log("------------------------------");
         console.log(res);
+        console.log("------------------------------");
         // navigate("/home");
       }
     });
@@ -65,6 +68,8 @@ function Auth() {
   if (authMode === "signin") {
     return (
       <div className="Auth-form-container">
+        
+
         <div>{context.auth}</div>
         <div className="mb-5">
           <img src={logo} alt="logo" />
