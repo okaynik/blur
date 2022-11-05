@@ -12,12 +12,35 @@ import EnvVars from "@configurations/EnvVars";
 import HttpStatusCodes from "@configurations/HttpStatusCodes";
 import { NodeEnvs } from "@declarations/enums";
 import { RouteError } from "@declarations/classes";
+import { auth, requiresAuth } from "express-openid-connect";
+// import {cors} from "@middlewares/cors";
 
 // **** Init express **** //
-
 const app = express();
+
 var cors = require("cors");
 app.use(cors());
+
+// **** Auth0 **** //
+const config = {
+  authRequired: false,
+  auth0Logout: true,
+  secret: "a long, randomly-generated string stored in env",
+  baseURL: "http://localhost:3000",
+  clientID: "0vy5dOr5DLAtUQPdRE38DpZAU1R2jWHC",
+  issuerBaseURL: "https://dev-l8rj2k42khpaz660.us.auth0.com",
+};
+
+app.use(auth(config));
+
+// req.isAuthenticated is provided from the auth router
+app.get("/", (req, res) => {
+  res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
+});
+
+app.get("/profile", requiresAuth(), (req, res) => {
+  res.send(JSON.stringify(req.oidc.user));
+});
 
 // **** Set basic express settings **** //
 
@@ -69,23 +92,23 @@ const staticDir = path.join(__dirname, "public");
 app.use(express.static(staticDir));
 
 // // Nav to login pg by default
-app.get("/", (_: Request, res: Response) => {
-  res.sendFile("login.html", { root: viewsDir });
-});
+// app.get("/", (_: Request, res: Response) => {
+//   res.sendFile("login.html", { root: viewsDir });
+// });
 
-// Redirect to login if not logged in.
-app.get("/users", (req: Request, res: Response) => {
-  const jwt = req.signedCookies[EnvVars.cookieProps.key];
-  if (!jwt) {
-    res.redirect("/");
-  } else {
-    res.sendFile("users.html", { root: viewsDir });
-  }
-});
+// // Redirect to login if not logged in.
+// app.get("/users", (req: Request, res: Response) => {
+//   const jwt = req.signedCookies[EnvVars.cookieProps.key];
+//   if (!jwt) {
+//     res.redirect("/");
+//   } else {
+//     res.sendFile("users.html", { root: viewsDir });
+//   }
+// });
 
-app.use("/api", BaseRouter);
-var testAPIRouter = require("./routes/react-test");
-app.use("/react-test", testAPIRouter);
+// app.use("/api", BaseRouter);
+// var testAPIRouter = require("./routes/react-test");
+// app.use("/react-test", testAPIRouter);
 
 // **** Export default **** //
 
