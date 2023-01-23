@@ -1,4 +1,31 @@
-import { IPost } from "@models/Post";
+// async function getAll(): Promise<Post[]> {
+//   return postRepo.getAll();
+// }
+
+// async function topViews(): Promise<Post[]> {
+//   return postRepo.topViews();
+// }
+
+// async function getOne(id: string): Promise<Post | null> {
+//   return postRepo.getOne(id);
+// }
+
+// async function add(
+//   title: string,
+//   body: string,
+//   aurthor: string
+// ): Promise<void> {
+//   return postRepo.add(title, body, aurthor);
+// }
+
+// export default {
+//   getAll,
+//   topViews,
+//   getOne,
+//   add,
+// } as const;
+
+import { Post } from "./post.model";
 
 const Sequelize = require("sequelize-cockroachdb");
 const sequelize = new Sequelize(
@@ -10,7 +37,7 @@ const sequelize = new Sequelize(
   }
 );
 
-const Post = sequelize.define("Post", {
+const Post = sequelize.define("post", {
   title: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -35,19 +62,19 @@ const Post = sequelize.define("Post", {
   },
 });
 
-async function getAll(): Promise<IPost[]> {
+async function getAll(): Promise<Post[]> {
   return Post.sync({ force: false })
     .then(() => Post.findAll())
-    .then((posts: IPost[]) => {
+    .then((posts: Post[]) => {
       console.log(posts);
       return posts;
     });
 }
 
-async function topViews(): Promise<IPost[]> {
+async function topViews(): Promise<Post[]> {
   return Post.sync({ force: false })
     .then(() => Post.findAll())
-    .then((posts: IPost[]) => {
+    .then((posts: Post[]) => {
       posts.sort(function (a, b) {
         return b.views - a.views;
       });
@@ -57,10 +84,10 @@ async function topViews(): Promise<IPost[]> {
 }
 
 //get one response
-async function getOne(id: string): Promise<IPost | null> {
+async function getOne(id: string): Promise<Post | null> {
   return Post.sync({ force: false })
     .then(() => Post.findAll())
-    .then((posts: IPost[]) => {
+    .then((posts: Post[]) => {
       for (const post of posts) {
         console.log(post.id);
         console.log(id);
