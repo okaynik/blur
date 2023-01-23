@@ -1,31 +1,4 @@
-// async function getAll(): Promise<Post[]> {
-//   return postRepo.getAll();
-// }
-
-// async function topViews(): Promise<Post[]> {
-//   return postRepo.topViews();
-// }
-
-// async function getOne(id: string): Promise<Post | null> {
-//   return postRepo.getOne(id);
-// }
-
-// async function add(
-//   title: string,
-//   body: string,
-//   aurthor: string
-// ): Promise<void> {
-//   return postRepo.add(title, body, aurthor);
-// }
-
-// export default {
-//   getAll,
-//   topViews,
-//   getOne,
-//   add,
-// } as const;
-
-import { Post } from "./post.model";
+import { Post } from "../models/post.model";
 
 const Sequelize = require("sequelize-cockroachdb");
 const sequelize = new Sequelize(

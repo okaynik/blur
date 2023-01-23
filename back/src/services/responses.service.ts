@@ -1,4 +1,4 @@
-import { IResponse } from "@models/Response";
+import { Response } from "../models/response.model";
 
 const Sequelize = require("sequelize-cockroachdb");
 const sequelize = new Sequelize(
@@ -10,7 +10,7 @@ const sequelize = new Sequelize(
   }
 );
 
-const Response = sequelize.define("Response", {
+const Response = sequelize.define("response", {
   body: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -30,18 +30,19 @@ const Response = sequelize.define("Response", {
   },
 });
 
-async function getAll(id: string): Promise<IResponse[]> {
+async function getAll(id: string): Promise<Response[]> {
   return Response.sync({ force: false })
     .then(() => Response.findAll())
-    .then((responses: IResponse[]) => {
-      let collect_posts: IResponse[] = [];
+    .then((responses: Response[]) => {
+      let collect_posts: Response[] = [];
       for (const res of responses) {
-        // console.log(res.createdAt)
+        console.log(res.createdAt);
         if (res.postId === id) {
           collect_posts.push(res);
         }
       }
-      console.log(collect_posts.length);
+      // console.log("collect_posts");
+      // console.log(collect_posts.length);
 
       collect_posts.sort(function (a, b) {
         return a.likes === b.likes

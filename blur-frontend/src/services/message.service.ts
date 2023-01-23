@@ -25,7 +25,7 @@ export const getProtectedResource = async (
   accessToken: string
 ): Promise<ApiResponse> => {
   const config: AxiosRequestConfig = {
-    url: `${apiServerUrl}/api/messages/protected`,
+    url: `${apiServerUrl}/api/posts/getall`,
     method: "GET",
     headers: {
       "content-type": "application/json",

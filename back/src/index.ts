@@ -3,8 +3,8 @@ import * as dotenv from "dotenv";
 import express from "express";
 import helmet from "helmet";
 import nocache from "nocache";
-import { messagesRouter } from "./messages/messages.router";
-import { postsRouter } from "./posts/posts.router";
+import { postsRouter } from "./routers/post.router";
+import { responsesRouter } from "./routers/response.router";
 import { errorHandler } from "./middleware/error.middleware";
 import { notFoundHandler } from "./middleware/not-found.middleware";
 
@@ -59,8 +59,8 @@ app.use(
 );
 
 app.use("/api", apiRouter);
-apiRouter.use("/messages", messagesRouter);
 apiRouter.use("/posts", postsRouter);
+apiRouter.use("/responses", responsesRouter);
 
 app.use(errorHandler);
 app.use(notFoundHandler);
