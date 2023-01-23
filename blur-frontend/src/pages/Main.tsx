@@ -1,10 +1,10 @@
-// import TopBar from "../components/TopBar";
-// import Posts from "../components/Posts";
+import TopBar from "../components/TopBar";
+import Posts from "../components/Posts";
 import "../styles/Main.css";
-
+import React from 'react';
+import ReactDOM from 'react-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
-import { useAuth0 } from "@auth0/auth0-react";
 
 export interface Post {
   id: number;
@@ -38,7 +38,7 @@ export default function Main() {
     fetch("http://localhost:9000/api/posts/add", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "applicati   on/json",
       },
       body: JSON.stringify({
         title: title,
@@ -49,32 +49,17 @@ export default function Main() {
     setIsEditing(false);
   };
 
-  const { user, logout, isLoading } = useAuth0();
-  useEffect(() => {
-    // if (isLoading) return;
-    if (!user) {
-      logout({ returnTo: window.location.origin });
-    }
-  }, [isLoading]);
-
-  const handleLogout = () => {
-    logout({
-      returnTo: window.location.origin,
-    });
-  };
 
   return (
-    <div>
-      {/* <TopBar /> */}
+     <div>
+      <TopBar />
       {/* <p>Hello {user}</p> */}
       <div className="Header mt-3 ml-2">
         <h1> {isEditing ? "Create new post" : "Top Posts"}</h1>
         <button className="btn btn-dark" onClick={handleEdit}>
           {isEditing ? "Cancel" : "New Post"}
         </button>
-        <button className="btn btn-dark" onClick={handleLogout}>
-          Logout
-        </button>
+
       </div>
 
       {isEditing && (
@@ -102,7 +87,7 @@ export default function Main() {
           </div>
         </div>
       )}
-      {/* {!isEditing && <Posts />} */}
+      {!isEditing && <Posts />}
     </div>
   );
 }
