@@ -1,8 +1,8 @@
 import TopBar from "../components/TopBar";
 import Posts from "../components/Posts";
 import "../styles/Main.css";
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -54,7 +54,6 @@ export default function Main() {
     setIsEditing(false);
   };
 
-
   useEffect(() => {
     if (!user) {
       logout({ returnTo: window.location.origin });
@@ -89,15 +88,14 @@ export default function Main() {
   }, [getAccessTokenSilently]);
 
   return (
-     <div>
+    <div>
       <TopBar />
-      {/* <p>Hello {user}</p> */}
+      <p>Hello {user?.nickname}</p>
       <div className="Header mt-3 ml-2">
         <h1> {isEditing ? "Create new post" : "Top Posts"}</h1>
         <button className="btn btn-dark" onClick={handleEdit}>
           {isEditing ? "Cancel" : "New Post"}
         </button>
-
       </div>
 
       {isEditing && (
