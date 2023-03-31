@@ -1,8 +1,0 @@
-{
-    "responses": [
-        { "id": 1, "likes": 23, "username": "waka_one", "title": "what to watch", "ans": "Imagine if you walked into a bar and there was a long line of people waiting to take a swing at you. That's the punch line." },
-        { "id": 2, "likes": 32, "username": "niita", "title": "what time is it", "ans": "Not to brag, but I defeated our local chess champion in less than five moves. Finally, my high school karate lessons paid off." },
-        { "id": 3, "likes": 123, "username": "marona", "title": "who is the best professor on camppus", "ans": "Singing in the shower is fun until you get soap in your mouth. Then it's a soap opera." },
-        { "id": 4, "likes": 2233, "username": "jonna", "title": "Is computer science ever fun?", "ans": "successful cs students earn a lot of money" }
-    ]
-}

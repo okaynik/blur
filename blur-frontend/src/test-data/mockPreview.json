@@ -1,0 +1,50 @@
+{
+    "previews": [
+      {
+        "id": 1,
+        "question": "What's the best way to learn a new programming language?",
+        "hot_response": "I think the best way to learn a new programming language is by doing small projects and solving coding challenges. It's also important to read documentation and watch tutorials.",
+        "author": "dev_guru",
+        "likes": 23,
+        "views": 112,
+        "time": "2022-03-29T12:30:00Z"
+      },
+      {
+        "id": 2,
+        "question": "How to deal with imposter syndrome as a programmer?",
+        "hot_response": "Imposter syndrome is very common among programmers. The best way to deal with it is to acknowledge it and remind yourself of your achievements. It's also important to surround yourself with supportive people and ask for help when needed.",
+        "author": "code_ninja",
+        "likes": 42,
+        "views": 256,
+        "time": "2022-03-28T09:45:00Z"
+      },
+      {
+        "id": 3,
+        "question": "What are some good resources to learn React?",
+        "hot_response": "There are many resources available online to learn React, such as the official documentation, tutorials on YouTube, and online courses on platforms like Udemy and Pluralsight.",
+        "author": "react_master",
+        "likes": 87,
+        "views": 512,
+        "time": "2022-03-27T18:15:00Z"
+      },
+      {
+        "id": 4,
+        "question": "What's the difference between front-end and back-end development?",
+        "hot_response": "Front-end development refers to the part of a website or application that users interact with, while back-end development deals with the server-side programming and database management.",
+        "author": "web_developer",
+        "likes": 62,
+        "views": 319,
+        "time": "2022-03-26T14:20:00Z"
+      },
+      {
+        "id": 5,
+        "question": "What are some common data structures used in programming?",
+        "hot_response": "Common data structures used in programming include arrays, linked lists, stacks, queues, trees, and graphs.",
+        "author": "data_structures_guru",
+        "likes": 123,
+        "views": 1024,
+        "time": "2022-03-25T08:00:00Z"
+      }
+    ]
+  }
+  

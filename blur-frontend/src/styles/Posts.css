@@ -1,19 +1,28 @@
-.post{
+.post {
     border: 1px solid #ccc;
     padding: 16px;
     margin: 8px 0px;
     border-radius: 4px;
-}
+  }
+  
+  .post h2 {
 
-.post h2{
+    color: #000;
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 8px;
-}
-
-.post p {
+  }
+  
+  .post p {
     font-size: 16px;
-}
+
+    color: #000;
+  }
+  
+  .post a {
+    color: #000;
+  }
+
 
 /* .Questions-box {
     display: flex;

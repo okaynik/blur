@@ -5,34 +5,37 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { getProtectedResource } from "../../services/message.service";
-import { Post } from "../../models/post";
+// import { getProtectedResource } from "../../services/message.service";
+// import { Post } from "../../models/post";
+import { Post_Preview } from "../../models/post_preview";
+
+import data from "../../test-data/mockPreview.json";
 
 const Posts: React.FC = () => {
-  const [posts, setLikes] = useState<Post[]>([]);
+  const [posts, setLikes] = useState<Post_Preview[]>([]);
   const { getAccessTokenSilently } = useAuth0();
 
   useEffect(() => {
     let isMounted = true;
 
     const getPosts = async () => {
-      const accessToken = await getAccessTokenSilently();
-      const { data, error } = await getProtectedResource(accessToken);
-      data?.forEach((post: Post) => {
-        console.log(post);
-      });
+      // const accessToken = await getAccessTokenSilently();
+      // const { data, error } = await getProtectedResource(accessToken);
+      // data?.forEach((post: Post) => {
+      //   console.log(post);
+      // });
 
       if (!isMounted) {
         return;
       }
 
       if (data) {
-        setLikes(data);
+        setLikes(data.previews);
       }
 
-      if (error) {
-        console.log(error);
-      }
+      // if (error) {
+      //   console.log(error);
+      // }
     };
 
     getPosts();
@@ -61,9 +64,9 @@ const Posts: React.FC = () => {
       {posts.map((post) => (
         <Link to={`/posts/${post.id}`}>
           <div className="post" key={post.id}>
-            <h2>{post.title}</h2>
+            <h2>{post.question}</h2>
             <p>
-              {post.author}: {post.body}
+              {post.author}: {post.hot_response}
             </p>
             <button onClick={() => handleLike(post.id, true)}>
               <FontAwesomeIcon icon={faChevronUp} color="" />
