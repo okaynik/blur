@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
-import "../styles/Posts.css";
+import "../../styles/Posts.css";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-import { getProtectedResource } from "../services/message.service";
-import { Post } from "../models/post";
+import { getProtectedResource } from "../../services/message.service";
+import { Post } from "../../models/post";
 
 const Posts: React.FC = () => {
   const [posts, setLikes] = useState<Post[]>([]);

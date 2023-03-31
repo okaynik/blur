@@ -1,7 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import React, { useEffect, useState, useContext } from "react";
 import "../styles/Auth.css";
-import logo from "../media/blur.svg";
+import logo from "../../media/blur.svg";
 import { useNavigate } from "react-router-dom";
 
 function Auth() {

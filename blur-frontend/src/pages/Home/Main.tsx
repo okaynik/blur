@@ -1,12 +1,10 @@
-import TopBar from "../components/TopBar";
-import Posts from "../components/Posts";
-import "../styles/Main.css";
-import React from "react";
-import ReactDOM from "react-dom";
+import Navbar from "../../components/Navbar";
+import Posts from "./Posts";
+import "../../styles/Main.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { getProtectedResource } from "../services/message.service";
+import { getProtectedResource } from "../../services/message.service";
 
 export interface Post {
   id: number;
@@ -89,7 +87,7 @@ export default function Main() {
 
   return (
     <div>
-      <TopBar />
+      <Navbar />
       <p>Hello {user?.nickname}</p>
       <div className="Header mt-3 ml-2">
         <h1> {isEditing ? "Create new post" : "Top Posts"}</h1>

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import "./styles/App.css";
-import Main from "./pages/Main";
+import Main from "./pages/Home/Main";
 // import Question from "./pages/Question";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { PageLoader } from "./components/PageLoader";

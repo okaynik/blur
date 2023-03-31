@@ -4,7 +4,7 @@ html {
     font-family: 'Roboto', sans-serif;
     -moz-osx-font-smoothing: grayscale;
     -webkit-font-smoothing: antialiased;
-    background-color: slategray!important;
+    background-color: rgb(241, 242, 242)!important;
 }
 
 body::-webkit-scrollbar {

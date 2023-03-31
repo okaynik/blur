@@ -1,0 +1,34 @@
+.background {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    background: white;
+  }
+  
+  .logo {
+    height: 30px;
+  }
+  
+  .fa-search {
+    margin-right: 10px;
+    font-size: 24px; /* increase font size */
+  }
+  
+  input[type="text"] {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    width: 200px; /* decrease width */
+  }
+  
+  .input-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  input[type="text"]:focus {
+    outline: none;
+  }
+  
