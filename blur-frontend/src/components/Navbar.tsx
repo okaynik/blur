@@ -39,10 +39,10 @@ export default function Navbar(props: NavbarProps) {
             <input type="text" placeholder="Search.." />
           </div>
           <div className="btn-container">
-            <button className="btn btn-dark" onClick={props.handleEdit}>
+            <button className="btn-dark" onClick={props.handleEdit}>
               {props.isEditing ? "Cancel" : "New Post"}
             </button>
-            <button className="btn btn-dark" onClick={handleLogout}>
+            <button className="btn-dark" onClick={handleLogout}>
               Logout
             </button>
           </div>

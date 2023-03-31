@@ -62,21 +62,21 @@ const Posts: React.FC = () => {
   return (
     <div>
       {posts.map((post) => (
-        <Link to={`/posts/${post.id}`}>
-          <div className="post" key={post.id}>
-            <h2>{post.question}</h2>
-            <p>
-              {post.author}: {post.hot_response}
-            </p>
-            <button onClick={() => handleLike(post.id, true)}>
-              <FontAwesomeIcon icon={faChevronUp} color="" />
-              {post.likes}
-            </button>
-            <button onClick={() => handleLike(post.id, false)}>
-              <FontAwesomeIcon icon={faChevronDown} color="blue" />
-            </button>
-          </div>
-        </Link>
+        <div className="post"  key={post.id}>
+          <Link to={`/posts/${post.id}`}>
+              <h2>{post.question}</h2>
+              <p>
+                {post.author}: {post.hot_response}
+              </p>
+          </Link>
+          <button className="upvote" onClick={() => handleLike(post.id, true)}>
+        <FontAwesomeIcon icon={faChevronUp} color="" />
+          {post.likes}
+        </button>
+        <button className="downvote" onClick={() => handleLike(post.id, false)}>
+          <FontAwesomeIcon icon={faChevronDown} color="" />
+        </button>
+    </div>
       ))}
     </div>
   );

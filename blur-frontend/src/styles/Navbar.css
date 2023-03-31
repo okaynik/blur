@@ -16,7 +16,7 @@
   }
   
   .input-container {
-    margin-left: 10px;
+    margin-left: 10%;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,7 +26,6 @@
   input[type="text"] {
     border: none;
     border-radius: 5px;
-    width: 300px;
   }
   
   input[type="text"]:focus {
@@ -38,15 +37,21 @@
     align-items: center;
     justify-content: flex-end;
     gap: 20px;
+
   }
   
-  .btn {
-    border: none;
-    border-radius: 5px;
-  }
   
   .btn-dark {
-    background-color: #343a40;
+    background-color: #3a5a82;
     color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  .btn-dark:hover {
+    opacity: 0.8;
   }
   

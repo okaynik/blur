@@ -1,13 +1,14 @@
 .post {
     border: 1px solid #ccc;
     padding: 16px;
-    margin: 8px 0px;
+    margin: 1.5% 10%;
     border-radius: 4px;
+    background: white;
   }
   
   .post h2 {
 
-    color: #000;
+    color: #36393e;
     font-size: 18px;
     font-weight: bold;
     margin-bottom: 8px;
@@ -15,13 +16,33 @@
   
   .post p {
     font-size: 16px;
-
-    color: #000;
+    color: #36393e;
   }
   
   .post a {
     color: #000;
   }
+
+  .post a:link,
+  .post a:visited {
+    text-decoration: none;
+  }
+
+  .upvote, .downvote {
+    background-color: #5D7DA3;
+    border-radius: 20%;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    margin-right: 5px;
+    cursor: pointer;
+  }
+  
+  .upvote:hover, .downvote:hover {
+    opacity: 0.9;
+  }
+  
+  
 
 
 /* .Questions-box {
