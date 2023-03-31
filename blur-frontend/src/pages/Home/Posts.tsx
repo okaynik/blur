@@ -9,6 +9,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 // import { Post } from "../../models/post";
 import { Post_Preview } from "../../models/post_preview";
 
+
 import data from "../../test-data/mockPreview.json";
 
 const Posts: React.FC = () => {
@@ -66,14 +67,19 @@ const Posts: React.FC = () => {
           <Link to={`/posts/${post.id}`}>
               <h2>{post.question}</h2>
               <p>
-                {post.author}: {post.hot_response}
+                <span className="author">{post.author}:</span>{" "}
+                {post.hot_response.length > 280
+                  ? post.hot_response.slice(0, 280) + "..."
+                  : post.hot_response}
               </p>
           </Link>
-          <button className="upvote" onClick={() => handleLike(post.id, true)}>
+          <button className="upvote" 
+                  onClick={() => handleLike(post.id, true)}>
         <FontAwesomeIcon icon={faChevronUp} color="" />
           {post.likes}
         </button>
-        <button className="downvote" onClick={() => handleLike(post.id, false)}>
+        <button className="downvote" 
+                onClick={() => handleLike(post.id, false)}>
           <FontAwesomeIcon icon={faChevronDown} color="" />
         </button>
     </div>

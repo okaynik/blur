@@ -1,22 +1,28 @@
 .post {
     border: 1px solid #ccc;
     padding: 16px;
-    margin: 1.5% 10%;
+    margin: 1.5% 15%;
     border-radius: 4px;
     background: white;
   }
+
   
   .post h2 {
-
     color: #36393e;
-    font-size: 18px;
+    font-size: 15px;
     font-weight: bold;
     margin-bottom: 8px;
   }
   
   .post p {
-    font-size: 16px;
-    color: #36393e;
+    font-size: 14px;
+    line-height: 1.4;
+    color: #333;
+    margin-bottom: 10px;
+  }
+
+  .post p span.author {
+    font-weight: 600;
   }
   
   .post a {
@@ -41,7 +47,6 @@
   .upvote:hover, .downvote:hover {
     opacity: 0.9;
   }
-  
   
 
 
