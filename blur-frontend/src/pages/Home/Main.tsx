@@ -87,14 +87,8 @@ export default function Main() {
 
   return (
     <div>
-      <Navbar />
+      <Navbar isEditing={isEditing} handleEdit={handleEdit} />
       <p>Hello {user?.nickname}</p>
-      <div className="Header mt-3 ml-2">
-        <h1> {isEditing ? "Create new post" : "Top Posts"}</h1>
-        <button className="btn btn-dark" onClick={handleEdit}>
-          {isEditing ? "Cancel" : "New Post"}
-        </button>
-      </div>
 
       {isEditing && (
         <div className="Create-box">

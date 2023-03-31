@@ -6,10 +6,13 @@ import { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
+export interface NavbarProps {
+  isEditing: boolean;
+  handleEdit: () => void;
+}
 
 
-
-export default function Navbar() {
+export default function Navbar(props: NavbarProps) {
 
     //logout
     const { user, logout, isLoading } = useAuth0();
@@ -28,17 +31,22 @@ export default function Navbar() {
       };
 
     
-    return (
-      <div className="background">
-        <img className="logo" src={logo} alt="Logo" />
-        <div className="input-container">
-          <FontAwesomeIcon icon={faSearch} className="fa-search" />
-          <input type="text" placeholder="Search.." />
+      return (
+        <div className="background">
+          <img className="logo" src={logo} alt="Logo" />
+          <div className="input-container">
+            <FontAwesomeIcon icon={faSearch} className="fa-search" />
+            <input type="text" placeholder="Search.." />
+          </div>
+          <div className="btn-container">
+            <button className="btn btn-dark" onClick={props.handleEdit}>
+              {props.isEditing ? "Cancel" : "New Post"}
+            </button>
+            <button className="btn btn-dark" onClick={handleLogout}>
+              Logout
+            </button>
+          </div>
         </div>
-        <button className="btn btn-dark" onClick={handleLogout}>
-          Logout
-        </button>
-      </div>
-
-    )
+      );
+      
 }
