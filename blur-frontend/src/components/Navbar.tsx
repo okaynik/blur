@@ -37,11 +37,16 @@ export default function Navbar(props: NavbarProps) {
         <div className="background">
           <img className="logo" src={logo} alt="Logo" />
           <div className="input-container">
-            <FontAwesomeIcon icon={faSearch} className="fa-search" />
+            <FontAwesomeIcon 
+              icon={faSearch} 
+              className="fa-search"
+              // onChange = {}
+              />
             <input type="text" placeholder="Search.." />
           </div>
           <div className="btn-container">
-            <button className="btn-dark" onClick={props.handleEdit}>
+            <button className="btn-dark"
+                    onClick={props.handleEdit}>
               {props.isEditing ? "Cancel" : "Ask"}
             </button>
             <button className="btn-dark" onClick={handleLogout}>

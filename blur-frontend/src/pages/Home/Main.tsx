@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect, useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { getProtectedResource } from "../../services/message.service";
+import Layout from "../Layout";
 
 export interface Post {
   id: number;
@@ -86,24 +87,23 @@ export default function Main() {
   }, [getAccessTokenSilently]);
 
   return (
-    <div>
-      <Navbar isEditing={isEditing} handleEdit={handleEdit} />
+    <Layout isEditing={isEditing} handleEdit={handleEdit}>
       <p>Hello {user?.nickname}</p>
 
       {isEditing && (
         <div className="Create-box">
           <div className="Create form-group mt-3">
-            <label>Title</label>
+            <label>Your Question</label>
             <input
               type="username"
               className="form-control mt-1"
-              placeholder="Enter title"
+              placeholder="Enter question"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
             />
             <textarea
               className="form-control mt-1"
-              placeholder="Enter your post here"
+              placeholder="Enter description of your question"
               value={body}
               onChange={(e) => setBody(e.target.value)}
             />
@@ -116,6 +116,7 @@ export default function Main() {
         </div>
       )}
       {!isEditing && <Posts />}
-    </div>
+    </Layout>
+
   );
 }

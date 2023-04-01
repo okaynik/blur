@@ -6,6 +6,7 @@ import Main from "./pages/Home/Main";
 import { ProtectedRoute } from "./components/ProtectedRoute";
 import { PageLoader } from "./components/PageLoader";
 import { useAuth0 } from "@auth0/auth0-react";
+import UserPage from "./pages/User/UserPage";
 
 function App() {
   const { isLoading, isAuthenticated, loginWithRedirect, buildAuthorizeUrl } =
@@ -52,6 +53,7 @@ function App() {
     <Routes>
       <Route path="/main" element={<ProtectedRoute component={Main} />} />
       <Route path="/" element={<Navigate to={"/main"} />} />
+      <Route path="/fakeuserid" element={<UserPage username='fakeuser'/>} />
       {/* <Route path="/" element={<Auth />} /> */}
       {/* <Route path="/main/question/:id" element={<Question />} /> */}
     </Routes>
