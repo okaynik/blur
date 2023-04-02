@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useState} from "react";
 import Layout from "../Layout";
+import "../../styles/NewPost.css";
+import { Link } from "react-router-dom";
 
 export default function NewPost(){
 
@@ -48,6 +50,9 @@ export default function NewPost(){
                 />
               </div>
               <div className="ButtonGroup">
+                <Link className="btn btn-dark" to={'/main'}>
+                  Cancel
+                </Link>
                 <button className="btn btn-dark" onClick={submitPost}>
                   Submit
                 </button>

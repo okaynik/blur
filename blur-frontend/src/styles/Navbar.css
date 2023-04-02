@@ -47,11 +47,15 @@
     cursor: pointer;
     transition: opacity 0.3s ease-in-out;
     font-size: 15px;
+    text-decoration: none;
+
   }
 
   .btn-dark:hover {
     opacity: 0.8;
+    color: white;
   }
+
 
   
   .user img {
