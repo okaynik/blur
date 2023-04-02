@@ -1,6 +1,7 @@
 import { AxiosRequestConfig } from "axios";
 import { ApiResponse } from "../models/api-response";
 import { Post } from "../models/post";
+import { Response } from "../models/response";
 import { callExternalApi } from "./external-api.service";
 
 const apiServerUrl = process.env.REACT_APP_API_SERVER_URL;
@@ -28,7 +29,7 @@ export const getTopPosts = async (
 export const getPost = async (
   accessToken: string,
   id: string
-): Promise<ApiResponse> => {
+): Promise<ApiResponse<Post>> => {
   const config: AxiosRequestConfig = {
     url: `${apiServerUrl}/api/posts/getone/${id}`,
     method: "GET",
@@ -38,7 +39,9 @@ export const getPost = async (
     },
   };
 
-  const { data, error } = (await callExternalApi({ config })) as ApiResponse;
+  const { data, error } = (await callExternalApi({
+    config,
+  })) as ApiResponse<Post>;
 
   return {
     data,
@@ -70,6 +73,29 @@ export const createPost = async (
 
   return {
     data,
+    error,
+  };
+};
+
+export const getResponses = async (
+  accessToken: string,
+  id: string
+): Promise<ApiResponse<Response[]>> => {
+  const config: AxiosRequestConfig = {
+    url: `${apiServerUrl}/api/responses/getall/${id}`,
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  const { data, error } = (await callExternalApi({ config })) as ApiResponse<
+    Response[]
+  >;
+
+  return {
+    data: data as Response[],
     error,
   };
 };
