@@ -38,9 +38,12 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/main" element={<ProtectedRoute component={Main} />} />
+      <Route
+        path="/main/:query?"
+        element={<ProtectedRoute component={Main} />}
+      />
       <Route path="/" element={<Navigate to={"/main"} />} />
-      <Route path="/fakeuserid" element={<UserPage />} />
+      <Route path="/user" element={<UserPage />} />
       <Route path="/newpost" element={<NewPost />} />
       <Route path="/posts/:id" element={<PostView />} />
     </Routes>

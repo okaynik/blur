@@ -56,7 +56,7 @@ async function topViews(): Promise<Post[]> {
     });
 }
 
-//get one response
+//get one post by id
 async function getOne(id: string): Promise<Post | null> {
   return Post.sync({ force: false })
     .then(() => Post.findAll())
@@ -82,9 +82,24 @@ async function add(title: string, body: string, author: string): Promise<void> {
   });
 }
 
+async function search(query: string): Promise<Post[]> {
+  return Post.sync({ force: false })
+    .then(() => Post.findAll())
+    .then((posts: Post[]) => {
+      const results: Post[] = [];
+      for (const post of posts) {
+        if (post.title.toLowerCase().includes(query.toLowerCase())) {
+          results.push(post);
+        }
+      }
+      return results;
+    });
+}
+
 export default {
   getAll,
   topViews,
   getOne,
   add,
+  search,
 } as const;

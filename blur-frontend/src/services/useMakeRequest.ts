@@ -9,8 +9,10 @@ export const useMakeRequest = <T>(
   const [value, setValue] = useState<T | null>(null);
   const { getAccessTokenSilently } = useAuth0();
 
+  console.log("call on useMakeRequest");
   useEffect(() => {
     let isMounted = true;
+    console.log("useEffect in useMakeRequest");
     const getPosts = async () => {
       const accessToken = await getAccessTokenSilently();
       const { data, error } = await request(accessToken, ...args);
@@ -32,7 +34,7 @@ export const useMakeRequest = <T>(
     return () => {
       isMounted = false;
     };
-  }, [getAccessTokenSilently]);
+  }, [getAccessTokenSilently, request, ...args]);
 
   return value;
 };

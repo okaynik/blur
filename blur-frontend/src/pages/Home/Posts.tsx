@@ -1,18 +1,27 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "../../styles/Posts.css";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { useAuth0 } from "@auth0/auth0-react";
-import { getTopPosts } from "../../services/posts.service";
+import { getTopPosts, searchPosts } from "../../services/posts.service";
 import { useMakeRequest } from "../../services/useMakeRequest";
 import { Post } from "../../models/post";
 import { Post_Preview } from "../../models/post_preview";
 
-const Posts: React.FC = () => {
+interface Props {
+  query: string | undefined;
+}
+
+const Posts: React.FC<Props> = ({ query }: Props) => {
   const [posts, setLikes] = useState<Post_Preview[]>([]);
-  const value = useMakeRequest<Post[]>(getTopPosts);
+
+  const value = query
+    ? useMakeRequest<Post[]>(searchPosts, query)
+    : useMakeRequest<Post[]>(getTopPosts);
+
+  console.log(query, "query in posts");
+  console.log(value, "value in posts");
 
   const handleLike = (id: number, like: boolean) => {
     const updatedPosts = posts.map((post) => {

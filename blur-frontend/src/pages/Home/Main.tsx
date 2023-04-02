@@ -1,11 +1,10 @@
-// import Navbar from "../../components/Navbar";
 import Posts from "./Posts";
 import "../../styles/Main.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { getProtectedResource } from "../../services/message.service";
 import Layout from "../Layout";
+import { useParams } from "react-router-dom";
 
 export interface Post {
   id: number;
@@ -28,6 +27,7 @@ export interface Response {
 
 export default function Main() {
   const { user, logout, isLoading } = useAuth0();
+  const { query } = useParams();
 
   useEffect(() => {
     if (!user) {
@@ -37,7 +37,7 @@ export default function Main() {
 
   return (
     <Layout>
-      <Posts />
+      <Posts query={query} />
     </Layout>
   );
 }

@@ -28,3 +28,9 @@ postsRouter.post("/add", validateAccessToken, async (req, res) => {
 
   res.status(201).end();
 });
+
+postsRouter.get("/search/:query", validateAccessToken, async (req, res) => {
+  const query = req.params.query;
+  const posts = await postService.search(query);
+  res.status(200).json(posts);
+});

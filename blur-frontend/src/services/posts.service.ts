@@ -18,10 +18,37 @@ export const getTopPosts = async (
     },
   };
 
-  const { data, error } = (await callExternalApi({ config })) as ApiResponse;
+  console.log("call on getTopPosts");
+  const { data, error } = (await callExternalApi({ config })) as ApiResponse<
+    Post[]
+  >;
 
   return {
-    data: data as Post[],
+    data,
+    error,
+  };
+};
+
+export const searchPosts = async (
+  accessToken: string,
+  query: string
+): Promise<ApiResponse<Post[]>> => {
+  const config: AxiosRequestConfig = {
+    url: `${apiServerUrl}/api/posts/search/${query}`,
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  console.log("call on searchPosts");
+  const { data, error } = (await callExternalApi({ config })) as ApiResponse<
+    Post[]
+  >;
+
+  return {
+    data,
     error,
   };
 };
@@ -95,7 +122,7 @@ export const getResponses = async (
   >;
 
   return {
-    data: data as Response[],
+    data,
     error,
   };
 };
