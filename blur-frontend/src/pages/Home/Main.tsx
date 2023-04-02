@@ -27,11 +27,7 @@ export interface Response {
 }
 
 export default function Main() {
-  const [isEditing, setIsEditing] = useState(false);
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
-
-  const { user, logout, isLoading, getAccessTokenSilently } = useAuth0();
+  const { user, logout, isLoading } = useAuth0();
 
   useEffect(() => {
     if (!user) {
