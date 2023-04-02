@@ -27,7 +27,7 @@ export default function UserPage(props: UserPageProps) {
 //   ];
 
   return (
-        <Layout isEditing={false} handleEdit={() => {}}>
+        <Layout >
             <div className="user-page">
                 <div className="back-btn">
                     <Link to="/main">

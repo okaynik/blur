@@ -8,13 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch} from "@fortawesome/free-solid-svg-icons";
 import mockUserImg from "../test-data/mockUserImg.jpg";
 
-export interface NavbarProps {
-  isEditing: boolean;
-  handleEdit: () => void;
-}
-
-
-export default function Navbar(props: NavbarProps) {
+export default function Navbar() {
 
     //logout
     const { user, logout, isLoading } = useAuth0();
@@ -45,10 +39,9 @@ export default function Navbar(props: NavbarProps) {
             <input type="text" placeholder="Search.." />
           </div>
           <div className="btn-container">
-            <button className="btn-dark"
-                    onClick={props.handleEdit}>
-              {props.isEditing ? "Cancel" : "Ask"}
-            </button>
+            <Link className="btn-dark"to={'/newpost'} >
+              Ask
+            </Link>
             <button className="btn-dark" onClick={handleLogout}>
               Logout
             </button>

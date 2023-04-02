@@ -1,4 +1,4 @@
-import Navbar from "../../components/Navbar";
+// import Navbar from "../../components/Navbar";
 import Posts from "./Posts";
 import "../../styles/Main.css";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -34,25 +34,6 @@ export default function Main() {
 
   const { user, logout, isLoading, getAccessTokenSilently } = useAuth0();
 
-  const handleEdit = () => {
-    setIsEditing(!isEditing);
-  };
-
-  const submitPost = () => {
-    fetch("http://localhost:9000/api/posts/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "applicati   on/json",
-      },
-      body: JSON.stringify({
-        title: title,
-        body: body,
-        author: "spicyshrimp",
-      }),
-    });
-    setIsEditing(false);
-  };
-
   useEffect(() => {
     if (!user) {
       logout({ returnTo: window.location.origin });
@@ -87,35 +68,8 @@ export default function Main() {
   }, [getAccessTokenSilently]);
 
   return (
-    <Layout isEditing={isEditing} handleEdit={handleEdit}>
-      <p>Hello {user?.nickname}</p>
-
-      {isEditing && (
-        <div className="Create-box">
-          <div className="Create form-group mt-3">
-            <label>Your Question</label>
-            <input
-              type="username"
-              className="form-control mt-1"
-              placeholder="Enter question"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-            <textarea
-              className="form-control mt-1"
-              placeholder="Enter description of your question"
-              value={body}
-              onChange={(e) => setBody(e.target.value)}
-            />
-          </div>
-          <div className="ButtonGroup">
-            <button className="btn btn-dark" onClick={submitPost}>
-              Submit
-            </button>
-          </div>
-        </div>
-      )}
-      {!isEditing && <Posts />}
+    <Layout>
+      <Posts />
     </Layout>
 
   );

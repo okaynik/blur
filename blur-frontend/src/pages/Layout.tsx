@@ -1,17 +1,17 @@
+import React, { ReactNode } from 'react';
 import Navbar from "../components/Navbar";
 
 interface LayoutProps {
-  isEditing: boolean;
-  handleEdit: () => void;
+  children: ReactNode;
 }
 
-export default function Layout(props: React.PropsWithChildren<LayoutProps>) {
+const Layout = ({ children }: LayoutProps) => {
   return (
-    <>
-      <Navbar 
-        isEditing={props.isEditing} 
-        handleEdit={props.handleEdit} />
-      <div>{props.children}</div>
-    </>
+    <div>
+      <Navbar />
+      {children}
+    </div>
   );
-}
+};
+
+export default Layout;
