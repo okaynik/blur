@@ -23,10 +23,8 @@ postsRouter.post("/add", validateAccessToken, async (req, res) => {
   const title = req.body.title;
   const body = req.body.body;
   const author = req.body.author;
-  console.log(title, body, author);
-  //   await postService.add(title, body, author);
-
-  res.status(201).end();
+  const id = await postService.add(title, body, author);
+  res.status(201).json({ id: id });
 });
 
 postsRouter.get("/search/:query", validateAccessToken, async (req, res) => {

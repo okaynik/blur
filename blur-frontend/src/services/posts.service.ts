@@ -1,5 +1,5 @@
 import { AxiosRequestConfig } from "axios";
-import { ApiResponse } from "../models/api-response";
+import { ApiResponse, PostId } from "../models/api-response";
 import { Post } from "../models/post";
 import { Response } from "../models/response";
 import { callExternalApi } from "./external-api.service";
@@ -81,7 +81,7 @@ export const createPost = async (
   title: string,
   body: string,
   author: string
-): Promise<ApiResponse> => {
+): Promise<ApiResponse<number>> => {
   const config: AxiosRequestConfig = {
     url: `${apiServerUrl}/api/posts/add`,
     method: "POST",
@@ -96,10 +96,12 @@ export const createPost = async (
     },
   };
 
-  const { data, error } = (await callExternalApi({ config })) as ApiResponse;
+  const { data, error } = (await callExternalApi({
+    config,
+  })) as ApiResponse<PostId>;
 
   return {
-    data,
+    data: data ? data.id : null,
     error,
   };
 };

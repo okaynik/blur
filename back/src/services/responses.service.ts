@@ -1,14 +1,14 @@
 import { Response } from "../models/response.model";
+import * as dotenv from "dotenv";
 
+dotenv.config();
+const COCKROACHDB = process.env.COCKROACHDB;
 const Sequelize = require("sequelize-cockroachdb");
-const sequelize = new Sequelize(
-  "postgresql://waka:WuiwJDk2iDozLmQBmvLhPQ@free-tier14.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&options=--cluster%3Dblur-edu-6053",
-  {
-    dialectOptions: {
-      application_name: "blur",
-    },
-  }
-);
+const sequelize = new Sequelize(COCKROACHDB, {
+  dialectOptions: {
+    application_name: "blur",
+  },
+});
 
 const Response = sequelize.define("response", {
   body: {
@@ -36,13 +36,10 @@ async function getAll(id: string): Promise<Response[]> {
     .then((responses: Response[]) => {
       let collect_posts: Response[] = [];
       for (const res of responses) {
-        console.log(res.createdAt);
         if (res.postId === id) {
           collect_posts.push(res);
         }
       }
-      // console.log("collect_posts");
-      // console.log(collect_posts.length);
 
       collect_posts.sort(function (a, b) {
         return a.likes === b.likes

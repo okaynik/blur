@@ -1,14 +1,14 @@
 import { Post } from "../models/post.model";
+import * as dotenv from "dotenv";
 
+dotenv.config();
+const COCKROACHDB = process.env.COCKROACHDB;
 const Sequelize = require("sequelize-cockroachdb");
-const sequelize = new Sequelize(
-  "postgresql://waka:WuiwJDk2iDozLmQBmvLhPQ@free-tier14.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full&options=--cluster%3Dblur-edu-6053",
-  {
-    dialectOptions: {
-      application_name: "blur",
-    },
-  }
-);
+const sequelize = new Sequelize(COCKROACHDB, {
+  dialectOptions: {
+    application_name: "blur",
+  },
+});
 
 const Post = sequelize.define("post", {
   title: {
@@ -74,11 +74,20 @@ async function getOne(id: string): Promise<Post | null> {
     });
 }
 
-async function add(title: string, body: string, author: string): Promise<void> {
+async function add(
+  title: string,
+  body: string,
+  author: string
+): Promise<number> {
   return Post.sync({ force: false }).then(() => {
-    console.log(title, author, body);
-    Post.create({ body: body, title: title, author: author });
-    console.log("Post Added");
+    return Post.create({ body: body, title: title, author: author })
+      .then((post: Post) => {
+        return post.id;
+      })
+      .catch((err: any) => {
+        console.log(err);
+        return null;
+      });
   });
 }
 
