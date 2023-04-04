@@ -11,11 +11,10 @@ responsesRouter.get("/getall/:id", validateAccessToken, async (req, res) => {
 });
 
 responsesRouter.post("/add", validateAccessToken, async (req, res) => {
-  const author = req.body.author;
   const postId = req.body.postId;
+  const author = req.body.author;
   const body = req.body.body;
-  console.log(author, postId, body);
-  //   await postService.add(title, body, author);
+  await responseService.add(postId, author, body);
 
   res.status(201).end();
 });

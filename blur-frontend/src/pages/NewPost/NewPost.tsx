@@ -8,8 +8,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 export default function NewPost() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const { user } = useAuth0();
-  const { getAccessTokenSilently } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
   const navigate = useNavigate();
 
   const submitPost = async () => {

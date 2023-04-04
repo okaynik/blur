@@ -128,3 +128,33 @@ export const getResponses = async (
     error,
   };
 };
+
+export const createResponse = async (
+  accessToken: string,
+  postId: string,
+  author: string,
+  body: string
+): Promise<ApiResponse> => {
+  const config: AxiosRequestConfig = {
+    url: `${apiServerUrl}/api/responses/add`,
+    method: "POST",
+    data: {
+      postId,
+      author,
+      body,
+    },
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  const { data, error } = (await callExternalApi({
+    config,
+  })) as ApiResponse;
+
+  return {
+    data,
+    error,
+  };
+};

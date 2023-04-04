@@ -56,16 +56,22 @@ async function getAll(id: string): Promise<Response[]> {
 }
 
 async function add(
-  author: string,
   postId: string,
+  author: string,
   body: string
 ): Promise<void> {
   return Response.sync({ force: false }).then(() => {
-    console.log(author, postId, body);
-    Response.create({ body: body, postId: postId, author: author });
-    console.log("completed");
+    return Response.create({ body: body, postId: postId, author: author })
+      .then((response: Response) => {
+        console.log(response);
+      })
+      .catch((err: any) => {
+        console.log(err);
+        return null;
+      });
   });
 }
+
 export default {
   getAll,
   add,
