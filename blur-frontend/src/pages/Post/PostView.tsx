@@ -14,6 +14,7 @@ import "../../styles/PostView.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "@auth0/auth0-react";
+import { PageLoader } from "../../components/PageLoader";
 
 export default function PostView() {
   const { id } = useParams();
@@ -67,6 +68,10 @@ export default function PostView() {
       setResponses(data);
     }
   };
+
+  if (!post || !responses) {
+    return <PageLoader />;
+  }
 
   return (
     <Layout>

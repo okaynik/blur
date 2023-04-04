@@ -8,6 +8,7 @@ import { getTopPosts, searchPosts } from "../../services/posts.service";
 import { useMakeRequest } from "../../services/useMakeRequest";
 import { Post } from "../../models/post";
 import { Post_Preview } from "../../models/post_preview";
+import { PageLoader } from "../../components/PageLoader";
 
 interface Props {
   query: string | undefined;
@@ -19,9 +20,6 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
   const value = query
     ? useMakeRequest<Post[]>(searchPosts, query)
     : useMakeRequest<Post[]>(getTopPosts);
-
-  console.log(query, "query in posts");
-  console.log(value, "value in posts");
 
   const handleLike = (id: number, like: boolean) => {
     const updatedPosts = posts.map((post) => {
@@ -36,6 +34,10 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
     });
     setLikes(updatedPosts);
   };
+
+  if (!value) {
+    return <PageLoader />;
+  }
 
   return (
     <div>
