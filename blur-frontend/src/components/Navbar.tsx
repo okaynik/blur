@@ -47,7 +47,7 @@ export default function Navbar() {
         <FontAwesomeIcon icon={faSearch} className="fa-search" />
         <input
           type="text"
-          placeholder="Search.."
+          placeholder="Search..."
           onChange={handleChange}
           onKeyDown={(e) => {
             if (e.key === "Enter") {

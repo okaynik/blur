@@ -4,40 +4,43 @@
     padding: 15px;
     background: white;
   }
-  
+
   .logo {
     height: 30px;
   }
-  
+
   .fa-search {
     margin-right: 10px;
     font-size: 24px;
   }
-  
+
   .input-container {
-    margin-left: 40px;
+    width: 40%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding-left: 10px;
   }
-  
+
   input[type="text"] {
     border: none;
-    border-radius: 5px;
+    width: 100%;
   }
-  
+
   input[type="text"]:focus {
     outline: none;
   }
-  
+
   .btn-container {
     /* border: 1px solid #3a5a82; */
     display: flex;
     justify-content: space-evenly;
     gap: 20px;
   }
-  
-  
+
+
   .btn-dark {
     background-color: #3a5a82;
     color: white;
@@ -57,11 +60,10 @@
   }
 
 
-  
+
   .user img {
     border: 2px solid #3a5a82;
     height: 40px;
     object-fit: cover;
     border-radius: 50%;
   }
-  

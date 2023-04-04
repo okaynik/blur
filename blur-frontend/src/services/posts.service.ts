@@ -18,7 +18,6 @@ export const getTopPosts = async (
     },
   };
 
-  console.log("call on getTopPosts");
   const { data, error } = (await callExternalApi({ config })) as ApiResponse<
     Post[]
   >;
@@ -42,7 +41,6 @@ export const searchPosts = async (
     },
   };
 
-  console.log("call on searchPosts");
   const { data, error } = (await callExternalApi({ config })) as ApiResponse<
     Post[]
   >;
