@@ -156,3 +156,33 @@ export const createResponse = async (
     error,
   };
 };
+
+export const likePost = async (
+  accessToken: string,
+  postId: string,
+  nickname: string,
+  vote: "up" | "down"
+): Promise<ApiResponse> => {
+  const config: AxiosRequestConfig = {
+    url: `${apiServerUrl}/api/likes/add`,
+    method: "POST",
+    data: {
+      postId,
+      nickname,
+      vote,
+    },
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  const { data, error } = (await callExternalApi({
+    config,
+  })) as ApiResponse;
+
+  return {
+    data,
+    error,
+  };
+};

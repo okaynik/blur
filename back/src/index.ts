@@ -7,6 +7,7 @@ import { postsRouter } from "./routers/post.router";
 import { responsesRouter } from "./routers/response.router";
 import { errorHandler } from "./middleware/error.middleware";
 import { notFoundHandler } from "./middleware/not-found.middleware";
+import { likesRouter } from "./routers/likes.router";
 
 dotenv.config();
 
@@ -72,6 +73,7 @@ app.use(
 app.use("/api", apiRouter);
 apiRouter.use("/posts", postsRouter);
 apiRouter.use("/responses", responsesRouter);
+apiRouter.use("/likes", likesRouter);
 
 app.use(errorHandler);
 app.use(notFoundHandler);

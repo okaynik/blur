@@ -4,11 +4,16 @@ import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
-import { getTopPosts, searchPosts } from "../../services/posts.service";
+import {
+  getTopPosts,
+  searchPosts,
+  likePost,
+} from "../../services/posts.service";
 import { useMakeRequest } from "../../services/useMakeRequest";
 import { Post } from "../../models/post";
 import { Post_Preview } from "../../models/post_preview";
 import { PageLoader } from "../../components/PageLoader";
+import { useAuth0 } from "@auth0/auth0-react";
 
 interface Props {
   query: string | undefined;
@@ -16,23 +21,19 @@ interface Props {
 
 const Posts: React.FC<Props> = ({ query }: Props) => {
   const [posts, setLikes] = useState<Post_Preview[]>([]);
+  const { user, getAccessTokenSilently } = useAuth0();
 
   const value = query
     ? useMakeRequest<Post[]>(searchPosts, query)
     : useMakeRequest<Post[]>(getTopPosts);
 
-  const handleLike = (id: number, like: boolean) => {
-    const updatedPosts = posts.map((post) => {
-      if (post.id === id) {
-        if (like) {
-          return { ...post, likes: post.likes + 1 };
-        } else {
-          return { ...post, likes: post.likes - 1 };
-        }
-      }
-      return post;
-    });
-    setLikes(updatedPosts);
+  const handleLike = async (id: number, vote: "up" | "down") => {
+    if (!user?.nickname) {
+      alert("Please log in to upvote a post");
+      return;
+    }
+    const accessToken = await getAccessTokenSilently();
+    await likePost(accessToken, id.toString(), user.nickname, vote);
   };
 
   if (!value) {
@@ -56,13 +57,13 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
                 : post.body}
             </p>
           </Link>
-          <button className="upvote" onClick={() => handleLike(post.id, true)}>
+          <button className="upvote" onClick={() => handleLike(post.id, "up")}>
             <FontAwesomeIcon icon={faChevronUp} color="" />
             {post.likes}
           </button>
           <button
             className="downvote"
-            onClick={() => handleLike(post.id, false)}
+            onClick={() => handleLike(post.id, "down")}
           >
             <FontAwesomeIcon icon={faChevronDown} color="" />
           </button>

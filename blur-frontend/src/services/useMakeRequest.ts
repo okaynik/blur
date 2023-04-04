@@ -10,7 +10,6 @@ export const useMakeRequest = <T>(
   const { getAccessTokenSilently } = useAuth0();
   useEffect(() => {
     let isMounted = true;
-    // console.log("useEffect in useMakeRequest");
     const makeRequest = async () => {
       const accessToken = await getAccessTokenSilently();
       const { data, error } = await request(accessToken, ...args);
