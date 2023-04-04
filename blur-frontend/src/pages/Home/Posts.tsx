@@ -39,6 +39,10 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
     return <PageLoader />;
   }
 
+  if (value.length === 0) {
+    return <div>No posts found</div>;
+  }
+
   return (
     <div>
       {value?.map((post) => (
