@@ -32,25 +32,19 @@ const Response = sequelize.define("response", {
 
 async function getAll(id: string): Promise<Response[]> {
   return Response.sync({ force: false })
-    .then(() => Response.findAll())
+    .then(() =>
+      Response.findAll({
+        where: {
+          postId: id,
+        },
+        order: [["likes", "DESC"]],
+      })
+    )
     .then((responses: Response[]) => {
-      let collect_posts: Response[] = [];
-      for (const res of responses) {
-        if (res.postId === id) {
-          collect_posts.push(res);
-        }
-      }
-
-      collect_posts.sort(function (a, b) {
-        return a.likes === b.likes
-          ? b.createdAt < a.createdAt
-            ? -1
-            : 0
-          : b.likes - a.likes;
-      });
-      return collect_posts;
+      return responses;
     })
     .catch((err: any) => {
+      console.log(err);
       return null;
     });
 }

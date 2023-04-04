@@ -4,6 +4,7 @@ import * as dotenv from "dotenv";
 dotenv.config();
 const COCKROACHDB = process.env.COCKROACHDB;
 const Sequelize = require("sequelize-cockroachdb");
+const { Op } = require("sequelize");
 const sequelize = new Sequelize(COCKROACHDB, {
   dialectOptions: {
     application_name: "blur",
@@ -39,37 +40,37 @@ async function getAll(): Promise<Post[]> {
   return Post.sync({ force: false })
     .then(() => Post.findAll())
     .then((posts: Post[]) => {
-      console.log(posts);
       return posts;
     });
 }
 
 async function topViews(): Promise<Post[]> {
   return Post.sync({ force: false })
-    .then(() => Post.findAll())
+    .then(() =>
+      Post.findAll({
+        order: [["views", "DESC"]],
+        limit: 10,
+      })
+    )
     .then((posts: Post[]) => {
-      posts.sort(function (a, b) {
-        return b.views - a.views;
-      });
-      console.log(posts);
       return posts;
     });
 }
 
-//get one post by id
 async function getOne(id: string): Promise<Post | null> {
   return Post.sync({ force: false })
-    .then(() => Post.findAll())
+    .then(() =>
+      Post.findAll({
+        where: {
+          id: id,
+        },
+      })
+    )
     .then((posts: Post[]) => {
-      for (const post of posts) {
-        console.log(post.id);
-        console.log(id);
-        if (post.id.toString() === id) {
-          return post;
-        }
-      }
+      return posts[0];
     })
     .catch((err: any) => {
+      console.log(err);
       return null;
     });
 }
@@ -93,15 +94,18 @@ async function add(
 
 async function search(query: string): Promise<Post[]> {
   return Post.sync({ force: false })
-    .then(() => Post.findAll())
+    .then(() =>
+      Post.findAll({
+        where: {
+          [Op.or]: [
+            { title: { [Op.iLike]: `%${query}%` } },
+            { body: { [Op.iLike]: `%${query}%` } },
+          ],
+        },
+      })
+    )
     .then((posts: Post[]) => {
-      const results: Post[] = [];
-      for (const post of posts) {
-        if (post.title.toLowerCase().includes(query.toLowerCase())) {
-          results.push(post);
-        }
-      }
-      return results;
+      return posts;
     });
 }
 
