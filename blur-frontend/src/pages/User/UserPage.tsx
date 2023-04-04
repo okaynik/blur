@@ -22,7 +22,7 @@ export default function UserPage() {
 
         <h1 className="user-page-title">Welcome, {user.nickname}!</h1>
         <div className="user-info">
-          <img src={mockUserImg} alt="User profile" className="user-img" />
+          <img src={user.picture} alt="User profile" className="user-img" />
           <p className="user-name">{user.nickname}</p>
         </div>
         {/* <h2 className="previous-questions-title">Previous Questions</h2>

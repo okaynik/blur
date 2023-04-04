@@ -64,7 +64,7 @@ export default function Navbar() {
           Logout
         </button>
         <Link className="user" to={"/user"}>
-          <img src={mockUserImg} alt="User" />
+          <img src={user?.picture} alt="User" />
         </Link>
       </div>
     </div>
