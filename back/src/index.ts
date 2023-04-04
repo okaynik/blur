@@ -22,6 +22,17 @@ const CLIENT_ORIGIN_URL = process.env.CLIENT_ORIGIN_URL;
 const app = express();
 const apiRouter = express.Router();
 
+// DB connection
+const db = require("./models/db");
+db.sequelize
+  .sync()
+  .then(() => {
+    console.log("DB connection successful.");
+  })
+  .catch((err: any) => {
+    console.log(err);
+  });
+
 app.use(express.json());
 app.set("json spaces", 2);
 

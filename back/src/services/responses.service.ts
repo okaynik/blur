@@ -1,14 +1,6 @@
 import { Response } from "../models/response.model";
-import * as dotenv from "dotenv";
 
-dotenv.config();
-const COCKROACHDB = process.env.COCKROACHDB;
-const Sequelize = require("sequelize-cockroachdb");
-const sequelize = new Sequelize(COCKROACHDB, {
-  dialectOptions: {
-    application_name: "blur",
-  },
-});
+const { sequelize, Sequelize } = require("../models/db");
 
 const Response = sequelize.define("response", {
   body: {
@@ -31,15 +23,12 @@ const Response = sequelize.define("response", {
 });
 
 async function getAll(id: string): Promise<Response[]> {
-  return Response.sync({ force: false })
-    .then(() =>
-      Response.findAll({
-        where: {
-          postId: id,
-        },
-        order: [["likes", "DESC"]],
-      })
-    )
+  return Response.findAll({
+    where: {
+      postId: id,
+    },
+    order: [["likes", "DESC"]],
+  })
     .then((responses: Response[]) => {
       return responses;
     })
@@ -54,16 +43,14 @@ async function add(
   author: string,
   body: string
 ): Promise<void> {
-  return Response.sync({ force: false }).then(() => {
-    return Response.create({ body: body, postId: postId, author: author })
-      .then((response: Response) => {
-        console.log(response);
-      })
-      .catch((err: any) => {
-        console.log(err);
-        return null;
-      });
-  });
+  return Response.create({ body: body, postId: postId, author: author })
+    .then((response: Response) => {
+      console.log(response);
+    })
+    .catch((err: any) => {
+      console.log(err);
+      return null;
+    });
 }
 
 export default {
