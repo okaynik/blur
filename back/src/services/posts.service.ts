@@ -1,48 +1,27 @@
 import { Post } from "../models/post.model";
 
-const { Op } = require("sequelize");
-const { sequelize, Sequelize } = require("../models/db");
-
-const Post = sequelize.define("post", {
-  title: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  body: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  author: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  likes: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
-  },
-  views: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
-  },
-});
+const { post, Op } = require("../models/db");
 
 async function topViews(): Promise<Post[]> {
-  return Post.findAll({
-    order: [["views", "DESC"]],
-    limit: 10,
-  }).then((posts: Post[]) => {
-    return posts;
-  });
+  console.log("topViews", post);
+
+  return post
+    .findAll({
+      order: [["views", "DESC"]],
+      limit: 10,
+    })
+    .then((posts: Post[]) => {
+      return posts;
+    });
 }
 
 async function getOne(id: string): Promise<Post | null> {
-  return Post.findAll({
-    where: {
-      id: id,
-    },
-  })
+  return post
+    .findAll({
+      where: {
+        id: id,
+      },
+    })
     .then((posts: Post[]) => {
       return posts[0];
     })
@@ -57,7 +36,8 @@ async function add(
   body: string,
   author: string
 ): Promise<number> {
-  return Post.create({ body: body, title: title, author: author })
+  return post
+    .create({ body: body, title: title, author: author })
     .then((post: Post) => {
       return post.id;
     })
@@ -68,16 +48,18 @@ async function add(
 }
 
 async function search(query: string): Promise<Post[]> {
-  return Post.findAll({
-    where: {
-      [Op.or]: [
-        { title: { [Op.iLike]: `%${query}%` } },
-        { body: { [Op.iLike]: `%${query}%` } },
-      ],
-    },
-  }).then((posts: Post[]) => {
-    return posts;
-  });
+  return post
+    .findAll({
+      where: {
+        [Op.or]: [
+          { title: { [Op.iLike]: `%${query}%` } },
+          { body: { [Op.iLike]: `%${query}%` } },
+        ],
+      },
+    })
+    .then((posts: Post[]) => {
+      return posts;
+    });
 }
 
 export default {

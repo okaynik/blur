@@ -1,34 +1,15 @@
 import { Response } from "../models/response.model";
 
-const { sequelize, Sequelize } = require("../models/db");
-
-const Response = sequelize.define("response", {
-  body: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  author: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-  likes: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-    defaultValue: 0,
-  },
-  postId: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-  },
-});
+const { response } = require("../models/db");
 
 async function getAll(id: string): Promise<Response[]> {
-  return Response.findAll({
-    where: {
-      postId: id,
-    },
-    order: [["likes", "DESC"]],
-  })
+  return response
+    .findAll({
+      where: {
+        postId: id,
+      },
+      order: [["likes", "DESC"]],
+    })
     .then((responses: Response[]) => {
       return responses;
     })
@@ -43,7 +24,8 @@ async function add(
   author: string,
   body: string
 ): Promise<void> {
-  return Response.create({ body: body, postId: postId, author: author })
+  return response
+    .create({ body: body, postId: postId, author: author })
     .then((response: Response) => {
       console.log(response);
     })
