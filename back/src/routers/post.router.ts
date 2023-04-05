@@ -4,11 +4,6 @@ import { validateAccessToken } from "../middleware/auth0.middleware";
 
 export const postsRouter = express.Router();
 
-postsRouter.get("/getall", validateAccessToken, async (req, res) => {
-  const posts = await postService.getAll();
-  res.status(200).json(posts);
-});
-
 postsRouter.get("/topviews", validateAccessToken, async (req, res) => {
   const posts = await postService.topViews();
   res.status(200).json(posts);
