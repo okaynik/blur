@@ -1,11 +1,83 @@
-import './pre-start'; // Must be the first import
-import logger from 'jet-logger';
+import cors from "cors";
+import * as dotenv from "dotenv";
+import express from "express";
+import helmet from "helmet";
+import nocache from "nocache";
+import { postsRouter } from "./routers/post.router";
+import { responsesRouter } from "./routers/response.router";
+import { errorHandler } from "./middleware/error.middleware";
+import { notFoundHandler } from "./middleware/not-found.middleware";
+import { likesRouter } from "./routers/likes.router";
 
-import EnvVars from '@configurations/EnvVars';
-import server from './server';
+dotenv.config();
 
+if (!(process.env.PORT && process.env.CLIENT_ORIGIN_URL)) {
+  throw new Error(
+    "Missing required environment variables. Check docs for more info."
+  );
+}
 
-// **** Start server **** //
+const PORT = parseInt(process.env.PORT, 10);
+const CLIENT_ORIGIN_URL = process.env.CLIENT_ORIGIN_URL;
 
-const msg = ('Express server started on port: ' + EnvVars.port.toString());
-server.listen(EnvVars.port, () => logger.info(msg));
+const app = express();
+const apiRouter = express.Router();
+
+// DB connection
+const db = require("./models/db");
+db.sequelize
+  .sync()
+  .then(() => {
+    console.log("DB connection successful.");
+  })
+  .catch((err: any) => {
+    console.log(err);
+  });
+
+app.use(express.json());
+app.set("json spaces", 2);
+
+app.use(
+  helmet({
+    hsts: {
+      maxAge: 31536000,
+    },
+    contentSecurityPolicy: {
+      useDefaults: false,
+      directives: {
+        "default-src": ["'none'"],
+        "frame-ancestors": ["'none'"],
+      },
+    },
+    frameguard: {
+      action: "deny",
+    },
+  })
+);
+
+app.use((req, res, next) => {
+  res.contentType("application/json; charset=utf-8");
+  next();
+});
+app.use(nocache());
+
+app.use(
+  cors({
+    origin: CLIENT_ORIGIN_URL,
+    methods: ["GET"],
+    allowedHeaders: ["Authorization", "Content-Type"],
+    maxAge: 86400,
+  })
+);
+
+app.use("/api", apiRouter);
+apiRouter.use("/posts", postsRouter);
+apiRouter.use("/responses", responsesRouter);
+apiRouter.use("/likes", likesRouter);
+
+app.use(errorHandler);
+app.use(notFoundHandler);
+
+app.listen(PORT, () => {
+  console.log(`Listening on port ${PORT}`);
+});

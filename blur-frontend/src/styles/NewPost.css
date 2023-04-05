@@ -1,0 +1,52 @@
+.Create-box {
+    max-width: 1000px;
+    margin: 0 auto;
+    /* padding: 20px; */
+    /* background-color: #f5f5f5; */
+    /* border-radius: 8px; */
+    /* box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1); */
+  }
+
+  .Create label {
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .Create input,
+  .Create textarea {
+    margin-top: 10px;
+    padding: 10px;
+    font-size: 16px;
+    /* border: 1px solid #ccc; */
+    border-radius: 5px;
+  }
+
+  .ButtonGroup {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+
+  .ButtonGroup a,
+  .ButtonGroup button {
+    margin-left: 20px;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: #fff;
+    font-size: 15px;
+  }
+
+  .ButtonGroup a {
+    background-color: #3a5a82;
+  }
+
+  .ButtonGroup button {
+    background-color: #3a5a82;
+  }
+
+  .ButtonGroup a:hover,
+  .ButtonGroup button:hover {
+    opacity: 0.8;
+    cursor: pointer;
+  }

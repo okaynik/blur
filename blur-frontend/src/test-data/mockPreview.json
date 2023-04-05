@@ -1,0 +1,50 @@
+{
+    "previews": [
+      {
+        "id": 1,
+        "question": "What are some good study habits for college students?",
+        "hot_response": "Good study habits for college students include setting goals, creating a study schedule, taking breaks, and practicing active recall.",
+        "author": "study_guru",
+        "likes": 23,
+        "views": 112,
+        "time": "2022-03-29T12:30:00Z"
+      },
+      {
+        "id": 2,
+        "question": "How do I manage my time effectively in college?",
+        "hot_response": "To manage your time effectively in college, you should prioritize your tasks, break them down into smaller chunks, and use tools like calendars and to-do lists to stay organized.",
+        "author": "time_management_pro",
+        "likes": 42,
+        "views": 256,
+        "time": "2022-03-28T09:45:00Z"
+      },
+      {
+        "id": 3,
+        "question": "What are some healthy meal options for college students on a budget?",
+        "hot_response": "As a broke college student, healthy eating might not be your top priority, but it's essential to fuel your body and brain. Don't worry; you don't need to break the bank to eat well. One of the cheapest options is to cook at home. Consider meal prepping for the week, so you're not tempted to splurge on unhealthy fast food. You can make big batches of healthy meals, such as stir-fry, pasta with veggies, or baked chicken with roasted veggies. Also, don't overlook frozen fruits and vegetables, which are just as nutritious as fresh produce and often cheaper. Invest in pantry staples like rice, beans, and canned tuna, which can be used in many recipes. Finally, shop at discount stores or farmers' markets for affordable, locally sourced produce. With a little planning and creativity, you can eat healthy on a budget.",
+        "author": "healthy_eating_expert",
+        "likes": 87,
+        "views": 512,
+        "time": "2022-03-27T18:15:00Z"
+      },
+      {
+        "id": 4,
+        "question": "How can I improve my public speaking skills?",
+        "hot_response": "To improve your public speaking skills, you should practice, prepare, and focus on your body language and tone of voice.",
+        "author": "public_speaking_pro",
+        "likes": 62,
+        "views": 319,
+        "time": "2022-03-26T14:20:00Z"
+      },
+      {
+        "id": 5,
+        "question": "What are some effective stress management techniques for college students?",
+        "hot_response": "Effective stress management techniques for college students include exercise, deep breathing, mindfulness meditation, and getting enough sleep.",
+        "author": "stress_management_guru",
+        "likes": 123,
+        "views": 1024,
+        "time": "2022-03-25T08:00:00Z"
+      }
+    ]
+  }
+  

@@ -1,0 +1,150 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-view {
+    background-color: white;
+    padding: 20px;
+    width: 800px;
+    margin-top: 26px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    height: 100%;
+}
+
+.post-view h1 {
+    font-size: 24px;
+    font-weight: 600;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+
+    /* .post-details {
+    } */
+
+.post-author {
+    font-weight: bold;
+}
+
+.post-body {
+    line-height: 1.5;
+}
+
+
+.add-response {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+  }
+
+  .add-response h2 {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+
+  .add-response textarea {
+    width: 800px;
+    height: 150px;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+    resize: none;
+  }
+
+  .response-button-group {
+    display: flex;
+    justify-content: space-around;
+    gap: 20%;
+  }
+
+
+  .add-response button {
+    padding: 8px;
+    background-color: #3a5a82;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .add-response button:hover {
+    opacity: 0.8;
+  }
+
+  input:focus,
+textarea:focus {
+  outline: none;
+}
+
+
+.add-response-button {
+    background-color: #3a5a82;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .add-response-button:hover {
+    background-color: #2c4565;
+  }
+
+  .add-response-button:focus {
+    outline: none;
+  }
+
+
+
+  /* reponses */
+
+  .responses {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+
+  .response {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    padding: 16px;
+    border-radius: 5px;
+    background: white;
+    width: 800px;
+  }
+
+  .response-details {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .response-author {
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .response-body {
+    margin-bottom: 10px;
+  }
+
+  .response-meta {
+    display: flex;
+    align-items: center;
+  }
+
+  .response-time {
+    font-size: 12px;
+    color: #ccc;
+    margin-right: 10px;
+  }
+
+
+

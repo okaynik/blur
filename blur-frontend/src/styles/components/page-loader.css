@@ -1,0 +1,20 @@
+.loader {
+  height: 5rem;
+  width: 5rem;
+  margin: auto;
+  animation: spin 2s infinite linear;
+  margin-top: 3rem;
+}
+
+.loader img{
+  filter: invert(1);
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
