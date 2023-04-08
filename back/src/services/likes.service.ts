@@ -5,7 +5,7 @@ const { post, like } = require("../models/db");
 
 async function add(
   postId: string,
-  nickname: string,
+  username: string,
   vote: Vote
 ): Promise<void> {
 
@@ -13,7 +13,7 @@ async function add(
   const [existingLike, created] = await like.findOrCreate({
     where: {
       postId: postId,
-      nickname: nickname,
+      username: username,
     },
     defaults: {
       vote: vote,
