@@ -55,7 +55,7 @@ const post = sequelize.define("post", {
   },
 });
 
-const like = sequelize.define("like", {
+const like = sequelize.define("post_votes", {
   postId: {
     type: Sequelize.INTEGER,
     allowNull: false,
@@ -69,6 +69,11 @@ const like = sequelize.define("like", {
     allowNull: false,
   },
 });
+
+post.hasMany(response, { foreignKey: "postId" });
+post.hasMany(like, { foreignKey: "postId" });
+response.belongsTo(post, { foreignKey: "postId" });
+like.belongsTo(post, { foreignKey: "postId" });
 
 const db: any = {};
 db.Sequelize = Sequelize;
