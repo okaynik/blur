@@ -29,7 +29,7 @@ async function add(
   } else {
 
     // user has already liked or disliked the post
-    console.log('Row already exists:', existingLike.toJSON());
+    // console.log('Row already exists:', existingLike.toJSON());
     if (existingLike.vote === vote) {
 
       // user is trying to like or dislike the post again, so we remove the like or dislike

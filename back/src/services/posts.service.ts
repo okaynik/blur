@@ -1,8 +1,8 @@
 import { Post } from "../models/post.model";
 
-const { post, Op } = require("../models/db");
+const { post, Op, like } = require("../models/db");
 
-async function topViews(): Promise<Post[]> {
+async function topViews(username:string): Promise<Post[]> {
   console.log("topViews", post);
 
   return post
