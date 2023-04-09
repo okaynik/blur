@@ -4,7 +4,7 @@ const { post, Op, postVote } = require("../models/db");
 
 async function topViews(username: string, page: number): Promise<Post[]> {
   const limitPerPage = 10 + (page - 1) * 10;
-  
+
   return post
     .findAll({
       order: [["views", "DESC"]],
@@ -92,16 +92,16 @@ async function search(query: string, username: string): Promise<Post[]> {
           { title: { [Op.iLike]: `%${query}%` } },
           { body: { [Op.iLike]: `%${query}%` } },
         ],
-        include: [
-          {
-            model: postVote,
-            required: false,
-            where: {
-              username: username,
-            },
-          },
-        ],
       },
+      include: [
+        {
+          model: postVote,
+          required: false,
+          where: {
+            username: username,
+          },
+        },
+      ],
     })
     .then((posts: any) => {
       return posts.map(
@@ -117,6 +117,10 @@ async function search(query: string, username: string): Promise<Post[]> {
             vote: post.post_votes[0] ? post.post_votes[0].vote : null,
           } as Post)
       );
+    })
+    .catch((err: any) => {
+      console.log(err);
+      return null;
     });
 }
 

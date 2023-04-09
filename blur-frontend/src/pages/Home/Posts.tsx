@@ -109,7 +109,7 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
               activeVote={post.vote}
             />
             <div className="post-info">
-              <ReactTimeAgo date={post.createdAt} locale="en-US" />
+              <ReactTimeAgo date={new Date(post.createdAt)} locale="en-US" />
               <div className="post-views">
                 {post.views}
                 <FontAwesomeIcon icon={faEye} />
