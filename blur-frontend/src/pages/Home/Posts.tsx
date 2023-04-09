@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import "../../styles/Posts.css";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,10 +21,53 @@ interface Props {
 
 const Posts: React.FC<Props> = ({ query }: Props) => {
   const { user, getAccessTokenSilently } = useAuth0();
+  const [pageNumber, setPageNumber] = useState(1);
+  const [loading, setLoading] = useState(false); // Added state for loading animation
+
 
   const posts = query
     ? useMakeRequest<Post[]>(searchPosts, query)
-    : useMakeRequest<Post[]>(getTopPosts);
+    : useMakeRequest<Post[]>(getTopPosts, pageNumber.toString());
+
+
+    const handleScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+      const scrollSum = scrollTop + clientHeight;
+
+      // console.log({ scrollTop, scrollHeight, clientHeight, "scrollSum": scrollSum })
+      //log scrollTop + scrollHeight
+
+      if (scrollTop + clientHeight >= scrollHeight && !loading) {
+        // User has scrolled to the bottom of the page
+        // console.log("bottom")
+        // console.log("page number", pageNumber)
+        setLoading(true); // Set loading state to true
+        // console.log('loading set to true');
+          // Add a delay of 500ms before invoking handleLoadMore
+        handleLoadMore();
+
+      }
+    };
+
+    const handleLoadMore = () => {
+      setLoading(false); // Set loading state to false after loading
+      setPageNumber(pageNumber + 1);
+      console.log('loading set to false');
+    };
+
+    useEffect(() => {
+      // Add scroll event listener when component mounts
+      window.addEventListener("scroll", handleScroll);
+  
+      // Cleanup scroll event listener when component unmounts
+      return () => {
+        window.removeEventListener("scroll", handleScroll);
+      };
+    }, [pageNumber]); // Empty dependency array to ensure effect runs only on mount and unmount
+  
+    useEffect(() => {
+      setPageNumber(1);
+    }, [query]);
 
   const handleVote = async (id: number, vote: Vote) => {
     console.log(id, vote);
@@ -65,6 +108,9 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
           />
         </div>
       ))}
+      {loading && (
+      <PageLoader />
+    )} {/* Render loading message while loading is true */}
     </div>
   );
 };

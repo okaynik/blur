@@ -5,6 +5,8 @@ import { ApiResponse } from "../models/api-response";
 export const useMakeRequest = <T>(
   request: (...args: string[]) => Promise<ApiResponse<T>>,
   ...args: string[]
+  // request: (...args: (string|number)[]) => Promise<ApiResponse<T>>,
+  // ...args: (string|number)[]
 ) => {
   const [value, setValue] = useState<T | null>(null);
   const { getAccessTokenSilently } = useAuth0();
