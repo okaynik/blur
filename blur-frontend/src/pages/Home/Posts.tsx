@@ -1,8 +1,7 @@
-import { useState } from "react";
 import "../../styles/Posts.css";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import {
   getTopPosts,
@@ -15,6 +14,8 @@ import { PageLoader } from "../../components/PageLoader";
 import { useAuth0 } from "@auth0/auth0-react";
 import { VoteButtons } from "../../components/VoteButtons";
 import { Vote } from "../../models/vote";
+import ReactTimeAgo from "react-time-ago";
+
 interface Props {
   query: string | undefined;
 }
@@ -49,7 +50,9 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
       {posts?.map((post) => (
         <div className="post" key={post.id}>
           <Link to={`/posts/${post.id}`}>
-            <h2>{post.title}</h2>
+            <div className="post-title">
+              <h2>{post.title}</h2>
+            </div>
             <p>
               <span className="author">{post.author}:</span>{" "}
               {post.body.length > 280
@@ -57,12 +60,21 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
                 : post.body}
             </p>
           </Link>
-          <VoteButtons
-            onVote={handleVote}
-            id={post.id}
-            likes={post.likes}
-            activeVote={post.vote}
-          />
+          <div className="bottom-post">
+            <VoteButtons
+              onVote={handleVote}
+              id={post.id}
+              likes={post.likes}
+              activeVote={post.vote}
+            />
+            <div className="post-info">
+              <ReactTimeAgo date={post.createdAt} locale="en-US" />
+              <div className="post-views">
+                {post.views}
+                <FontAwesomeIcon icon={faEye} />
+              </div>
+            </div>
+          </div>
         </div>
       ))}
     </div>

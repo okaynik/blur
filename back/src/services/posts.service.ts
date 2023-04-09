@@ -27,6 +27,7 @@ async function topViews(username: string): Promise<Post[]> {
             author: post.author,
             likes: post.likes,
             views: post.views,
+            createdAt: post.createdAt,
             vote: post.post_votes[0] ? post.post_votes[0].vote : null,
           } as Post)
       );
@@ -48,6 +49,7 @@ async function getOne(id: string, username: string): Promise<Post | null> {
     })
     .then((post: any) => {
       if (post) {
+        post.increment("views", { by: 1 });
         return {
           id: post.id,
           title: post.title,
@@ -55,6 +57,7 @@ async function getOne(id: string, username: string): Promise<Post | null> {
           author: post.author,
           likes: post.likes,
           views: post.views,
+          createdAt: post.createdAt,
           vote: post.post_votes[0] ? post.post_votes[0].vote : null,
         };
       } else {
@@ -108,6 +111,7 @@ async function search(query: string, username: string): Promise<Post[]> {
             author: post.author,
             likes: post.likes,
             views: post.views,
+            createdAt: post.createdAt,
             vote: post.post_votes[0] ? post.post_votes[0].vote : null,
           } as Post)
       );

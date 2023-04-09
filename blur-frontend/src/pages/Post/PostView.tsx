@@ -13,11 +13,12 @@ import {
 import { useMakeRequest } from "../../services/useMakeRequest";
 import "../../styles/PostView.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "@auth0/auth0-react";
 import { PageLoader } from "../../components/PageLoader";
 import { VoteButtons } from "../../components/VoteButtons";
 import { Vote } from "../../models/vote";
+import ReactTimeAgo from "react-time-ago";
 
 export default function PostView() {
   const { id } = useParams();
@@ -72,6 +73,15 @@ export default function PostView() {
     }
   };
 
+  const handleVotePost = async (id: number, vote: Vote) => {
+    if (!user?.nickname) {
+      alert("Please log in to upvote a post");
+      return;
+    }
+    const accessToken = await getAccessTokenSilently();
+    await likePost(accessToken, id.toString(), user.nickname, vote, "post");
+  };
+
   const handleVoteResponse = async (id: number, vote: Vote) => {
     if (!user?.nickname) {
       alert("Please log in to upvote a post");
@@ -95,12 +105,34 @@ export default function PostView() {
             <p className="post-author"> {post?.author}</p>
             <p className="post-body">{post?.body}</p>
           </div>
-          <button
-            onClick={() => setShowAddResponse(!showAddResponse)}
-            className="add-response-button"
-          >
-            {showAddResponse ? "Cancel" : "Add a response"}
-          </button>
+
+          <div className="bottom-post">
+            <div className="post-buttons">
+              <button
+                onClick={() => setShowAddResponse(!showAddResponse)}
+                className="add-response-button"
+              >
+                {showAddResponse ? "Cancel" : "Add a response"}
+              </button>
+              <VoteButtons
+                onVote={handleVotePost}
+                id={post.id}
+                likes={post.likes}
+                activeVote={post.vote}
+              />
+            </div>
+            <div className="post-info">
+              <ReactTimeAgo
+                date={post.createdAt}
+                locale="en-US"
+                future={true}
+              />
+              <div className="post-views">
+                {post.views}
+                <FontAwesomeIcon icon={faEye} />
+              </div>
+            </div>
+          </div>
         </div>
 
         <div className="add-response">
@@ -129,14 +161,14 @@ export default function PostView() {
                 <p className="response-author"> {response.author}</p>
                 <p className="response-body">{response.body}</p>
               </div>
-              <div className="response-meta">
+              <div className="response-meta bottom-post">
                 <VoteButtons
                   onVote={handleVoteResponse}
                   id={response.id}
                   likes={response.likes}
                   activeVote={response.vote}
                 />
-                <p className="response-time">{response.time}</p>
+                <ReactTimeAgo date={post.createdAt} locale="en-US" />
               </div>
             </div>
           ))}

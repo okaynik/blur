@@ -1,4 +1,4 @@
-import { Vote } from './vote';
+import { Vote } from "./vote";
 export interface Post {
   id: number;
   title: string;
@@ -7,5 +7,6 @@ export interface Post {
   likes: number;
   views: number;
   time: string;
+  createdAt: Date;
   vote: Vote;
 }

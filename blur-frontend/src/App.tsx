@@ -9,6 +9,10 @@ import UserPage from "./pages/User/UserPage";
 import NewPost from "./pages/NewPost/NewPost";
 import PostView from "./pages/Post/PostView";
 
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en.json";
+TimeAgo.addDefaultLocale(en);
+
 function App() {
   const { isLoading, isAuthenticated, loginWithRedirect } = useAuth0();
 

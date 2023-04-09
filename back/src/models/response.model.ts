@@ -5,7 +5,7 @@ export interface Response {
   body: string;
   author: string;
   likes: number;
-  createdAt: string;
+  createdAt: Date;
   postId: string;
   vote: Vote | null;
 }
