@@ -1,0 +1,30 @@
+.vote-buttons {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 100px;
+  }
+
+  .upvote, .downvote {
+    background-color: #5D7DA3;
+    border-radius: 20%;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+  }
+
+  .upvote-active {
+    background-color: orange;
+    opacity: 1;
+  }
+
+  .downvote-active {
+    background-color: purple;
+    opacity: 1;
+  }
+
+  .upvote:hover, .downvote:hover {
+    opacity: 0.9;
+  }

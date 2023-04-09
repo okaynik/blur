@@ -4,7 +4,7 @@ import { Vote } from "../models/vote";
 import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
-
+import "../styles/VoteButtons.css";
 interface VoteProps {
     onVote: (id: number, vote: Vote) => void;
     id: number;

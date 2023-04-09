@@ -8,12 +8,12 @@
 .post-view {
     background-color: white;
     padding: 20px;
-    width: 800px;
     margin-top: 26px;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
     border: 1px solid #ccc;
-    height: 100%;
+    width: 100%;
+
 }
 
 .post-view h1 {
@@ -39,6 +39,7 @@
     flex-direction: column;
     align-items: center;
     margin-top: 20px;
+    width: 100%; /* Add width property */
   }
 
   .add-response h2 {
@@ -47,13 +48,13 @@
   }
 
   .add-response textarea {
-    width: 800px;
+    width: 100%; /* Set width to 100% to make it as wide as the parent container */
+    max-width: 100%;
     height: 150px;
     margin-bottom: 10px;
     padding: 10px;
     border: 1px solid gray;
     border-radius: 5px;
-    resize: none;
   }
 
   .response-button-group {
@@ -118,7 +119,7 @@ textarea:focus {
     padding: 16px;
     border-radius: 5px;
     background: white;
-    width: 800px;
+    /* width: 100%; */
   }
 
   .response-details {
