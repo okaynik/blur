@@ -7,6 +7,6 @@ export interface Response {
   likes: number;
   time: string;
   postId: number;
-  createdAt: Date;
+  createdAt: string;
   vote: Vote | null;
 }

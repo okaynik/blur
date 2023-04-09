@@ -7,6 +7,6 @@ export interface Post {
   author: string;
   likes: number;
   views: number;
-  createdAt: Date;
+  createdAt: string;
   vote: Vote | null;
 }

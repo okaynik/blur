@@ -122,11 +122,7 @@ export default function PostView() {
               />
             </div>
             <div className="post-info">
-              <ReactTimeAgo
-                date={post.createdAt}
-                locale="en-US"
-                future={true}
-              />
+              <ReactTimeAgo date={new Date(post.createdAt)} locale="en-US" />
               <div className="post-views">
                 {post.views}
                 <FontAwesomeIcon icon={faEye} />
@@ -168,7 +164,10 @@ export default function PostView() {
                   likes={response.likes}
                   activeVote={response.vote}
                 />
-                <ReactTimeAgo date={post.createdAt} locale="en-US" />
+                <ReactTimeAgo
+                  date={new Date(response.createdAt)}
+                  locale="en-US"
+                />
               </div>
             </div>
           ))}
