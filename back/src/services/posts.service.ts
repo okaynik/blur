@@ -130,7 +130,7 @@ async function userPosts(username: string): Promise<Post[]> {
       where: {
         author: username,
       },
-      order: [["views", "DESC"]],
+      order: [["createdAt", "DESC"]],
     })
     .then((posts: any) => {
       return posts;

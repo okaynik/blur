@@ -5,12 +5,12 @@ import { validateAccessToken } from "../middleware/auth0.middleware";
 export const postsRouter = express.Router();
 
 postsRouter.get("/topviews", validateAccessToken, async (req, res) => {
-  const username = req.auth?.payload.nickname as string;
+  const username = req.auth?.payload.username as string;
   if (!username) {
     res.status(400).json({ error: "Username not provided" });
     return;
   }
-  const pageNum = Number(req.query.page)
+  const pageNum = Number(req.query.page);
   if (isNaN(pageNum) || pageNum <= 0) {
     res.status(400).json({ error: "Invalid page number" });
     return;
@@ -20,7 +20,7 @@ postsRouter.get("/topviews", validateAccessToken, async (req, res) => {
 });
 
 postsRouter.get("/getone/:id", validateAccessToken, async (req, res) => {
-  const username = req.auth?.payload.nickname as string;
+  const username = req.auth?.payload.username as string;
   if (!username) {
     res.status(400).json({ error: "Username not provided" });
     return;
@@ -39,7 +39,7 @@ postsRouter.post("/add", validateAccessToken, async (req, res) => {
 
 postsRouter.get("/search/:query", validateAccessToken, async (req, res) => {
   const query = req.params.query;
-  const username = req.auth?.payload.nickname as string;
+  const username = req.auth?.payload.username as string;
   if (!username) {
     res.status(400).json({ error: "Username not provided" });
     return;
@@ -49,7 +49,7 @@ postsRouter.get("/search/:query", validateAccessToken, async (req, res) => {
 });
 
 postsRouter.get("/userposts", validateAccessToken, async (req, res) => {
-  const username = req.auth?.payload.nickname as string;
+  const username = req.auth?.payload.username as string;
   if (!username) {
     res.status(400).json({ error: "Username not provided" });
     return;

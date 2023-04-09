@@ -25,7 +25,7 @@ export default function NewPost() {
       accessToken,
       title,
       body,
-      user.nickname as string
+      user.username as string
     );
 
     if (error) {
@@ -49,12 +49,14 @@ export default function NewPost() {
             placeholder="Enter question"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            maxLength={150}
           />
           <textarea
             className="form-control mt-1"
             placeholder="Enter description of your question"
             value={body}
             onChange={(e) => setBody(e.target.value)}
+            maxLength={255}
           />
         </div>
         <div className="ButtonGroup">

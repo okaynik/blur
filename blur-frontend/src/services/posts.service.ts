@@ -161,7 +161,7 @@ export const createResponse = async (
 export const likePost = async (
   accessToken: string,
   postId: string,
-  nickname: string,
+  username: string,
   vote: "up" | "down",
   type: "post" | "response"
 ): Promise<ApiResponse> => {
@@ -170,7 +170,7 @@ export const likePost = async (
     method: "POST",
     data: {
       postId,
-      nickname,
+      username,
       vote,
       type,
     },

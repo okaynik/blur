@@ -70,12 +70,12 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
 
   const handleVote = async (id: number, vote: Vote) => {
     console.log(id, vote);
-    if (!user?.nickname) {
+    if (!user?.username) {
       alert("Please log in to upvote a post");
       return;
     }
     const accessToken = await getAccessTokenSilently();
-    await likePost(accessToken, id.toString(), user.nickname, vote, "post");
+    await likePost(accessToken, id.toString(), user.username, vote, "post");
   };
 
   if (!posts) {

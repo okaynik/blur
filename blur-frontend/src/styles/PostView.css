@@ -15,8 +15,7 @@
 
 .post-view h1 {
     font-size: 24px;
-    font-weight: 600;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+    font-weight: 800;
 }
 
 .post-view h2 {
@@ -24,8 +23,16 @@
     font-size: 15px;
   }
 
-    /* .post-details {
-    } */
+.post-details {
+  border-bottom: 1px solid  hsl(210,8%,90%);;
+  margin-bottom: 1rem;
+  padding-bottom: 0.3rem;
+}
+
+.post-details h4 {
+    font-weight: bold;
+    font-size: 15px;
+  }
 
 .post-author {
     font-weight: bold;
@@ -33,6 +40,7 @@
 
 .post-body {
     line-height: 1.5;
+    margin-bottom: 2rem;
 }
 
 .post-buttons {
@@ -141,6 +149,7 @@ textarea:focus {
 
   .response-body {
     margin-bottom: 10px;
+    overflow-wrap: break-word;
   }
 
   .response-meta {

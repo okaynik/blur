@@ -52,7 +52,7 @@ export default function PostView() {
     const { data: _, error } = await createResponse(
       accessToken,
       id as string,
-      user.nickname as string,
+      user.username as string,
       answer
     );
 
@@ -74,21 +74,21 @@ export default function PostView() {
   };
 
   const handleVotePost = async (id: number, vote: Vote) => {
-    if (!user?.nickname) {
+    if (!user?.username) {
       alert("Please log in to upvote a post");
       return;
     }
     const accessToken = await getAccessTokenSilently();
-    await likePost(accessToken, id.toString(), user.nickname, vote, "post");
+    await likePost(accessToken, id.toString(), user.username, vote, "post");
   };
 
   const handleVoteResponse = async (id: number, vote: Vote) => {
-    if (!user?.nickname) {
+    if (!user?.username) {
       alert("Please log in to upvote a post");
       return;
     }
     const accessToken = await getAccessTokenSilently();
-    await likePost(accessToken, id.toString(), user.nickname, vote, "response");
+    await likePost(accessToken, id.toString(), user.username, vote, "response");
     setUpdate(!update);
   };
 
@@ -96,23 +96,15 @@ export default function PostView() {
     return <PageLoader />;
   }
 
-  const renderTimeAgo = (createdAt:Date) => {
-    // Convert createdAt to a Date object
-    const date = new Date(createdAt);
-  
-    // Render ReactTimeAgo component with the correct locale
-    return <ReactTimeAgo date={date} locale="en-US" />;
-  };
-
   return (
     <Layout>
       <div className="container">
         <div className="post-view">
-          <h1>{post?.title}</h1>
           <div className="post-details">
-            <p className="post-author"> {post?.author}</p>
-            <p className="post-body">{post?.body}</p>
+            <h1>{post?.title}</h1>
+            <h4 className="post-author"> {post?.author}</h4>
           </div>
+          <p className="post-body">{post?.body}</p>
 
           <div className="bottom-post">
             <div className="post-buttons">
@@ -147,6 +139,8 @@ export default function PostView() {
                 onChange={(e) => setAnswer(e.target.value)}
                 onFocus={(e) => (e.target.style.outline = "none")}
                 onBlur={(e) => (e.target.style.outline = "")}
+                placeholder="Add a response"
+                maxLength={2000}
               ></textarea>
               <div className="response-button-group">
                 <button onClick={() => setShowAddResponse(false)}>

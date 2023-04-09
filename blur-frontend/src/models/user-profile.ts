@@ -1,5 +1,5 @@
 export interface UserProfile {
-  nickname: string;
+  username: string;
   name: string;
   picture: string;
   updated_at: string;
