@@ -43,18 +43,23 @@ export default function Navbar() {
       <Link to={`/main`}>
         <img className="logo" src={logo} alt="Logo" />
       </Link>
-      <div className="input-container">
-        <FontAwesomeIcon icon={faSearch} className="fa-search" />
-        <input
-          type="text"
-          placeholder="Search..."
-          onChange={handleChange}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              handleSubmit(e);
-            }
-          }}
-        />
+      <div className="search">
+        <div className="input-container">
+          <FontAwesomeIcon icon={faSearch} className="fa-search" />
+          <input
+            type="text"
+            placeholder="Search..."
+            onChange={handleChange}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") {
+                handleSubmit(e);
+              }
+            }}
+          />
+        </div>
+        <button className="btn-dark" onClick={handleSubmit}>
+          Search
+        </button>
       </div>
       <div className="btn-container">
         <Link className="btn-dark" to={"/newpost"}>

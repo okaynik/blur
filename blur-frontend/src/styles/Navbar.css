@@ -1,6 +1,7 @@
 .background {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   padding: 15px;
   background: white;
   position: fixed;
@@ -18,9 +19,15 @@
   font-size: 24px;
 }
 
-.input-container {
-  width: 40%;
+.search {
   display: flex;
+  width: 40%;
+  gap: 1rem;
+}
+
+.input-container {
+  display: flex;
+  width: 80%;
   align-items: center;
   justify-content: flex-start;
   border: 1px solid black;
