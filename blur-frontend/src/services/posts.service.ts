@@ -7,10 +7,11 @@ import { callExternalApi } from "./external-api.service";
 const apiServerUrl = process.env.REACT_APP_API_SERVER_URL;
 
 export const getTopPosts = async (
-  accessToken: string
+  accessToken: string,
+  pageNumber: string
 ): Promise<ApiResponse<Post[]>> => {
   const config: AxiosRequestConfig = {
-    url: `${apiServerUrl}/api/posts/topviews`,
+    url: `${apiServerUrl}/api/posts/topviews?page=${pageNumber}`, // Update URL with page number
     method: "GET",
     headers: {
       "content-type": "application/json",

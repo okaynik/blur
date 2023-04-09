@@ -2,11 +2,13 @@ import { Post } from "../models/post.model";
 
 const { post, Op, postVote } = require("../models/db");
 
-async function topViews(username: string): Promise<Post[]> {
+async function topViews(username: string, page: number): Promise<Post[]> {
+  const limitPerPage = 10 + (page - 1) * 10;
+  
   return post
     .findAll({
       order: [["views", "DESC"]],
-      limit: 10,
+      limit: limitPerPage,
       include: [
         {
           model: postVote,

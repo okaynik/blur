@@ -10,7 +10,12 @@ postsRouter.get("/topviews", validateAccessToken, async (req, res) => {
     res.status(400).json({ error: "Username not provided" });
     return;
   }
-  const posts = await postService.topViews(username);
+  const pageNum = Number(req.query.page)
+  if (isNaN(pageNum) || pageNum <= 0) {
+    res.status(400).json({ error: "Invalid page number" });
+    return;
+  }
+  const posts = await postService.topViews(username, pageNum);
   res.status(200).json(posts);
 });
 
