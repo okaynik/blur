@@ -1,11 +1,14 @@
 import { Link } from "react-router-dom";
 import Layout from "../Layout";
-import mockUserImg from "../../test-data/mockUserImg.jpg";
 import "../../styles/UserPage.css";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useMakeRequest } from "../../services/useMakeRequest";
+import { getUserPosts } from "../../services/posts.service";
+import { Post } from "../../models/post";
 
 export default function UserPage() {
   const { user } = useAuth0();
+  const posts = useMakeRequest<Post[]>(getUserPosts);
 
   if (!user) {
     return <div>Loading...</div>;
@@ -25,16 +28,22 @@ export default function UserPage() {
           <img src={user.picture} alt="User profile" className="user-img" />
           <p className="user-name">{user.nickname}</p>
         </div>
-        {/* <h2 className="previous-questions-title">Previous Questions</h2>
-                <ul className="previous-questions-list">
-                    {previousQuestions.map((question) => (
-                        <li key={question.id} className="previous-question">
-                            <Link to={`/main/question/${question.id}`} className="question-link">
-                                {question.title} ({question.answerCount})
-                            </Link>
-                        </li>
-                ))}
-                </ul> */}
+      </div>
+      <div className="user-posts">
+        <h2 className="your-posts">Your Posts</h2>
+        {posts?.map((post) => (
+          <div className="post" key={post.id}>
+            <Link to={`/posts/${post.id}`}>
+              <h2>{post.title}</h2>
+              <p>
+                <span className="author">{post.author}:</span>{" "}
+                {post.body.length > 280
+                  ? post.body.slice(0, 280) + "..."
+                  : post.body}
+              </p>
+            </Link>
+          </div>
+        ))}
       </div>
     </Layout>
   );
