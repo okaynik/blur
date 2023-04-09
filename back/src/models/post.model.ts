@@ -1,3 +1,5 @@
+import { Vote } from "./like.model";
+
 export interface Post {
   id: number;
   title: string;
@@ -6,4 +8,5 @@ export interface Post {
   likes: number;
   views: number;
   time: string;
+  vote: Vote | null;
 }

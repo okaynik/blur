@@ -2,32 +2,64 @@ import { Post } from "../models/post.model";
 
 const { post, Op, like } = require("../models/db");
 
-async function topViews(username:string): Promise<Post[]> {
-  console.log("topViews", post);
-
+async function topViews(username: string): Promise<Post[]> {
   return post
     .findAll({
       order: [["views", "DESC"]],
       limit: 10,
+      include: [
+        {
+          model: like,
+          required: false,
+          where: {
+            username: username,
+          },
+        },
+      ],
     })
-    .then((posts: Post[]) => {
-      return posts;
+    .then((posts: any) => {
+      return posts.map(
+        (post: any) =>
+          ({
+            id: post.id,
+            title: post.title,
+            body: post.body,
+            author: post.author,
+            likes: post.likes,
+            views: post.views,
+            vote: post.post_votes[0] ? post.post_votes[0].vote : null,
+          } as Post)
+      );
     });
 }
 
-async function getOne(id: string): Promise<Post | null> {
+async function getOne(id: string, username: string): Promise<Post | null> {
   return post
-    .findAll({
-      where: {
-        id: id,
-      },
+    .findByPk(id, {
+      include: [
+        {
+          model: like,
+          required: false,
+          where: {
+            username: username,
+          },
+        },
+      ],
     })
-    .then((posts: Post[]) => {
-      return posts[0];
-    })
-    .catch((err: any) => {
-      console.log(err);
-      return null;
+    .then((post: any) => {
+      if (post) {
+        return {
+          id: post.id,
+          title: post.title,
+          body: post.body,
+          author: post.author,
+          likes: post.likes,
+          views: post.views,
+          vote: post.post_votes[0] ? post.post_votes[0].vote : null,
+        };
+      } else {
+        return null;
+      }
     });
 }
 
@@ -47,7 +79,7 @@ async function add(
     });
 }
 
-async function search(query: string): Promise<Post[]> {
+async function search(query: string, username: string): Promise<Post[]> {
   return post
     .findAll({
       where: {
@@ -55,10 +87,30 @@ async function search(query: string): Promise<Post[]> {
           { title: { [Op.iLike]: `%${query}%` } },
           { body: { [Op.iLike]: `%${query}%` } },
         ],
+        include: [
+          {
+            model: like,
+            required: false,
+            where: {
+              username: username,
+            },
+          },
+        ],
       },
     })
-    .then((posts: Post[]) => {
-      return posts;
+    .then((posts: any) => {
+      return posts.map(
+        (post: any) =>
+          ({
+            id: post.id,
+            title: post.title,
+            body: post.body,
+            author: post.author,
+            likes: post.likes,
+            views: post.views,
+            vote: post.post_votes[0] ? post.post_votes[0].vote : null,
+          } as Post)
+      );
     });
 }
 
