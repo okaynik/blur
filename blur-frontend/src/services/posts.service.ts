@@ -161,7 +161,8 @@ export const likePost = async (
   accessToken: string,
   postId: string,
   nickname: string,
-  vote: "up" | "down"
+  vote: "up" | "down",
+  type: "post" | "response"
 ): Promise<ApiResponse> => {
   const config: AxiosRequestConfig = {
     url: `${apiServerUrl}/api/likes/add`,
@@ -170,6 +171,7 @@ export const likePost = async (
       postId,
       nickname,
       vote,
+      type,
     },
     headers: {
       "content-type": "application/json",

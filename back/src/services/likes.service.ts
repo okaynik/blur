@@ -1,59 +1,64 @@
 import { Like, Vote } from "../models/like.model";
 import { Post } from "../models/post.model";
 
-const { post, like } = require("../models/db");
+const { post, postVote, responseVote, response } = require("../models/db");
 
 async function add(
-  postId: string,
+  id: string,
   username: string,
-  vote: Vote
+  vote: Vote,
+  type: "post" | "response"
 ): Promise<void> {
+  const instance =
+    type === "post" ? await post.findByPk(id) : await response.findByPk(id);
+  const [existingVote, created] =
+    type === "post"
+      ? await postVote.findOrCreate({
+          where: {
+            postId: id,
+            username: username,
+          },
+          defaults: {
+            vote: vote,
+          },
+        })
+      : await responseVote.findOrCreate({
+          where: {
+            responseId: id,
+            username: username,
+          },
+          defaults: {
+            vote: vote,
+          },
+        });
 
-  const postInstance = await post.findByPk(postId);
-  const [existingLike, created] = await like.findOrCreate({
-    where: {
-      postId: postId,
-      username: username,
-    },
-    defaults: {
-      vote: vote,
-    },
-  });
-
-  if (created){
+  if (created) {
     // user havent liked or disliked the post yet
-    await postInstance.increment("likes", {
+    await instance.increment("likes", {
       by: vote === "up" ? 1 : -1,
     });
-
   } else {
-
     // user has already liked or disliked the post
     // console.log('Row already exists:', existingLike.toJSON());
-    if (existingLike.vote === vote) {
-
+    if (existingVote.vote === vote) {
       // user is trying to like or dislike the post again, so we remove the like or dislike
-      await postInstance.increment("likes", {
+      await instance.increment("likes", {
         by: vote === "up" ? -1 : 1,
       });
+      console.log("same vote");
 
-      await existingLike.destroy();
-
-    }
-
-    else {
+      await existingVote.destroy();
+    } else {
       // user is trying to change his like or dislike
-      await postInstance.increment("likes", {
+      await instance.increment("likes", {
         by: vote === "up" ? 2 : -2,
       });
 
-      await existingLike.update({
+      await existingVote.update({
         vote: vote,
       });
     }
-
   }
-
 }
 
 export default {

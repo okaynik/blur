@@ -23,25 +23,12 @@ export const VoteButtons: React.FC<VoteProps> = ({
   );
   const [displayLikes, setDisplayLikes] = useState(likes);
 
-  // useEffect(() => {
-  //   if (activeVote === "up") {
-  //     setActiveUp(true);
-  //     setActiveDown(false);
-  //   } else if (activeVote === "down") {
-  //     setActiveUp(false);
-  //     setActiveDown(true);
-  //   } else {
-  //     setActiveUp(false);
-  //     setActiveDown(false);
-  //   }
-  //   setDisplayLikes(likes);
-  // }, [activeVote, likes]);
-
   return (
     <div className="vote-buttons">
       <button
         className={activeUp ? "upvote upvote-active" : "upvote"}
         onClick={() => {
+          onVote(id, "up");
           if (!activeUp) {
             setActiveUp(true);
             if (activeDown) {
@@ -50,12 +37,10 @@ export const VoteButtons: React.FC<VoteProps> = ({
             } else {
               setDisplayLikes(displayLikes + 1);
             }
-            onVote(id, "up");
           } else {
             setActiveUp(false);
             setActiveDown(false);
             setDisplayLikes(displayLikes - 1);
-            onVote(id, "down");
           }
         }}
       >
@@ -65,6 +50,7 @@ export const VoteButtons: React.FC<VoteProps> = ({
       <button
         className={activeDown ? "downvote downvote-active" : "downvote"}
         onClick={() => {
+          onVote(id, "down");
           if (!activeDown) {
             setActiveDown(true);
             if (activeUp) {
@@ -73,12 +59,10 @@ export const VoteButtons: React.FC<VoteProps> = ({
             } else {
               setDisplayLikes(displayLikes - 1);
             }
-            onVote(id, "down");
           } else {
             setActiveDown(false);
             setActiveUp(false);
             setDisplayLikes(displayLikes + 1);
-            onVote(id, "up");
           }
         }}
       >

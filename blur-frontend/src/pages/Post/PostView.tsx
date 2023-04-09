@@ -8,6 +8,7 @@ import {
   createResponse,
   getPost,
   getResponses,
+  likePost,
 } from "../../services/posts.service";
 import { useMakeRequest } from "../../services/useMakeRequest";
 import "../../styles/PostView.css";
@@ -15,6 +16,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronUp, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { useAuth0 } from "@auth0/auth0-react";
 import { PageLoader } from "../../components/PageLoader";
+import { VoteButtons } from "../../components/VoteButtons";
+import { Vote } from "../../models/vote";
 
 export default function PostView() {
   const { id } = useParams();
@@ -69,6 +72,16 @@ export default function PostView() {
     }
   };
 
+  const handleVoteResponse = async (id: number, vote: Vote) => {
+    if (!user?.nickname) {
+      alert("Please log in to upvote a post");
+      return;
+    }
+    const accessToken = await getAccessTokenSilently();
+    await likePost(accessToken, id.toString(), user.nickname, vote, "response");
+    setUpdate(!update);
+  };
+
   if (!post || !responses) {
     return <PageLoader />;
   }
@@ -117,13 +130,12 @@ export default function PostView() {
                 <p className="response-body">{response.body}</p>
               </div>
               <div className="response-meta">
-                <button className="upvote">
-                  <FontAwesomeIcon icon={faChevronUp} color="" />
-                  {response.likes}
-                </button>
-                <button className="downvote">
-                  <FontAwesomeIcon icon={faChevronDown} color="" />
-                </button>
+                <VoteButtons
+                  onVote={handleVoteResponse}
+                  id={response.id}
+                  likes={response.likes}
+                  activeVote={response.vote}
+                />
                 <p className="response-time">{response.time}</p>
               </div>
             </div>
@@ -133,34 +145,3 @@ export default function PostView() {
     </Layout>
   );
 }
-
-// function Vote(props: { likes: number }) {
-//   const [offset, setOffset] = useState(0);
-//   const [colorUp, setColorUp] = useState("black");
-//   const [colorDown, setColorDown] = useState("black");
-//   return (
-//     <div className="Votes">
-//       <FaChevronUp
-//         size={"20"}
-//         color={colorUp}
-//         onClick={(e) => {
-//           e.preventDefault();
-//           setOffset(1);
-//           setColorUp("orange");
-//           setColorDown("black");
-//         }}
-//       />
-//       <p className="Likes fs-4">{props.likes + offset}</p>
-//       <FaChevronDown
-//         size={"20"}
-//         color={colorDown}
-//         onClick={(e) => {
-//           e.preventDefault();
-//           setOffset(-1);
-//           setColorDown("blue");
-//           setColorUp("black");
-//         }}
-//       />
-//     </div>
-//   );
-// }

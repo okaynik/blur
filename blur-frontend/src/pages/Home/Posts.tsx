@@ -27,13 +27,13 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
     : useMakeRequest<Post[]>(getTopPosts);
 
   const handleVote = async (id: number, vote: Vote) => {
-    console.log(id, vote)
+    console.log(id, vote);
     if (!user?.nickname) {
       alert("Please log in to upvote a post");
       return;
     }
     const accessToken = await getAccessTokenSilently();
-    await likePost(accessToken, id.toString(), user.nickname, vote);
+    await likePost(accessToken, id.toString(), user.nickname, vote, "post");
   };
 
   if (!posts) {
@@ -57,11 +57,12 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
                 : post.body}
             </p>
           </Link>
-          <VoteButtons 
-            onVote={handleVote} 
-            id={post.id} 
+          <VoteButtons
+            onVote={handleVote}
+            id={post.id}
             likes={post.likes}
-            activeVote = {post.vote}  />
+            activeVote={post.vote}
+          />
         </div>
       ))}
     </div>
@@ -69,4 +70,3 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
 };
 
 export default Posts;
-

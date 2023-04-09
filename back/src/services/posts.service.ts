@@ -1,6 +1,6 @@
 import { Post } from "../models/post.model";
 
-const { post, Op, like } = require("../models/db");
+const { post, Op, postVote } = require("../models/db");
 
 async function topViews(username: string): Promise<Post[]> {
   return post
@@ -9,7 +9,7 @@ async function topViews(username: string): Promise<Post[]> {
       limit: 10,
       include: [
         {
-          model: like,
+          model: postVote,
           required: false,
           where: {
             username: username,
@@ -38,7 +38,7 @@ async function getOne(id: string, username: string): Promise<Post | null> {
     .findByPk(id, {
       include: [
         {
-          model: like,
+          model: postVote,
           required: false,
           where: {
             username: username,
@@ -89,7 +89,7 @@ async function search(query: string, username: string): Promise<Post[]> {
         ],
         include: [
           {
-            model: like,
+            model: postVote,
             required: false,
             where: {
               username: username,

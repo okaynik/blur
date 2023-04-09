@@ -5,8 +5,8 @@ import { validateAccessToken } from "../middleware/auth0.middleware";
 export const responsesRouter = express.Router();
 
 responsesRouter.get("/getall/:id", validateAccessToken, async (req, res) => {
-  console.log(req.params.id);
-  const responses = await responseService.getAll(req.params.id);
+  const username = req.auth?.payload.nickname as string;
+  const responses = await responseService.getAll(req.params.id, username);
   res.status(200).json(responses);
 });
 
