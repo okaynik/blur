@@ -114,9 +114,23 @@ async function search(query: string, username: string): Promise<Post[]> {
     });
 }
 
+async function userPosts(username: string): Promise<Post[]> {
+  return post
+    .findAll({
+      where: {
+        author: username,
+      },
+      order: [["views", "DESC"]],
+    })
+    .then((posts: any) => {
+      return posts;
+    });
+}
+
 export default {
   topViews,
   getOne,
   add,
   search,
+  userPosts,
 } as const;

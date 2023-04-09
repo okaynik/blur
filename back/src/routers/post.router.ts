@@ -42,3 +42,13 @@ postsRouter.get("/search/:query", validateAccessToken, async (req, res) => {
   const posts = await postService.search(query, username);
   res.status(200).json(posts);
 });
+
+postsRouter.get("/userposts", validateAccessToken, async (req, res) => {
+  const username = req.auth?.payload.nickname as string;
+  if (!username) {
+    res.status(400).json({ error: "Username not provided" });
+    return;
+  }
+  const posts = await postService.userPosts(username);
+  res.status(200).json(posts);
+});

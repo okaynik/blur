@@ -4,12 +4,12 @@
     flex-direction: column;
     align-items: center;
   }
-  
+
   .back-btn {
     align-self: flex-start;
     margin: 20px 10px;
   }
-  
+
   .back-btn button {
     background-color: #3a5a82;
     color: #fff;
@@ -19,19 +19,19 @@
     border: none;
     cursor: pointer;
   }
-  
+
   .user-page-title {
     margin: 20px 0;
     font-size: 36px;
   }
-  
+
   .user-info {
     display: flex;
     flex-direction: column;
     align-items: center;
     margin: 20px 0;
   }
-  
+
   .user-img {
     width: 100px;
     height: 100px;
@@ -39,34 +39,37 @@
     border-radius: 50%;
     margin-bottom: 10px;
   }
-  
+
   .user-name {
     font-size: 24px;
   }
-  
+
+  .your-posts {
+    margin: 1.5% 10%;
+  }
+
   .previous-questions-title {
     margin: 20px 0;
     font-size: 24px;
   }
-  
+
   .previous-questions-list {
     list-style: none;
     padding: 0;
     margin: 0;
   }
-  
+
   .previous-question {
     margin: 10px 0;
     font-size: 20px;
   }
-  
+
   .question-link {
     text-decoration: none;
     color: #3f51b5;
     transition: all 0.3s ease-in-out;
   }
-  
+
   .question-link:hover {
     color: #2196f3;
   }
-  

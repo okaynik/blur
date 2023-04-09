@@ -188,3 +188,25 @@ export const likePost = async (
     error,
   };
 };
+
+export const getUserPosts = async (
+  accessToken: string
+): Promise<ApiResponse<Post[]>> => {
+  const config: AxiosRequestConfig = {
+    url: `${apiServerUrl}/api/posts/userposts`,
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  const { data, error } = (await callExternalApi({ config })) as ApiResponse<
+    Post[]
+  >;
+
+  return {
+    data,
+    error,
+  };
+};
