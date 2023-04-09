@@ -7,7 +7,7 @@ interface LayoutProps {
 
 const Layout = ({ children }: LayoutProps) => {
   return (
-    <div>
+    <div style={{ marginTop: '90px' }}> {/* Add the margin-top style inline */}
       <Navbar />
       {children}
     </div>

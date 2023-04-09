@@ -96,6 +96,14 @@ export default function PostView() {
     return <PageLoader />;
   }
 
+  const renderTimeAgo = (createdAt:Date) => {
+    // Convert createdAt to a Date object
+    const date = new Date(createdAt);
+  
+    // Render ReactTimeAgo component with the correct locale
+    return <ReactTimeAgo date={date} locale="en-US" />;
+  };
+
   return (
     <Layout>
       <div className="container">

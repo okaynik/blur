@@ -1,69 +1,69 @@
 .background {
-    display: flex;
-    justify-content: space-between;
-    padding: 15px;
-    background: white;
-  }
+  display: flex;
+  justify-content: space-between;
+  padding: 15px;
+  background: white;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 999; /* optional: set a high z-index value to ensure it stays on top of other content */
+}
 
-  .logo {
-    height: 30px;
-  }
+.logo {
+  height: 30px;
+}
 
-  .fa-search {
-    margin-right: 10px;
-    font-size: 24px;
-  }
+.fa-search {
+  margin-right: 10px;
+  font-size: 24px;
+}
 
-  .input-container {
-    width: 40%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    border: 1px solid black;
-    border-radius: 5px;
-    padding-left: 10px;
-  }
+.input-container {
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding-left: 10px;
+}
 
-  input[type="text"] {
-    border: none;
-    width: 100%;
-  }
+input[type="text"] {
+  border: none;
+  width: 100%;
+}
 
-  input[type="text"]:focus {
-    outline: none;
-  }
+input[type="text"]:focus {
+  outline: none;
+}
 
-  .btn-container {
-    /* border: 1px solid #3a5a82; */
-    display: flex;
-    justify-content: space-evenly;
-    gap: 20px;
-  }
+.btn-container {
+  /* border: 1px solid #3a5a82; */
+  display: flex;
+  justify-content: space-evenly;
+  gap: 20px;
+}
 
+.btn-dark {
+  background-color: #3a5a82;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+  font-size: 15px;
+  text-decoration: none;
+}
 
-  .btn-dark {
-    background-color: #3a5a82;
-    color: white;
-    padding: 8px 16px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    transition: opacity 0.3s ease-in-out;
-    font-size: 15px;
-    text-decoration: none;
+.btn-dark:hover {
+  opacity: 0.8;
+  color: white;
+}
 
-  }
-
-  .btn-dark:hover {
-    opacity: 0.8;
-    color: white;
-  }
-
-
-
-  .user img {
-    border: 2px solid #3a5a82;
-    height: 40px;
-    object-fit: cover;
-    border-radius: 50%;
-  }
+.user img {
+  border: 2px solid #3a5a82;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+}
