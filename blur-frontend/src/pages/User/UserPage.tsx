@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Layout from "../Layout";
 import "../../styles/UserPage.css";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -9,22 +9,24 @@ import ReactTimeAgo from "react-time-ago";
 
 export default function UserPage() {
   const { user } = useAuth0();
+  const navigate = useNavigate();
   const posts = useMakeRequest<Post[]>(getUserPosts);
 
   if (!user) {
     return <div>Loading...</div>;
   }
 
-  console.log(user);
-
   return (
     <Layout>
       <div className="user-page">
-        <div className="back-btn">
-          <Link to="/main">
-            <button>Go Back</button>
-          </Link>
-        </div>
+        <button
+          className="back-btn"
+          onClick={() => {
+            navigate(-1);
+          }}
+        >
+          Go Back
+        </button>
 
         <h1 className="user-page-title">Welcome, {user.username}!</h1>
         <div className="user-info">

@@ -60,9 +60,14 @@ export default function NewPost() {
           />
         </div>
         <div className="ButtonGroup">
-          <Link className="btn btn-dark" to={"/main"}>
+          <button
+            className="btn btn-dark"
+            onClick={() => {
+              navigate(-1);
+            }}
+          >
             Cancel
-          </Link>
+          </button>
           <button className="btn btn-dark" onClick={submitPost}>
             Submit
           </button>

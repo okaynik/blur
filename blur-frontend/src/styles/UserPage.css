@@ -6,11 +6,9 @@
   }
 
   .back-btn {
-    align-self: flex-start;
-    margin: 20px 10px;
-  }
-
-  .back-btn button {
+    position: absolute;
+    margin-left: 2rem;
+    left: 0;
     background-color: #3a5a82;
     color: #fff;
     padding: 0.5rem 1rem;
