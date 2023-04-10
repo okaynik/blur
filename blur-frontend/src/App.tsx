@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import "./styles/App.css";
 import Main from "./pages/Home/Main";
 import { ProtectedRoute } from "./components/ProtectedRoute";
@@ -11,11 +11,12 @@ import PostView from "./pages/Post/PostView";
 
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en.json";
+import Verify from "./pages/Auth/Verify";
 
 TimeAgo.addDefaultLocale(en);
 
 function App() {
-  const { isLoading, isAuthenticated, loginWithRedirect } = useAuth0();
+  const { isLoading, isAuthenticated, loginWithRedirect, user } = useAuth0();
 
   const handleAuth = async () => {
     await loginWithRedirect({
@@ -41,16 +42,23 @@ function App() {
     );
   }
 
+  if (!user?.email_verified) {
+    return <ProtectedRoute component={Verify} />;
+  }
+
   return (
     <Routes>
       <Route
         path="/main/:query?"
         element={<ProtectedRoute component={Main} />}
       />
-      <Route path="/" element={<Navigate to={"/main"} />} />
-      <Route path="/user" element={<UserPage />} />
-      <Route path="/newpost" element={<NewPost />} />
-      <Route path="/posts/:id" element={<PostView />} />
+      <Route path="/" element={<ProtectedRoute component={Main} />} />
+      <Route path="/user" element={<ProtectedRoute component={UserPage} />} />
+      <Route path="/newpost" element={<ProtectedRoute component={NewPost} />} />
+      <Route
+        path="/posts/:id"
+        element={<ProtectedRoute component={PostView} />}
+      />
     </Routes>
   );
 }
