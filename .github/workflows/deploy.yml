@@ -1,23 +1,27 @@
-name: Deploy using AWS SSM Send-Command
-
+name: Run Shell Script on EC2 Instance
 on:
   push:
-    branches: [main]
+    branches:
+      - main
 
 jobs:
-  start:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
       - uses: actions/checkout@v2
-
-      - name: AWS SSM Send Command
-        uses: peterkimzz/aws-ssm-send-command@v1.1.1
+      - name: Run Script on EC2 Instance
+        uses: appleboy/ssh-action@v0.1.9
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID  }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY  }}
-          aws-region: us-east-1
-          instance-ids: ${{ secrets.INSTANCE_ID  }}
-          comment: Deploy the main branch
-          working-directory: /home/ec2-user/blur
-          command: /bin/sh ./deploy.sh
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            # Change to the directory where the script is located
+            cd /home/${{ secrets.USER }}/blur
+
+            git pull
+            # Make the script executable
+            chmod +x deploy.sh
+
+            # Run the script
+            ./deploy.sh
