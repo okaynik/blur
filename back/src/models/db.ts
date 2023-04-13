@@ -8,6 +8,7 @@ const sequelize = new Sequelize(COCKROACHDB, {
   dialectOptions: {
     application_name: "blur",
   },
+  logging: false,
 });
 
 const response = sequelize.define("response", {
