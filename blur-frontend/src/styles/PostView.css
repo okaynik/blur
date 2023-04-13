@@ -73,14 +73,14 @@
   }
 
   .response-button-group {
+    width: 100%;
     display: flex;
-    justify-content: space-around;
-    gap: 20%;
+    gap: 20px;
   }
 
 
   .add-response button {
-    padding: 8px;
+    padding: 5px 10px;
     background-color: #3a5a82;
     color: white;
     border: none;
@@ -105,7 +105,7 @@ textarea:focus {
     border: none;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 14px;
+    font-size: 16px;
   }
 
   .add-response-button:hover {
@@ -167,5 +167,105 @@ textarea:focus {
     color: gray;
   }
 
+  .response-buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 1rem;
+  }
+
+  .input-area {
+    font-size: smaller;
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+
+  .input-area textarea {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+
+  .input-area-buttons {
+    display: flex;
+    gap: 20px;
+  }
+
+  .input-area-buttons button {
+    padding: 6px;
+    background-color: #3a5a82;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .no-bottom-padding {
+    padding-bottom: 0;
+  }
+
+
+
+  /* comments */
+  .comments {
+    border-top: 1px solid  hsl(210, 8%, 90%);;
+    margin-top: 10px;
+    font-size: smaller;
+    display: flex;
+    flex-direction: column;
+    padding-left: 10px;
+    padding-bottom: 10px;
+  }
+
+  .comment {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    border-bottom: 1px solid  hsl(210,8%,92%);;
+  }
+
+  .comment:last-child {
+    border-bottom: none;
+  }
+
+  .add-comment {
+    font-size: smaller;
+    color: #3a5a82;
+    text-decoration: none;
+    cursor: pointer;
+  }
+
+  .add-comment:hover {
+    color: #3a5a82;
+  }
+
+  .comment-details {
+    display: flex;
+  }
+
+  .comment-details time {
+    color: gray;
+  }
+
+  .comment-author {
+    font-weight: bold;
+    margin: 0;
+    margin-right: 10px;
+  }
+
+  .comment-body {
+    margin: 0;
+  }
+
+  .view-all-comments {
+    padding-left: 5px;
+    color: #3a5a82;
+    text-decoration: none;
+    cursor: pointer;
+  }
 
 

@@ -34,7 +34,6 @@ export default function Navbar() {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    console.log(query);
     navigate(`/main/${query}`);
   };
 

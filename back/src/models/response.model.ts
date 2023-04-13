@@ -1,4 +1,5 @@
 import { Vote } from "./like.model";
+import { Comment } from "./comment.model";
 
 export interface Response {
   id: number;
@@ -8,4 +9,6 @@ export interface Response {
   createdAt: string;
   postId: string;
   vote: Vote | null;
+  comments: Comment[];
+  numComments: number;
 }

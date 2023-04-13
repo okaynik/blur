@@ -19,6 +19,7 @@ import { PageLoader } from "../../components/PageLoader";
 import { VoteButtons } from "../../components/VoteButtons";
 import { Vote } from "../../models/vote";
 import ReactTimeAgo from "react-time-ago";
+import { ResponseView } from "../../components/ResponseView";
 
 export default function PostView() {
   const { id } = useParams();
@@ -36,7 +37,6 @@ export default function PostView() {
   }, [value]);
 
   const [answer, setAnswer] = useState("");
-  const [update, setUpdate] = useState(false);
 
   const submitResponse = async () => {
     if (answer === "") {
@@ -61,7 +61,6 @@ export default function PostView() {
       return;
     }
     setAnswer("");
-    setUpdate(!update);
     setShowAddResponse(false);
 
     const { data, error: err } = await getResponses(accessToken, id as string);
@@ -89,7 +88,6 @@ export default function PostView() {
     }
     const accessToken = await getAccessTokenSilently();
     await likePost(accessToken, id.toString(), user.username, vote, "response");
-    setUpdate(!update);
   };
 
   if (!post || !responses) {
@@ -108,18 +106,18 @@ export default function PostView() {
 
           <div className="bottom-post">
             <div className="post-buttons">
-              <button
-                onClick={() => setShowAddResponse(!showAddResponse)}
-                className="add-response-button"
-              >
-                {showAddResponse ? "Cancel" : "Add a response"}
-              </button>
               <VoteButtons
                 onVote={handleVotePost}
                 id={post.id}
                 likes={post.likes}
                 activeVote={post.vote}
               />
+              <button
+                onClick={() => setShowAddResponse(!showAddResponse)}
+                className="add-response-button"
+              >
+                {showAddResponse ? "Cancel" : "Add a response"}
+              </button>
             </div>
             <div className="post-info">
               <ReactTimeAgo date={new Date(post.createdAt)} locale="en-US" />
@@ -154,24 +152,18 @@ export default function PostView() {
         <div className="responses">
           <h3>Responses</h3>
           {responses?.map((response) => (
-            <div key={response.id} className="response">
-              <div className="response-details">
-                <p className="response-author"> {response.author}</p>
-                <p className="response-body">{response.body}</p>
-              </div>
-              <div className="response-meta bottom-post">
-                <VoteButtons
-                  onVote={handleVoteResponse}
-                  id={response.id}
-                  likes={response.likes}
-                  activeVote={response.vote}
-                />
-                <ReactTimeAgo
-                  date={new Date(response.createdAt)}
-                  locale="en-US"
-                />
-              </div>
-            </div>
+            <ResponseView
+              key={response.id}
+              responseId={response.id}
+              author={response.author}
+              body={response.body}
+              createdAt={response.createdAt}
+              likes={response.likes}
+              vote={response.vote}
+              comments={response.comments}
+              numComments={response.numComments}
+              onVote={handleVoteResponse}
+            />
           ))}
         </div>
       </div>

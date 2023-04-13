@@ -51,7 +51,6 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
   const handleLoadMore = () => {
     setLoading(false); // Set loading state to false after loading
     setPageNumber(pageNumber + 1);
-    console.log("loading set to false");
   };
 
   useEffect(() => {
@@ -69,7 +68,6 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
   }, [query]);
 
   const handleVote = async (id: number, vote: Vote) => {
-    console.log(id, vote);
     if (!user?.username) {
       alert("Please log in to upvote a post");
       return;

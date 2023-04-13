@@ -7,7 +7,10 @@ async function topViews(username: string, page: number): Promise<Post[]> {
 
   return post
     .findAll({
-      order: [["views", "DESC"]],
+      order: [
+        ["likes", "DESC"],
+        ["views", "DESC"],
+      ],
       limit: limitPerPage,
       include: [
         {

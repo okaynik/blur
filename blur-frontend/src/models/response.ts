@@ -9,4 +9,6 @@ export interface Response {
   postId: number;
   createdAt: string;
   vote: Vote | null;
+  comments: Comment[];
+  numComments: number;
 }

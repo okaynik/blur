@@ -2,6 +2,7 @@ import { AxiosRequestConfig } from "axios";
 import { ApiResponse, PostId } from "../models/api-response";
 import { Post } from "../models/post";
 import { Response } from "../models/response";
+import { Comment } from "../models/comment";
 import { callExternalApi } from "./external-api.service";
 
 const apiServerUrl = process.env.REACT_APP_API_SERVER_URL;
@@ -204,6 +205,59 @@ export const getUserPosts = async (
 
   const { data, error } = (await callExternalApi({ config })) as ApiResponse<
     Post[]
+  >;
+
+  return {
+    data,
+    error,
+  };
+};
+
+export const createComment = async (
+  accessToken: string,
+  responseId: string,
+  username: string,
+  body: string
+): Promise<ApiResponse> => {
+  const config: AxiosRequestConfig = {
+    url: `${apiServerUrl}/api/responses/addcomment`,
+    method: "POST",
+    data: {
+      responseId,
+      username,
+      body,
+    },
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  const { data, error } = (await callExternalApi({
+    config,
+  })) as ApiResponse;
+
+  return {
+    data,
+    error,
+  };
+};
+
+export const getComments = async (
+  accessToken: string,
+  id: string
+): Promise<ApiResponse<Comment[]>> => {
+  const config: AxiosRequestConfig = {
+    url: `${apiServerUrl}/api/responses/getcomments/${id}`,
+    method: "GET",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  const { data, error } = (await callExternalApi({ config })) as ApiResponse<
+    Comment[]
   >;
 
   return {

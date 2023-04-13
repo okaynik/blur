@@ -9,8 +9,6 @@ likesRouter.post("/add", validateAccessToken, async (req, res) => {
   const username = req.body.username;
   const vote = req.body.vote;
   const type = req.body.type;
-
-  console.log(postId, username, vote, type);
   if (!postId || !username || !vote || !type) {
     res.status(400).end();
     return;

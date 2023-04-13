@@ -89,6 +89,21 @@ const responseVote = sequelize.define("response_votes", {
   },
 });
 
+const responseComment = sequelize.define("response_comments", {
+  responseId: {
+    type: Sequelize.INTEGER,
+    allowNull: false,
+  },
+  username: {
+    type: Sequelize.STRING(20),
+    allowNull: false,
+  },
+  body: {
+    type: Sequelize.STRING(255),
+    allowNull: false,
+  },
+});
+
 post.hasMany(response, { foreignKey: "postId" });
 post.hasMany(postVote, { foreignKey: "postId" });
 
@@ -96,7 +111,9 @@ response.belongsTo(post, { foreignKey: "postId" });
 postVote.belongsTo(post, { foreignKey: "postId" });
 
 response.hasMany(responseVote, { foreignKey: "responseId" });
+response.hasMany(responseComment, { foreignKey: "responseId" });
 responseVote.belongsTo(response, { foreignKey: "responseId" });
+responseComment.belongsTo(response, { foreignKey: "responseId" });
 
 const db: any = {};
 db.Sequelize = Sequelize;
@@ -105,6 +122,7 @@ db.response = response;
 db.responseVote = responseVote;
 db.post = post;
 db.postVote = postVote;
+db.responseComment = responseComment;
 db.Op = Op;
 
 module.exports = db;

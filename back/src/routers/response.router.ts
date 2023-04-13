@@ -18,3 +18,21 @@ responsesRouter.post("/add", validateAccessToken, async (req, res) => {
 
   res.status(201).end();
 });
+
+responsesRouter.get(
+  "/getcomments/:id",
+  validateAccessToken,
+  async (req, res) => {
+    const responses = await responseService.getComments(req.params.id);
+    res.status(200).json(responses);
+  }
+);
+
+responsesRouter.post("/addcomment", validateAccessToken, async (req, res) => {
+  const responseId = req.body.responseId;
+  const username = req.body.username;
+  const body = req.body.body;
+  await responseService.addComment(responseId, username, body);
+
+  res.status(201).end();
+});

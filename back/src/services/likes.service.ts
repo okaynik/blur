@@ -45,7 +45,6 @@ async function add(
       await instance.increment("likes", {
         by: vote === "up" ? -1 : 1,
       });
-      console.log("same vote");
 
       await existingVote.destroy();
     } else {

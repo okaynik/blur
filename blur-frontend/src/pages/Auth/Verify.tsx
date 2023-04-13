@@ -27,7 +27,6 @@ export default function Verify() {
       await getAccessTokenSilently({ ignoreCache: true });
       const tokenClaims = await getIdTokenClaims();
       const updatedUser = { ...tokenClaims };
-      console.log("updatedUser:", updatedUser);
 
       if (updatedUser?.email_verified) {
         navigate(`/`);
