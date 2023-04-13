@@ -18,6 +18,12 @@
     cursor: pointer;
   }
 
+  @media screen and (max-width: 640px) {
+    .back-btn {
+        display: none !important;
+    }
+}
+
   .user-page-title {
     margin: 20px 0;
     font-size: 36px;

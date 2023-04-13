@@ -106,6 +106,7 @@ textarea:focus {
     border-radius: 5px;
     cursor: pointer;
     font-size: 16px;
+    white-space: nowrap;
   }
 
   .add-response-button:hover {

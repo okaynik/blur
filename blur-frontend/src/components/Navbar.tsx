@@ -1,12 +1,21 @@
 import logo from "../media/blur.svg";
 import "../styles/Navbar.css";
 import { useAuth0 } from "@auth0/auth0-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import mockUserImg from "../test-data/mockUserImg.jpg";
+
+function Hamburger() {
+  return (
+    <div className="hamburger">
+      <div className="burger burger1" />
+      <div className="burger burger2" />
+      <div className="burger burger3" />
+    </div>
+  );
+}
 
 export default function Navbar() {
   //logout
@@ -36,6 +45,97 @@ export default function Navbar() {
     e.preventDefault();
     navigate(`/main/${query}`);
   };
+
+  // mobile device navbar
+  const [windowDimension, setWindowDimension] = useState(window.innerWidth);
+
+  useEffect(() => {
+    setWindowDimension(window.innerWidth);
+  }, []);
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimension(window.innerWidth);
+    }
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const isMobile = windowDimension <= 640;
+  const [openDrawer, toggleDrawer] = useState(false);
+  const drawerRef = useRef<any>();
+
+  useEffect(() => {
+    /* Close the drawer when the user clicks outside of it */
+    const closeDrawer = (event: any) => {
+      if (drawerRef.current && drawerRef.current.contains(event.target)) {
+        return;
+      }
+
+      toggleDrawer(false);
+    };
+
+    document.addEventListener("mousedown", closeDrawer);
+    return () => document.removeEventListener("mousedown", closeDrawer);
+  }, []);
+
+  if (isMobile) {
+    return (
+      <div className="background-mobile">
+        <Link to={`/main`}>
+          <img className="logo" src={logo} alt="Logo" />
+        </Link>
+        <div className="search-mobile">
+          <div className="input-container-mobile">
+            <FontAwesomeIcon icon={faSearch} className="fa-search" />
+            <input
+              type="text"
+              placeholder="Search..."
+              onChange={handleChange}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSubmit(e);
+                }
+              }}
+            />
+          </div>
+        </div>
+        <div className="hamburger" onClick={() => toggleDrawer(!openDrawer)}>
+          <Hamburger />
+        </div>
+        {
+          <div
+            className={`drawer ${openDrawer ? "drawer-open" : ""}`}
+            ref={drawerRef}
+          >
+            <div
+              className="close-button"
+              onClick={() => toggleDrawer(!openDrawer)}
+            >
+              &times;
+            </div>
+            <div className="drawer-item">
+              <Link to={`/main`} onClick={() => toggleDrawer(!openDrawer)}>
+                Home
+              </Link>
+            </div>
+            <div className="drawer-item">
+              <Link to={`/newpost`}>Ask</Link>
+            </div>
+            <div className="drawer-item">
+              <Link to={`/user/`}>My profile</Link>
+            </div>
+            <div className="drawer-item">
+              <Link to={`/`} onClick={handleLogout}>
+                Logout
+              </Link>
+            </div>
+          </div>
+        }
+      </div>
+    );
+  }
 
   return (
     <div className="background">
