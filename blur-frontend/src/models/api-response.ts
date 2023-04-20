@@ -13,3 +13,4 @@ export interface ApiResponse<
 export interface PostId {
   id: number;
 }
+

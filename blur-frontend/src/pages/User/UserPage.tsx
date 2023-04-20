@@ -7,14 +7,50 @@ import { getUserPosts } from "../../services/posts.service";
 import { Post } from "../../models/post";
 import ReactTimeAgo from "react-time-ago";
 
+import { ApiResponse } from "../../models/api-response";
+import { useCallback} from "react";
+import { AppError } from "../../models/app-error";
+import  InfiniteScroll  from '../../components/InfiniteScroll';
+
+
 export default function UserPage() {
-  const { user } = useAuth0();
+  const { user, getAccessTokenSilently } = useAuth0();
   const navigate = useNavigate();
-  const posts = useMakeRequest<Post[]>(getUserPosts);
+  // const posts = useMakeRequest<Post[]>(getUserPosts);
+    const fetchPosts = useCallback(async (page: number): Promise<ApiResponse<Post[]>> => {
+      try {
+        const accessToken = await getAccessTokenSilently();
+        // console.log("fetchPosts: ", page, "brrrr why is this so hard"); 
+        return  getUserPosts(accessToken, page);
+      } catch (error) {
+        console.log("error fetching data: ", error);
+        return { error: error as AppError, data: [] };
+      }
+    }, []);
 
   if (!user) {
     return <div>Loading...</div>;
   }
+
+  function renderPost({ item }: { item: Post }): JSX.Element {
+    return (
+      <div className="post" key={item.id}>
+      <Link to={`/posts/${item.id}`}>
+        <h2>{item.title}</h2>
+        <p>
+          <span className="author">{item.author}:</span>{" "}
+          {item.body.length > 280
+            ? item.body.slice(0, 280) + "..."
+            : item.body}
+        </p>
+        <div className="response-meta bottom-post">
+          <ReactTimeAgo date={new Date(item.createdAt)} locale="en-US" />
+        </div>
+      </Link>
+    </div>
+    );
+  }
+  
 
   return (
     <Layout>
@@ -36,22 +72,13 @@ export default function UserPage() {
       </div>
       <div className="user-posts">
         <h2 className="your-posts">Your recent posts</h2>
-        {posts?.map((post) => (
-          <div className="post" key={post.id}>
-            <Link to={`/posts/${post.id}`}>
-              <h2>{post.title}</h2>
-              <p>
-                <span className="author">{post.author}:</span>{" "}
-                {post.body.length > 280
-                  ? post.body.slice(0, 280) + "..."
-                  : post.body}
-              </p>
-              <div className="response-meta bottom-post">
-                <ReactTimeAgo date={new Date(post.createdAt)} locale="en-US" />
-              </div>
-            </Link>
-          </div>
-        ))}
+        <div>
+          <InfiniteScroll<Post>
+          fetchData={fetchPosts}
+          renderItem={renderPost}
+        />
+        </div>
+          
       </div>
     </Layout>
   );

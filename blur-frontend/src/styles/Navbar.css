@@ -13,6 +13,9 @@
 .logo {
   height: 30px;
 }
+.logo:hover{
+  cursor: pointer;
+}
 
 .fa-search {
   margin-right: 10px;
@@ -147,13 +150,12 @@ input[type="text"]:focus {
   width: 50%;
 }
 
-.drawer-item a{
-  color: white;
+.drawer-item{
   font-size: 30px;
   margin: 25px;
   text-decoration: none;
   white-space: nowrap;
-  color: white;
+  color: BLACK;
 }
 
 .drawer .close-button {
@@ -163,4 +165,46 @@ input[type="text"]:focus {
   margin-right: 30px;
   font-size: 50px;
   color: white;
+}
+.dark-mode {
+  background-color: rgba(24, 24, 24, 0.6);
+}
+
+.dark-mode .background {
+  background-color: rgba(24, 24, 24, 0.6);
+}
+
+.dark-mode .btn-dark {
+  background-color: white;
+  color: #3a5a82;
+}
+
+.dark-mode .btn-dark:hover {
+  background-color: #3a5a82;
+  color: white;
+}
+
+.dark-mode .logo:hover{
+  cursor: pointer;
+}
+
+.dark-mode .search {
+  background-color: #e4e4e4;
+}
+
+.dark-mode .input-container {
+  border: 1px solid white;
+  background-color: #e4e4e4;
+}
+
+.dark-mode input[type="text"] {
+  background-color: #e4e4e4;
+}
+
+.dark-mode .btn-container {
+  background-color: #e4e4e4;
+}
+
+.dark-mode .user img {
+  border: 2px solid white;
 }

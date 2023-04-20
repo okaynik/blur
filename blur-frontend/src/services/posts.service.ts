@@ -9,7 +9,7 @@ const apiServerUrl = process.env.REACT_APP_API_SERVER_URL;
 
 export const getTopPosts = async (
   accessToken: string,
-  pageNumber: string
+  pageNumber: number
 ): Promise<ApiResponse<Post[]>> => {
   const config: AxiosRequestConfig = {
     url: `${apiServerUrl}/api/posts/topviews?page=${pageNumber}`, // Update URL with page number
@@ -32,10 +32,11 @@ export const getTopPosts = async (
 
 export const searchPosts = async (
   accessToken: string,
-  query: string
+  query: string,
+  pageNumber: number
 ): Promise<ApiResponse<Post[]>> => {
   const config: AxiosRequestConfig = {
-    url: `${apiServerUrl}/api/posts/search/${query}`,
+    url: `${apiServerUrl}/api/posts/search/${query}?page=${pageNumber}`,
     method: "GET",
     headers: {
       "content-type": "application/json",
@@ -192,10 +193,11 @@ export const likePost = async (
 };
 
 export const getUserPosts = async (
-  accessToken: string
+  accessToken: string,
+  pageNumber: number
 ): Promise<ApiResponse<Post[]>> => {
   const config: AxiosRequestConfig = {
-    url: `${apiServerUrl}/api/posts/userposts`,
+    url: `${apiServerUrl}/api/posts/userposts?page=${pageNumber}`,
     method: "GET",
     headers: {
       "content-type": "application/json",

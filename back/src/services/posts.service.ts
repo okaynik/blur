@@ -3,7 +3,8 @@ import { Post } from "../models/post.model";
 const { post, Op, postVote } = require("../models/db");
 
 async function topViews(username: string, page: number): Promise<Post[]> {
-  const limitPerPage = 10 + (page - 1) * 10;
+  const limitPerPage = 10;
+  const offset = (page - 1) * limitPerPage;
 
   return post
     .findAll({
@@ -11,6 +12,7 @@ async function topViews(username: string, page: number): Promise<Post[]> {
         ["likes", "DESC"],
         ["views", "DESC"],
       ],
+      offset: offset,
       limit: limitPerPage,
       include: [
         {
@@ -87,7 +89,9 @@ async function add(
     });
 }
 
-async function search(query: string, username: string): Promise<Post[]> {
+async function search(query: string, username: string, page: number): Promise<Post[]> {
+  const limitPerPage = 10;
+  const offset = (page - 1) * limitPerPage;
   return post
     .findAll({
       where: {
@@ -96,6 +100,8 @@ async function search(query: string, username: string): Promise<Post[]> {
           { body: { [Op.iLike]: `%${query}%` } },
         ],
       },
+      offset: offset,
+      limit: limitPerPage,
       include: [
         {
           model: postVote,
@@ -127,13 +133,17 @@ async function search(query: string, username: string): Promise<Post[]> {
     });
 }
 
-async function userPosts(username: string): Promise<Post[]> {
+async function userPosts(username: string, page: number): Promise<Post[]> {
+  const limitPerPage = 10;
+  const offset = (page - 1) * limitPerPage;
   return post
     .findAll({
       where: {
         author: username,
       },
       order: [["createdAt", "DESC"]],
+      offset: offset,
+      limit: limitPerPage,
     })
     .then((posts: any) => {
       return posts;

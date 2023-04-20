@@ -4,6 +4,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
@@ -120,6 +121,7 @@ export default function Navbar() {
                 Home
               </Link>
             </div>
+
             <div className="drawer-item">
               <Link to={`/newpost`}>Ask</Link>
             </div>
@@ -137,11 +139,21 @@ export default function Navbar() {
     );
   }
 
+  const handleClickIcon = () => {
+    navigate('../',{replace:true})
+  };
+
+  const darkModeButton = document.getElementById("dark-mode-button");
+    darkModeButton?.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+  });
+  
+
   return (
     <div className="background">
-      <Link to={`/main`}>
+      <div onClick={handleClickIcon}>
         <img className="logo" src={logo} alt="Logo" />
-      </Link>
+      </div>
       <div className="search">
         <div className="input-container">
           <FontAwesomeIcon icon={faSearch} className="fa-search" />
@@ -161,6 +173,9 @@ export default function Navbar() {
         </button>
       </div>
       <div className="btn-container">
+        <button className="btn-dark" id="dark-mode-button">
+              Dark Mode
+          </button>
         <Link className="btn-dark" to={"/newpost"}>
           Ask
         </Link>
