@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import * as React from "react";
 import { useParams } from "react-router-dom";
 import { Post } from "../../models/post";
@@ -20,6 +20,11 @@ import { VoteButtons } from "../../components/VoteButtons";
 import { Vote } from "../../models/vote";
 import ReactTimeAgo from "react-time-ago";
 import { ResponseView } from "../../components/ResponseView";
+import { AppError } from "../../models/app-error";
+
+import { ApiResponse } from "../../models/api-response";
+import  InfiniteScroll  from '../../components/InfiniteScroll';
+
 
 export default function PostView() {
   const { id } = useParams();
@@ -28,13 +33,13 @@ export default function PostView() {
 
   const post = useMakeRequest<Post>(getPost, id as string);
   const [responses, setResponses] = useState<Response[]>([]);
-  const value = useMakeRequest<Response[]>(getResponses, id as string);
+  // const value = useMakeRequest<Response[]>(getResponses, id as string);
 
-  useEffect(() => {
-    if (value) {
-      setResponses(value);
-    }
-  }, [value]);
+  // useEffect(() => {
+  //   if (value) {
+  //     setResponses(value);
+  //   }
+  // }, [value]);
 
   const [answer, setAnswer] = useState("");
 
@@ -63,7 +68,7 @@ export default function PostView() {
     setAnswer("");
     setShowAddResponse(false);
 
-    const { data, error: err } = await getResponses(accessToken, id as string);
+    const { data, error: err } = await getResponses(accessToken, id as string, 1);
     if (err) {
       alert("Error getting responses, try again");
     }
@@ -89,6 +94,35 @@ export default function PostView() {
     const accessToken = await getAccessTokenSilently();
     await likePost(accessToken, id.toString(), user.username, vote, "response");
   };
+
+  const fetchResponses = useCallback(async (page: number): Promise<ApiResponse<Response[]>> => {
+    try {
+      const accessToken = await getAccessTokenSilently();
+      // console.log("fetchPosts: ", page, "brrrr why is this so hard"); 
+      return getResponses(accessToken, id as string, page);
+    } catch (error) {
+      console.log("error fetching data: ", error);
+      return { error: error as AppError, data: [] };
+    }
+  }, []);
+
+
+  function renderResponse({item}: {item: Response}): JSX.Element {
+    return (
+      <ResponseView
+      key={item.id}
+      responseId={item.id}
+      author={item.author}
+      body={item.body}
+      createdAt={item.createdAt}
+      likes={item.likes}
+      vote={item.vote}
+      comments={item.comments}
+      numComments={item.numComments}
+      onVote={handleVoteResponse}
+    />
+    );
+  }
 
   if (!post || !responses) {
     return <PageLoader />;
@@ -151,20 +185,13 @@ export default function PostView() {
         </div>
         <div className="responses">
           <h3>Responses</h3>
-          {responses?.map((response) => (
-            <ResponseView
-              key={response.id}
-              responseId={response.id}
-              author={response.author}
-              body={response.body}
-              createdAt={response.createdAt}
-              likes={response.likes}
-              vote={response.vote}
-              comments={response.comments}
-              numComments={response.numComments}
-              onVote={handleVoteResponse}
-            />
-          ))}
+          {/* {responses?.map((response) => (
+
+          ))} */}
+          <InfiniteScroll<Response>
+            fetchData={fetchResponses}
+            renderItem={renderResponse}
+          />
         </div>
       </div>
     </Layout>
