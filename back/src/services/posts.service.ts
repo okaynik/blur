@@ -11,9 +11,11 @@ async function topViews(username: string, page: number): Promise<Post[]> {
       order: [
         ["likes", "DESC"],
         ["views", "DESC"],
+        ["createdAt", "DESC"],
       ],
       offset: offset,
       limit: limitPerPage,
+      subquery: false,
       include: [
         {
           model: postVote,
@@ -89,7 +91,11 @@ async function add(
     });
 }
 
-async function search(query: string, username: string, page: number): Promise<Post[]> {
+async function search(
+  query: string,
+  username: string,
+  page: number
+): Promise<Post[]> {
   const limitPerPage = 10;
   const offset = (page - 1) * limitPerPage;
   return post
