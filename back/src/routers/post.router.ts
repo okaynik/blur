@@ -4,12 +4,13 @@ import { validateAccessToken } from "../middleware/auth0.middleware";
 
 export const postsRouter = express.Router();
 
-postsRouter.get("/topviews", validateAccessToken, async (req, res) => {
-  const username = req.auth?.payload.username as string;
-  if (!username) {
-    res.status(400).json({ error: "Username not provided" });
-    return;
-  }
+postsRouter.get("/topviews", async (req, res) => {
+  let username;
+  await validateAccessToken(req, res, () => {
+    username = req.auth?.payload.username as string;
+  });
+  username = username ? username : "";
+
   const pageNum = Number(req.query.page);
   if (isNaN(pageNum) || pageNum <= 0) {
     res.status(400).json({ error: "Invalid page number" });
@@ -19,12 +20,13 @@ postsRouter.get("/topviews", validateAccessToken, async (req, res) => {
   res.status(200).json(posts);
 });
 
-postsRouter.get("/getone/:id", validateAccessToken, async (req, res) => {
-  const username = req.auth?.payload.username as string;
-  if (!username) {
-    res.status(400).json({ error: "Username not provided" });
-    return;
-  }
+postsRouter.get("/getone/:id", async (req, res) => {
+  let username;
+  await validateAccessToken(req, res, () => {
+    username = req.auth?.payload.username as string;
+  });
+  username = username ? username : "";
+
   const post = await postService.getOne(req.params.id, username);
   res.status(200).json(post);
 });
@@ -43,13 +45,14 @@ postsRouter.post("/add", validateAccessToken, async (req, res) => {
     });
 });
 
-postsRouter.get("/search/:query", validateAccessToken, async (req, res) => {
+postsRouter.get("/search/:query", async (req, res) => {
   const query = req.params.query;
-  const username = req.auth?.payload.username as string;
-  if (!username) {
-    res.status(400).json({ error: "Username not provided" });
-    return;
-  }
+  let username;
+  await validateAccessToken(req, res, () => {
+    username = req.auth?.payload.username as string;
+  });
+  username = username ? username : "";
+
   const pageNum = Number(req.query.page);
   if (isNaN(pageNum) || pageNum <= 0) {
     res.status(400).json({ error: "Invalid page number" });

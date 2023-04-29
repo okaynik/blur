@@ -4,10 +4,18 @@ import { validateAccessToken } from "../middleware/auth0.middleware";
 
 export const responsesRouter = express.Router();
 
-responsesRouter.get("/getall/:id", validateAccessToken, async (req, res) => {
-  const username = req.auth?.payload.username as string;
-  const pageNum = Number(req.query.page)
-  const responses = await responseService.getAll(req.params.id, username, pageNum);
+responsesRouter.get("/getall/:id", async (req, res) => {
+  let username;
+  await validateAccessToken(req, res, () => {
+    username = req.auth?.payload.username as string;
+  });
+  username = username ? username : "";
+  const pageNum = Number(req.query.page);
+  const responses = await responseService.getAll(
+    req.params.id,
+    username,
+    pageNum
+  );
   res.status(200).json(responses);
 });
 
@@ -25,14 +33,10 @@ responsesRouter.post("/add", validateAccessToken, async (req, res) => {
     });
 });
 
-responsesRouter.get(
-  "/getcomments/:id",
-  validateAccessToken,
-  async (req, res) => {
-    const responses = await responseService.getComments(req.params.id);
-    res.status(200).json(responses);
-  }
-);
+responsesRouter.get("/getcomments/:id", async (req, res) => {
+  const responses = await responseService.getComments(req.params.id);
+  res.status(200).json(responses);
+});
 
 responsesRouter.post("/addcomment", validateAccessToken, async (req, res) => {
   const responseId = req.body.responseId;

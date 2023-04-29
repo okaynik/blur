@@ -32,11 +32,20 @@ export function ResponseView({
 }: Props) {
   const [showAddComment, setshowAddComment] = useState(false);
   const [commentBody, setCommentBody] = useState("");
-  const { user, getAccessTokenSilently } = useAuth0();
+  const { user, getAccessTokenSilently, loginWithRedirect } = useAuth0();
   const [commentsDisplay, setComments] = useState<Comment[]>(comments);
   const [numberOfComments, setNumberOfComments] = useState(numComments);
   const [showAllComments, setShowAllComments] = useState(false);
 
+  const handleAuth = async () => {
+    await loginWithRedirect({
+      prompt: "login",
+      appState: {
+        returnTo: "/main",
+      },
+      screen_hint: "login",
+    });
+  };
   const submitComment = async () => {
     if (commentBody === "") {
       alert("Please fill out all fields");
@@ -77,7 +86,10 @@ export function ResponseView({
   };
 
   const viewAllComments = async () => {
-    const accessToken = await getAccessTokenSilently();
+    let accessToken = "";
+    if (user) {
+      accessToken = await getAccessTokenSilently();
+    }
     const { data, error } = await getComments(
       accessToken,
       responseId.toString()
@@ -114,6 +126,11 @@ export function ResponseView({
             />
             <a
               onClick={() => {
+                if (!user) {
+                  alert("Please log in to leave a comment");
+                  handleAuth();
+                  return;
+                }
                 setshowAddComment(!showAddComment);
               }}
               className="add-comment"

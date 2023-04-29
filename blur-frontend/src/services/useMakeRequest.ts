@@ -5,35 +5,39 @@ import { ApiResponse } from "../models/api-response";
 export const useMakeRequest = <T>(
   request: (...args: string[]) => Promise<ApiResponse<T>>,
   ...args: string[]
+) =>
   // request: (...args: (string|number)[]) => Promise<ApiResponse<T>>,
   // ...args: (string|number)[]
-) => {
-  const [value, setValue] = useState<T | null>(null);
-  const { getAccessTokenSilently } = useAuth0();
-  useEffect(() => {
-    let isMounted = true;
-    const makeRequest = async () => {
-      const accessToken = await getAccessTokenSilently();
-      const { data, error } = await request(accessToken, ...args);
+  {
+    const [value, setValue] = useState<T | null>(null);
+    const { user, getAccessTokenSilently } = useAuth0();
+    useEffect(() => {
+      let isMounted = true;
+      const makeRequest = async () => {
+        let accessToken = "";
+        if (user) {
+          accessToken = await getAccessTokenSilently();
+        }
+        const { data, error } = await request(accessToken, ...args);
 
-      if (!isMounted) {
-        return;
-      }
+        if (!isMounted) {
+          return;
+        }
 
-      if (data) {
-        setValue(data);
-      }
+        if (data) {
+          setValue(data);
+        }
 
-      if (error) {
-        console.error(error);
-      }
-    };
+        if (error) {
+          console.error(error);
+        }
+      };
 
-    makeRequest();
-    return () => {
-      isMounted = false;
-    };
-  }, [getAccessTokenSilently, request, ...args]);
+      makeRequest();
+      return () => {
+        isMounted = false;
+      };
+    }, [getAccessTokenSilently, request, ...args]);
 
-  return value;
-};
+    return value;
+  };

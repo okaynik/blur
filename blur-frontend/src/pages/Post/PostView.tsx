@@ -23,27 +23,27 @@ import { ResponseView } from "../../components/ResponseView";
 import { AppError } from "../../models/app-error";
 
 import { ApiResponse } from "../../models/api-response";
-import  InfiniteScroll  from '../../components/InfiniteScroll';
-
+import InfiniteScroll from "../../components/InfiniteScroll";
 
 export default function PostView() {
   const { id } = useParams();
   const [showAddResponse, setShowAddResponse] = useState(false);
-  const { user, getAccessTokenSilently } = useAuth0();
+  const { user, getAccessTokenSilently, loginWithRedirect } = useAuth0();
 
   const post = useMakeRequest<Post>(getPost, id as string);
-  const [responses, setResponses] = useState<Response[]>([]);
   const [responsesUpdated, setResponsesUpdated] = useState(0);
-  // const value = useMakeRequest<Response[]>(getResponses, id as string);
-
-  // useEffect(() => {
-  //   if (value) {
-  //     setResponses(value);
-  //   }
-  // }, [value]);
 
   const [answer, setAnswer] = useState("");
 
+  const handleAuth = async () => {
+    await loginWithRedirect({
+      prompt: "login",
+      appState: {
+        returnTo: "/main",
+      },
+      screen_hint: "login",
+    });
+  };
   const submitResponse = async () => {
     if (answer === "") {
       alert("Please fill out all fields");
@@ -69,12 +69,12 @@ export default function PostView() {
     setAnswer("");
     setShowAddResponse(false);
     setResponsesUpdated(responsesUpdated + 1);
-    
   };
 
   const handleVotePost = async (id: number, vote: Vote) => {
     if (!user?.username) {
       alert("Please log in to upvote a post");
+      handleAuth();
       return;
     }
     const accessToken = await getAccessTokenSilently();
@@ -84,43 +84,47 @@ export default function PostView() {
   const handleVoteResponse = async (id: number, vote: Vote) => {
     if (!user?.username) {
       alert("Please log in to upvote a post");
+      handleAuth();
       return;
     }
     const accessToken = await getAccessTokenSilently();
     await likePost(accessToken, id.toString(), user.username, vote, "response");
   };
 
-  const fetchResponses = useCallback(async (page: number): Promise<ApiResponse<Response[]>> => {
-    try {
-      const accessToken = await getAccessTokenSilently();
-      // console.log("fetchPosts: ", page, "brrrr why is this so hard"); 
-      return getResponses(accessToken, id as string, page);
-    } catch (error) {
-      console.log("error fetching data: ", error);
-      return { error: error as AppError, data: [] };
-    }
+  const fetchResponses = useCallback(
+    async (page: number): Promise<ApiResponse<Response[]>> => {
+      try {
+        let accessToken = "";
+        if (user) {
+          accessToken = await getAccessTokenSilently();
+        }
+        return getResponses(accessToken, id as string, page);
+      } catch (error) {
+        console.log("error fetching data: ", error);
+        return { error: error as AppError, data: [] };
+      }
+    },
+    []
+  );
 
-  }, []);
-
-
-  function renderResponse({item}: {item: Response}): JSX.Element {
+  function renderResponse({ item }: { item: Response }): JSX.Element {
     return (
       <ResponseView
-      key={item.id}
-      responseId={item.id}
-      author={item.author}
-      body={item.body}
-      createdAt={item.createdAt}
-      likes={item.likes}
-      vote={item.vote}
-      comments={item.comments}
-      numComments={item.numComments}
-      onVote={handleVoteResponse}
-    />
+        key={item.id}
+        responseId={item.id}
+        author={item.author}
+        body={item.body}
+        createdAt={item.createdAt}
+        likes={item.likes}
+        vote={item.vote}
+        comments={item.comments}
+        numComments={item.numComments}
+        onVote={handleVoteResponse}
+      />
     );
   }
 
-  if (!post || !responses) {
+  if (!post) {
     return <PageLoader />;
   }
 
@@ -143,7 +147,14 @@ export default function PostView() {
                 activeVote={post.vote}
               />
               <button
-                onClick={() => setShowAddResponse(!showAddResponse)}
+                onClick={() => {
+                  if (!user) {
+                    alert("Please log in to leave a response");
+                    handleAuth();
+                    return;
+                  }
+                  setShowAddResponse(!showAddResponse);
+                }}
                 className="add-response-button"
               >
                 {showAddResponse ? "Cancel" : "Add a response"}

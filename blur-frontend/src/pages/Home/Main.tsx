@@ -29,11 +29,11 @@ export default function Main() {
   const { user, logout, isLoading } = useAuth0();
   const { query } = useParams();
 
-  useEffect(() => {
-    if (!user) {
-      logout({ returnTo: window.location.origin });
-    }
-  }, [isLoading]);
+  // useEffect(() => {
+  //   if (!user) {
+  //     logout({ returnTo: window.location.origin });
+  //   }
+  // }, [isLoading]);
 
   return (
     <Layout>
