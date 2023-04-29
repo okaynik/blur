@@ -109,10 +109,11 @@ export const createPost = async (
 
 export const getResponses = async (
   accessToken: string,
-  id: string
+  id: string,
+  pageNumber: number
 ): Promise<ApiResponse<Response[]>> => {
   const config: AxiosRequestConfig = {
-    url: `${apiServerUrl}/api/responses/getall/${id}`,
+    url: `${apiServerUrl}/api/responses/getall/${id}?page=${pageNumber}`,
     method: "GET",
     headers: {
       "content-type": "application/json",
