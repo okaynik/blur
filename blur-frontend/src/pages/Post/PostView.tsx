@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useState, useCallback } from "react";
 import * as React from "react";
 import { useParams } from "react-router-dom";
 import { Post } from "../../models/post";
@@ -45,6 +45,7 @@ export default function PostView() {
     });
   };
   const submitResponse = async () => {
+    setResponsesUpdated(responsesUpdated + 1);
     if (answer === "") {
       alert("Please fill out all fields");
       return;
@@ -68,7 +69,7 @@ export default function PostView() {
     }
     setAnswer("");
     setShowAddResponse(false);
-    setResponsesUpdated(responsesUpdated + 1);
+    
   };
 
   const handleVotePost = async (id: number, vote: Vote) => {
@@ -192,11 +193,13 @@ export default function PostView() {
         </div>
         <div className="responses">
           <h3>Responses</h3>
+
           <InfiniteScroll<Response>
             fetchData={fetchResponses}
             renderItem={renderResponse}
             responsesUpdated={responsesUpdated}
           />
+
         </div>
       </div>
     </Layout>

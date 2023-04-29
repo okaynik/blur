@@ -3,7 +3,7 @@ import { AppError } from "../../models/app-error";
 import "../../styles/Posts.css";
 import * as React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import { faEye, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { ApiResponse } from "../../models/api-response";
 import {
@@ -26,6 +26,9 @@ interface Props {
 
 const Posts: React.FC<Props> = ({ query }: Props) => {
   const { user, getAccessTokenSilently, loginWithRedirect } = useAuth0();
+  const [deletePermission, setDeletePermission] = useState(false);
+
+  // console.log(user)
   const handleAuth = async () => {
     await loginWithRedirect({
       prompt: "login",
@@ -35,6 +38,12 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
       screen_hint: "login",
     });
   };
+
+  useEffect (() => {
+    if (user?.user_authorization.permissions.includes('delete:posts')){
+      setDeletePermission(true)
+    }
+  }, [user])
 
   const fetchPosts = useCallback(
     async (page: number): Promise<ApiResponse<Post[]>> => {
@@ -89,7 +98,13 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
               {item.views}
               <FontAwesomeIcon icon={faEye} />
             </div>
+
           </div>
+          {deletePermission && (
+              <div className="delete-post" onClick={handleDelete}>
+                <FontAwesomeIcon icon={faTrash} />
+              </div>
+            )}
         </div>
       </div>
     );
