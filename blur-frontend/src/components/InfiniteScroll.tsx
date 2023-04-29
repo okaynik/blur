@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
-import { debounce } from 'lodash';
+import React, { useState, useEffect, useCallback, useMemo } from "react";
+import { debounce } from "lodash";
 import { ApiResponse } from "../models/api-response";
 import { PageLoader } from "../components/PageLoader";
 
@@ -24,7 +24,7 @@ function InfiniteScroll<T>({
     try {
       const response: ApiResponse<T[]> = await fetchData(page);
       if (response.error) {
-        console.error('Error fetching data:', response.error);
+        console.error("Error fetching data:", response.error);
       } else {
         if (response.data && response.data.length > 0) {
           setItems((prevItems) => [...prevItems, ...(response.data || [])]);
@@ -33,7 +33,7 @@ function InfiniteScroll<T>({
         }
       }
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     } finally {
       setIsLoading(false);
     }
@@ -63,14 +63,17 @@ function InfiniteScroll<T>({
   useEffect(() => {
     const debouncedHandleScroll = debounce(handleScroll, 50);
 
-    window.addEventListener('scroll', debouncedHandleScroll);
-    return () => window.removeEventListener('scroll', debouncedHandleScroll);
+    window.addEventListener("scroll", debouncedHandleScroll);
+    return () => window.removeEventListener("scroll", debouncedHandleScroll);
   }, [handleScroll]);
 
-  const MemoizedRenderItem = useMemo(() => React.memo(renderItem), [renderItem]);
+  const MemoizedRenderItem = useMemo(
+    () => React.memo(renderItem),
+    [renderItem]
+  );
 
   if (items.length === 0 && !isLoading) {
-    return <div>no posts found...🚀 Why not try asking a question?</div>;
+    return <div>nothing found...🚀 Why not try asking a question?</div>;
   }
 
   return (

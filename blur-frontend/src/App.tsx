@@ -18,21 +18,21 @@ TimeAgo.addDefaultLocale(en);
 function App() {
   const { isLoading, isAuthenticated, loginWithRedirect, user } = useAuth0();
 
-  const handleAuth = async () => {
-    await loginWithRedirect({
-      prompt: "login",
-      appState: {
-        returnTo: "/main",
-      },
-      screen_hint: "login",
-    });
-  };
+  // const handleAuth = async () => {
+  //   await loginWithRedirect({
+  //     prompt: "login",
+  //     appState: {
+  //       returnTo: "/main",
+  //     },
+  //     screen_hint: "login",
+  //   });
+  // };
 
-  useEffect(() => {
-    if (!isAuthenticated && !isLoading) {
-      handleAuth();
-    }
-  }, [isLoading, isAuthenticated]);
+  // useEffect(() => {
+  //   if (!isAuthenticated && !isLoading) {
+  //     handleAuth();
+  //   }
+  // }, [isLoading, isAuthenticated]);
 
   if (isLoading) {
     return (
@@ -42,7 +42,7 @@ function App() {
     );
   }
 
-  if (!user?.email_verified) {
+  if (user && !user?.email_verified) {
     return <ProtectedRoute component={Verify} />;
   }
 
@@ -50,15 +50,14 @@ function App() {
     <Routes>
       <Route
         path="/main/:query?"
-        element={<ProtectedRoute component={Main} />}
+        // element={<ProtectedRoute component={Main} />}
+        element={<Main />}
       />
-      <Route path="/" element={<ProtectedRoute component={Main} />} />
+      {/* <Route path="/" element={<ProtectedRoute component={Main} />} /> */}
+      <Route path="/" element={<Main />} />
       <Route path="/user" element={<ProtectedRoute component={UserPage} />} />
       <Route path="/newpost" element={<ProtectedRoute component={NewPost} />} />
-      <Route
-        path="/posts/:id"
-        element={<ProtectedRoute component={PostView} />}
-      />
+      <Route path="/posts/:id" element={<PostView />} />
     </Routes>
   );
 }

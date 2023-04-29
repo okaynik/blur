@@ -4,7 +4,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
@@ -20,16 +19,26 @@ function Hamburger() {
 
 export default function Navbar() {
   //logout
-  const { user, logout, isLoading } = useAuth0();
+  const { user, logout, isLoading, loginWithRedirect } = useAuth0();
   const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // if (isLoading) return;
-    if (!user) {
-      logout({ returnTo: window.location.origin });
-    }
-  }, [isLoading]);
+  const handleAuth = async () => {
+    await loginWithRedirect({
+      prompt: "login",
+      appState: {
+        returnTo: "/main",
+      },
+      screen_hint: "login",
+    });
+  };
+
+  // useEffect(() => {
+  //   // if (isLoading) return;
+  //   if (!user) {
+  //     logout({ returnTo: window.location.origin });
+  //   }
+  // }, [isLoading]);
 
   const handleLogout = () => {
     logout({
@@ -140,14 +149,13 @@ export default function Navbar() {
   }
 
   const handleClickIcon = () => {
-    navigate('../',{replace:true})
+    navigate("../", { replace: true });
   };
 
   const darkModeButton = document.getElementById("dark-mode-button");
-    darkModeButton?.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
+  darkModeButton?.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
   });
-  
 
   return (
     <div className="background">
@@ -173,18 +181,27 @@ export default function Navbar() {
         </button>
       </div>
       <div className="btn-container">
-        <button className="btn-dark" id="dark-mode-button">
-              Dark Mode
-          </button>
+        {/* <button className="btn-dark" id="dark-mode-button">
+          Dark Mode
+        </button> */}
         <Link className="btn-dark" to={"/newpost"}>
           Ask
         </Link>
-        <button className="btn-dark" onClick={handleLogout}>
-          Logout
-        </button>
-        <Link className="user" to={"/user"}>
-          <img src={user?.picture} alt="User" />
-        </Link>
+        {user && (
+          <>
+            <button className="btn-dark" onClick={handleLogout}>
+              Logout
+            </button>
+            <Link className="user" to={"/user"}>
+              <img src={user?.picture} alt="User" />
+            </Link>
+          </>
+        )}
+        {!user && (
+          <button className="btn-dark" onClick={handleAuth}>
+            Sign Up
+          </button>
+        )}
       </div>
     </div>
   );

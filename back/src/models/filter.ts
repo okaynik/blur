@@ -4,7 +4,6 @@ const Filter = require("bad-words"),
 const removeWords = [
   "hell",
   "hells",
-  "sadist",
   "piss",
   "knob",
   "damn",
