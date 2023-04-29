@@ -1,4 +1,4 @@
-import { useCallback} from "react";
+import { useState,useCallback, useEffect} from "react";
 import { AppError } from "../../models/app-error";
 import "../../styles/Posts.css";
 import * as React from "react";
@@ -17,14 +17,29 @@ import { VoteButtons } from "../../components/VoteButtons";
 import { Vote } from "../../models/vote";
 import ReactTimeAgo from "react-time-ago";
 import  InfiniteScroll  from '../../components/InfiniteScroll';
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+
+// import jwt_decode from "jwt-decode";
+
 
 interface Props {
   query: string | undefined;
 }
 
+
+
 const Posts: React.FC<Props> = ({ query }: Props) => {
   const { user, getAccessTokenSilently } = useAuth0();
-  
+  const [deletePermission, setDeletePermission] = useState(true);
+
+  // useEffect(() => {
+  //   if (user?.username === "admin") {
+  //   });
+
+
+
+  console.log(user)
+
   const fetchPosts = useCallback(async (page: number): Promise<ApiResponse<Post[]>> => {
     try {
       const accessToken = await getAccessTokenSilently();
@@ -37,8 +52,15 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
   }, [query]);
 
 
+  const handleDelete = () => {
+    console.log("delete");
+
+
+  };
+
   function renderPost({ item }: { item: Post }): JSX.Element {
     return (
+
       <div className="post" key={"post" + item.id}>
             <Link to={`/posts/${item.id}`}>
               <div className="post-title">
@@ -65,6 +87,13 @@ const Posts: React.FC<Props> = ({ query }: Props) => {
                   <FontAwesomeIcon icon={faEye} />
                 </div>
               </div>
+              {
+                deletePermission && (
+                  <div className="delete-post">
+                    <FontAwesomeIcon icon={faTrash} onClick={handleDelete} />
+                  </div>
+                )
+              }
             </div>
           </div>
     );

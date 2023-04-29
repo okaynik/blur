@@ -59,3 +59,8 @@
   .post a:visited {
     text-decoration: none;
   }
+
+.delete-post:hover{
+  color: red;
+  cursor: pointer;
+}
