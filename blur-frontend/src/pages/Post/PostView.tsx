@@ -33,6 +33,7 @@ export default function PostView() {
 
   const post = useMakeRequest<Post>(getPost, id as string);
   const [responses, setResponses] = useState<Response[]>([]);
+  const [responsesUpdated, setResponsesUpdated] = useState(0);
   // const value = useMakeRequest<Response[]>(getResponses, id as string);
 
   // useEffect(() => {
@@ -67,14 +68,8 @@ export default function PostView() {
     }
     setAnswer("");
     setShowAddResponse(false);
-
-    const { data, error: err } = await getResponses(accessToken, id as string, 1);
-    if (err) {
-      alert("Error getting responses, try again");
-    }
-    if (data) {
-      setResponses(data);
-    }
+    setResponsesUpdated(responsesUpdated + 1);
+    
   };
 
   const handleVotePost = async (id: number, vote: Vote) => {
@@ -104,6 +99,7 @@ export default function PostView() {
       console.log("error fetching data: ", error);
       return { error: error as AppError, data: [] };
     }
+
   }, []);
 
 
@@ -185,12 +181,10 @@ export default function PostView() {
         </div>
         <div className="responses">
           <h3>Responses</h3>
-          {/* {responses?.map((response) => (
-
-          ))} */}
           <InfiniteScroll<Response>
             fetchData={fetchResponses}
             renderItem={renderResponse}
+            responsesUpdated={responsesUpdated}
           />
         </div>
       </div>

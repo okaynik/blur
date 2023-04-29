@@ -6,11 +6,13 @@ import { PageLoader } from "../components/PageLoader";
 interface InfiniteScrollProps<T> {
   fetchData: (page: number) => Promise<ApiResponse<T[]>>;
   renderItem: (props: { item: T }) => JSX.Element;
+  responsesUpdated?: number; // add this prop
 }
 
 function InfiniteScroll<T>({
   fetchData,
   renderItem,
+  responsesUpdated = 0,
 }: InfiniteScrollProps<T>): React.ReactElement {
   const [items, setItems] = useState<T[]>([]);
   const [page, setPage] = useState(1);
@@ -41,7 +43,7 @@ function InfiniteScroll<T>({
     setItems([]);
     setPage(1);
     setHasMore(true);
-  }, [fetchData]);
+  }, [fetchData, responsesUpdated]);
 
   useEffect(() => {
     fetchItems();
@@ -68,7 +70,7 @@ function InfiniteScroll<T>({
   const MemoizedRenderItem = useMemo(() => React.memo(renderItem), [renderItem]);
 
   if (items.length === 0 && !isLoading) {
-    return <div>no posts data...🚀 Why not try asking a question?</div>;
+    return <div>no posts found...🚀 Why not try asking a question?</div>;
   }
 
   return (
