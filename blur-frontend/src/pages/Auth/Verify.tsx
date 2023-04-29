@@ -34,7 +34,6 @@ export default function Verify() {
         setMessage("Email is not verified yet!");
       }
     } catch (error) {
-      console.error("Error getting updated user object:", error);
       alert("There was an error verifying your email.");
     }
   };

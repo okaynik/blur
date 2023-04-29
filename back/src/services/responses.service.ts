@@ -2,6 +2,7 @@ import { Response } from "../models/response.model";
 import { Comment } from "../models/comment.model";
 
 const { response, responseVote, responseComment, Op } = require("../models/db");
+const filter = require("../models/filter");
 
 async function getAll(id: string, username: string, page: number): Promise<Response[]> {
   const limitPerPage = 10;
@@ -69,11 +70,11 @@ async function getAll(id: string, username: string, page: number): Promise<Respo
     });
 }
 
-async function add(
-  postId: string,
-  author: string,
-  body: string
-): Promise<void> {
+function add(postId: string, author: string, body: string): Promise<void> {
+  if (filter.isProfane(body)) {
+    return Promise.reject("Profanity is not allowed");
+  }
+
   return response
     .create({ body: body, postId: postId, author: author })
     .catch((err: any) => {
@@ -112,6 +113,10 @@ async function addComment(
   username: string,
   body: string
 ): Promise<void> {
+  if (filter.isProfane(body)) {
+    return Promise.reject("Profanity is not allowed");
+  }
+
   return responseComment
     .create({ body: body, responseId: responseId, username: username })
     .catch((err: any) => {

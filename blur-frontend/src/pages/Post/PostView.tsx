@@ -63,7 +63,7 @@ export default function PostView() {
     );
 
     if (error) {
-      alert("Error creating response, try again");
+      alert("Error creating response:\n" + error.message);
       return;
     }
     setAnswer("");

@@ -56,7 +56,7 @@ export function ResponseView({
     );
 
     if (error) {
-      alert("Error creating response, try again");
+      alert("Error creating the comment:\n" + error.message);
       return;
     }
     setCommentBody("");
@@ -67,7 +67,7 @@ export function ResponseView({
       responseId.toString()
     );
     if (err) {
-      alert("Error getting responses, try again");
+      alert("Error getting comments, try again");
     }
     if (data) {
       setComments(data);
