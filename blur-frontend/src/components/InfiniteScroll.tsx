@@ -43,7 +43,7 @@ function InfiniteScroll<T>({
     setItems([]);
     setPage(1);
     setHasMore(true);
-  }, [fetchData, responsesUpdated]);
+  }, [fetchData]);
 
   useEffect(() => {
     fetchItems();

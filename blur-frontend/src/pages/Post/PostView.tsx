@@ -105,7 +105,7 @@ export default function PostView() {
         return { error: error as AppError, data: [] };
       }
     },
-    []
+    [responsesUpdated]
   );
 
   function renderResponse({ item }: { item: Response }): JSX.Element {
