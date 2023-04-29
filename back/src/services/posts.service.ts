@@ -1,6 +1,7 @@
 import { Post } from "../models/post.model";
 
 const { post, Op, postVote } = require("../models/db");
+const filter = require("../models/filter");
 
 async function topViews(username: string, page: number): Promise<Post[]> {
   const limitPerPage = 10;
@@ -40,6 +41,9 @@ async function topViews(username: string, page: number): Promise<Post[]> {
             vote: post.post_votes[0] ? post.post_votes[0].vote : null,
           } as Post)
       );
+    })
+    .catch((err: any) => {
+      return err;
     });
 }
 
@@ -80,6 +84,10 @@ async function add(
   body: string,
   author: string
 ): Promise<number> {
+  if (filter.isProfane(title) || filter.isProfane(body)) {
+    return Promise.reject("Profanity is not allowed.");
+  }
+
   return post
     .create({ body: body, title: title, author: author })
     .then((post: Post) => {

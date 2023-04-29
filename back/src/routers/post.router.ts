@@ -10,7 +10,7 @@ postsRouter.get("/topviews", validateAccessToken, async (req, res) => {
     res.status(400).json({ error: "Username not provided" });
     return;
   }
-  const pageNum = Number(req.query.page)
+  const pageNum = Number(req.query.page);
   if (isNaN(pageNum) || pageNum <= 0) {
     res.status(400).json({ error: "Invalid page number" });
     return;
@@ -33,8 +33,14 @@ postsRouter.post("/add", validateAccessToken, async (req, res) => {
   const title = req.body.title;
   const body = req.body.body;
   const author = req.body.author;
-  const id = await postService.add(title, body, author);
-  res.status(201).json({ id: id });
+  await postService
+    .add(title, body, author)
+    .then((id: number) => {
+      res.status(201).json({ id: id });
+    })
+    .catch((err) => {
+      res.status(403).json({ message: err });
+    });
 });
 
 postsRouter.get("/search/:query", validateAccessToken, async (req, res) => {
@@ -59,7 +65,7 @@ postsRouter.get("/userposts", validateAccessToken, async (req, res) => {
     res.status(400).json({ error: "Username not provided" });
     return;
   }
-  const pageNum = Number(req.query.page)
+  const pageNum = Number(req.query.page);
   if (isNaN(pageNum) || pageNum <= 0) {
     res.status(400).json({ error: "Invalid page number" });
     return;

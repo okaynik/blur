@@ -1,5 +1,4 @@
-import { Like, Vote } from "../models/like.model";
-import { Post } from "../models/post.model";
+import { Vote } from "../models/like.model";
 
 const { post, postVote, responseVote, response } = require("../models/db");
 

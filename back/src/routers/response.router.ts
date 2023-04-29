@@ -14,9 +14,14 @@ responsesRouter.post("/add", validateAccessToken, async (req, res) => {
   const postId = req.body.postId;
   const author = req.body.author;
   const body = req.body.body;
-  await responseService.add(postId, author, body);
-
-  res.status(201).end();
+  await responseService
+    .add(postId, author, body)
+    .then(() => {
+      res.status(201).end();
+    })
+    .catch((err) => {
+      res.status(403).json({ message: err });
+    });
 });
 
 responsesRouter.get(
@@ -32,7 +37,12 @@ responsesRouter.post("/addcomment", validateAccessToken, async (req, res) => {
   const responseId = req.body.responseId;
   const username = req.body.username;
   const body = req.body.body;
-  await responseService.addComment(responseId, username, body);
-
-  res.status(201).end();
+  await responseService
+    .addComment(responseId, username, body)
+    .then(() => {
+      res.status(201).end();
+    })
+    .catch((err) => {
+      res.status(403).json({ message: err });
+    });
 });

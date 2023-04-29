@@ -29,7 +29,7 @@ export default function NewPost() {
     );
 
     if (error) {
-      alert("Error creating post, try again");
+      alert("Error creating the post:\n" + error.message);
       return;
     }
 
