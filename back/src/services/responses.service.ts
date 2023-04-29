@@ -3,13 +3,20 @@ import { Comment } from "../models/comment.model";
 
 const { response, responseVote, responseComment, Op } = require("../models/db");
 
-async function getAll(id: string, username: string): Promise<Response[]> {
+async function getAll(id: string, username: string, page: number): Promise<Response[]> {
+  const limitPerPage = 10;
+  const offset = (page - 1) * limitPerPage;
   return response
     .findAll({
       where: {
         postId: id,
       },
-      order: [["likes", "DESC"]],
+      order: [
+        ["likes", "DESC"],
+        ["createdAt", "DESC"]
+      ],
+      offset: offset,
+      limit: limitPerPage,
       include: [
         {
           model: responseVote,

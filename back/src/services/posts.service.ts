@@ -106,6 +106,11 @@ async function search(
           { body: { [Op.iLike]: `%${query}%` } },
         ],
       },
+      order: [
+        ["likes", "DESC"],
+        ["views", "DESC"],
+        ["createdAt", "DESC"],
+      ],
       offset: offset,
       limit: limitPerPage,
       include: [

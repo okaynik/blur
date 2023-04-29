@@ -6,7 +6,8 @@ export const responsesRouter = express.Router();
 
 responsesRouter.get("/getall/:id", validateAccessToken, async (req, res) => {
   const username = req.auth?.payload.username as string;
-  const responses = await responseService.getAll(req.params.id, username);
+  const pageNum = Number(req.query.page)
+  const responses = await responseService.getAll(req.params.id, username, pageNum);
   res.status(200).json(responses);
 });
 
