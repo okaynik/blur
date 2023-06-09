@@ -13,6 +13,7 @@ const removeWords = [
   "sh1t",
   "ass",
   "poop",
+  "crap",
 ];
 
 filter.removeWords(...removeWords);
