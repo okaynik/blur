@@ -152,10 +152,11 @@ export default function Navbar() {
     navigate("../", { replace: true });
   };
 
-  const darkModeButton = document.getElementById("dark-mode-button");
-  darkModeButton?.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-  });
+  // const darkModeButton = document.getElementById("dark-mode-button");
+  //   darkModeButton?.addEventListener("click", () => {
+  //     document.body.classList.toggle("dark-mode");
+  // });
+  
 
   return (
     <div className="background">
@@ -182,8 +183,8 @@ export default function Navbar() {
       </div>
       <div className="btn-container">
         {/* <button className="btn-dark" id="dark-mode-button">
-          Dark Mode
-        </button> */}
+              Dark Mode
+          </button> */}
         <Link className="btn-dark" to={"/newpost"}>
           Ask
         </Link>

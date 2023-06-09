@@ -268,3 +268,25 @@ export const getComments = async (
     error,
   };
 };
+
+
+export const deletePost = async (
+  accessToken: string,
+  postId: string
+): Promise<ApiResponse> => {
+  const config: AxiosRequestConfig = {
+    url: `${apiServerUrl}/api/admin/posts/delete/${postId}`,
+    method: "DELETE",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${accessToken}`,
+    },
+  };
+
+  const { data, error } = (await callExternalApi({ config })) as ApiResponse;
+
+  return {
+    data,
+    error,
+  };
+};

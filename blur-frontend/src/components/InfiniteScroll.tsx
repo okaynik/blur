@@ -12,7 +12,7 @@ interface InfiniteScrollProps<T> {
 function InfiniteScroll<T>({
   fetchData,
   renderItem,
-  responsesUpdated = 0,
+  responsesUpdated,
 }: InfiniteScrollProps<T>): React.ReactElement {
   const [items, setItems] = useState<T[]>([]);
   const [page, setPage] = useState(1);
@@ -43,7 +43,7 @@ function InfiniteScroll<T>({
     setItems([]);
     setPage(1);
     setHasMore(true);
-  }, [fetchData, responsesUpdated]);
+  }, [fetchData]);
 
   useEffect(() => {
     fetchItems();
